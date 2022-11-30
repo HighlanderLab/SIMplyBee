@@ -5187,6 +5187,7 @@ getPheno <- function(x, caste = NULL, nInd = NULL, collapse = FALSE) {
     ret <- NULL
   } else if (isPop(x)) {
     ret <- pheno(pop = x)
+    rownames(ret) <- x@id
   } else if (isColony(x)) {
     if (is.null(caste)) {
       warning("Caste not provided, returning info for all castes!")
@@ -5208,11 +5209,12 @@ getPheno <- function(x, caste = NULL, nInd = NULL, collapse = FALSE) {
         ret <- do.call("rbind", ret)
       }
     } else {
-      tmp <- getCastePop(x = x, caste = caste, nInd = nInd)
+      tmp <- getCastePop(x = x, caste = caste, nInd = nInd, use="order")
       if (is.null(tmp)) {
         ret <- NULL
       } else {
         ret <- pheno(pop = tmp)
+        rownames(ret) <- tmp@id
       }
     }
   } else if (isMultiColony(x)) {
@@ -5850,6 +5852,7 @@ getGv <- function(x, caste =NULL, nInd = NULL, collapse = FALSE) {
     ret <- NULL
   } else if (isPop(x)) {
     ret <- gv(pop = x)
+    rownames(ret) <- x@id
   } else if (isColony(x)) {
     if (is.null(caste)) {
       warning("Caste not provided, returning info for all castes!")
@@ -5871,11 +5874,12 @@ getGv <- function(x, caste =NULL, nInd = NULL, collapse = FALSE) {
         ret <- do.call("rbind", ret)
       }
     } else {
-      tmp <- getCastePop(x = x, caste = caste, nInd = nInd)
+      tmp <- getCastePop(x = x, caste = caste, nInd = nInd, use="order")
       if (is.null(tmp)) {
         ret <- NULL
       } else {
         ret <- gv(pop = tmp)
+        rownames(ret) <- tmp@id
       }
     }
   } else if (isMultiColony(x)) {

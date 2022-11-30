@@ -29,7 +29,12 @@ populations instead. To cater for this, we created a `MultiColony` class. It
 behaves as a list of `Colony` objects but with additional functionality - you
 can apply function directly to the `MultiColony` objects. A `MultiColony` can
 represent different apiaries or even different subpopulations in terms of either
-age of the queens of geographical location of the apiaries.
+age of the queens of geographical location of the apiaries. First, we again load
+the package, if we haven't already.
+
+```{r}
+library(package = "SIMplyBee")
+```
 
 # Creating a MultiColony object
 

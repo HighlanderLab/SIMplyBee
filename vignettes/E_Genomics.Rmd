@@ -131,14 +131,28 @@ getSegSiteGeno(colony, caste = "drones", nInd = 4)[, 1:10]
 ```
 
 You can also use `caste = "all"` to get the haplotypes and phenotypes from every
-individual in the colony:
+individual in the colony. If the argument `collapse` is set to `FALSE`, then the
+function returns a list with haplotypes for each caste. Let's explore the
+structure of the output:
 
 ```{r Colony haplo}
-getSegSiteHaplo(colony, caste = "all")[, 1:10]
+str(getSegSiteHaplo(colony, caste = "all", collapse = FALSE))
 ```
 
-```{r drones geno}
-getSegSiteGeno(colony, caste = "all")[, 1:10]
+If the argument `collapse` is set to `TRUE`, the function returns a single
+matrix with hyplotypes of all the individuals. The same behaviour is implemented
+for all the functions that extract genomic information
+
+```{r}
+str(getSegSiteHaplo(colony, caste = "all", collapse = TRUE))
+```
+
+```{r}
+getSegSiteHaplo(colony, caste = "all", collapse = TRUE)[1:10, 1:10]
+```
+
+```{r all geno}
+getSegSiteGeno(colony, caste = "all", collapse = TRUE)[1:10, 1:10]
 ```
 
 SIMplyBee also has shortcuts for these haplotype and genotype functions to make
@@ -249,13 +263,8 @@ Now lets calculate the IBS GRM, we will use the genotypes to calculate this:
   GRM <- calcBeeGRMIbs(x = geno, sex = sex)
 ```
 
-This produces a very large matrix that you can view with:
-
-```{r  view GRM}
-  GRM 
-```
-
-We can also get the diagonal of the matrix:
+This produces a very large matrix that you can view with the command `GRM`. We
+can also get the diagonal of the matrix:
 
 ```{r view diagonal}
   library("Matrix"); image(as(GRM, "Matrix"))
@@ -286,15 +295,15 @@ You can also compare caste members:
  md <- "md"
 ```
 
-```{r Queen vs fathers}
+```{r Queen vs fathers 1}
    GRM[idQueen, idFathers]
 ```
 
-```{r Queen vs workers}
+```{r Queen vs workers 1}
    GRM[idQueen, idWorkers]
 ```
 
-```{r Queen vs drones}
+```{r Queen vs drones 1}
    GRM[idQueen, idDrones]
 ```
 
@@ -342,13 +351,12 @@ Let's check out this large matrix:
 ```{r  view calcGRMIbd}
  library("Matrix"); image(as(GRMs$genome, "Matrix"))
  library("Matrix"); image(as(GRMs$indiv, "Matrix"))
- GRMs
 ```
 
 Now we can look at the diagonal of the matrix of the whole genome and of the
 individuals
 
-```{r  view diagonal}
+```{r  view diagonal1}
  x <- diag(GRMs$genome)
  hist(x)
  summary(x)
@@ -360,7 +368,7 @@ individuals
 
 And now the non-diagonals
 
-```{r  view non-diagonal}
+```{r  view non-diagonal1}
   x <- GRMs$genome[lower.tri(x = GRMs$genome, diag = FALSE)]
   hist(x)
   summary(x)
@@ -385,25 +393,24 @@ Let's compare some of the caste members' whole genomes and individuals
 ```
 
 ```{r  Queen vs fathers}
-  GRMs$genome[fG, qG]
-  GRMs$indiv[fI, qI]
+  head(GRMs$genome[fG, qG])
+  head(GRMs$indiv[fI, qI])
 ```
 
 ```{r  Queen vs workers}
-  GRMs$genome[wG, qG]
-  GRMs$indiv[wI, qI]
+  head(GRMs$genome[wG, qG])
+  head(GRMs$indiv[wI, qI])
 ```
 
 ```{r  Queen vs drones}
-  GRMs$genome[dG, qG]
-  GRMs$indiv[dI, qI]
+  head(GRMs$genome[dG, qG])
+  head(GRMs$indiv[dI, qI])
 ```
 
 As demonstrate above, we can look at the non-diagonal:
 
-```{r view non-diagonal}
+```{r view non-diagonal2}
   x <- alleleFreq[lower.tri(x = alleleFreq, diag = FALSE)]
    hist(x)
    summary(x)
 ```
-

@@ -29,6 +29,12 @@ or population (class `MultiColony`); \* cross either with pre-selected
 population/group of drones or according to a cross plan. \* cross queens on an
 open DCA or mating station
 
+We again load the package, if we haven't already.
+
+```{r}
+library(package = "SIMplyBee")
+```
+
 First, we have to create a founder population and some virgin queen, virgin
 colonies, and virgin apiaries that we will later cross.
 
@@ -214,4 +220,3 @@ crossPlanApiary4 <- c(
 apiary4 <- cross(apiary4, crossPlan = crossPlanApiary4, drones = c(singleDrone, DCA, matingStationDCA))
 nFathers(apiary4)
 ```
-

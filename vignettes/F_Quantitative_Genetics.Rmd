@@ -150,12 +150,12 @@ all honeybees in the simulation will have genetic and phenotypic values for both
 traits. The genetic values are stored in the `gv` slot of each `Pop` object,
 while phenotypic values are stored in the `pheno` slot.
 
-```{r basePop_virgin_queens}
+```{r basePop_virgin_queens, echo = FALSE, fig.height = 5, fig.width = 6}
 # Base population virgin queens
 basePop <- createVirginQueens(founderGenomes, n = 20)
 head(basePop@gv)
 head(basePop@pheno)
-par(mfrow = c(2, 2))
+par(mfrow=c(2,2))
 limQ <- range(c(basePop@gv[, "queenTrait"], basePop@pheno[, "queenTrait"]))
 brkQ <- seq(from = limQ[1], to = limQ[2], length.out = 10)
 limW <- range(c(basePop@gv[, "workersTrait"], basePop@pheno[, "workersTrait"]))
@@ -186,11 +186,11 @@ in different castes. Therefore, drones will also have the queen and workers
 effect genetic (and phenotypic values) for honey yield even though they do not
 contribute to this trait in a colony.
 
-```{r basePop_drones}
+```{r basePop_drones, echo = FALSE, fig.height = 2.7, fig.width = 5}
 # Base population drones
 drones <- createDrones(x = basePop[1:5], nInd = 3)
 head(drones@gv)
-par(mfrow = c(1, 2))
+par(mfrow=c(1,2))
 hist(drones@gv[, "queenTrait"], xlab = "Genetic value", main = "Queen effect")
 hist(drones@gv[, "workersTrait"], xlab = "Genetic value", main = "Workers effect")
 ```
@@ -282,11 +282,11 @@ the queen mated with (=fathers in a colony)!
 getFathersGv(colony)
 ```
 
-Knowing father of each worker, we inspect variation in the distribution of
+Knowing the father of each worker, we inspect variation in the distribution of
 genetic values of worker by the patriline (workers from a single father drone)
 for the workers effect.
 
-```{r distribution_by_patriline}
+```{r distribution_by_patriline, echo = FALSE, fig.height = 4.5, fig.width = 6}
 # Variation in workers effect genetic values by patriline in workers
 p <- ggplot(data = df, aes(x = gvWorkersTrait, colour = father)) +
   xlab("Genetic value for the workers effect") +
@@ -341,7 +341,7 @@ yield and workers contribute the other half. This means that removing workers
 will still give a non-zero honey yield! This shows that we have to design the
 mapping between individual, caste, and colony values with care!
 
-```{r colony_pheno_change}
+```{r colony_pheno_change1}
 # Colony phenotype value from a reduced colony
 removeWorkers(colony, p = 0.99) |>
   calcColonyPheno(queenTrait = "queenTrait", workersTrait = "workersTrait")
@@ -382,8 +382,8 @@ In a similar manner, we can calculate colony value for all the colonies in our
 apiary, where the row names of the output represent colony IDs.
 
 ```{r multicolony_pheno}
-colonyGv <- calcColonyGv(apiary))
-colonyPheno <- calcColonyPheno(apiary))
+colonyGv <- calcColonyGv(apiary)
+colonyPheno <- calcColonyPheno(apiary)
 data.frame(colonyGv, colonyPheno)
 ```
 
@@ -398,7 +398,7 @@ for further reproduction.
 TODO: improve this code once selectColonies() is improved
 
 ```{r multicolony_selection}
-(bestColonyId <- names(colonyValuesGv[order(colonyValuesGv[, 1], decreasing = TRUE), ])[1])
+(bestColonyId <- names(colonyGv[order(colonyGv[, 1], decreasing = TRUE), ])[1])
 apiary[[bestColonyId]]
 # selectColonies(apiary, ID = bestColonyId)
 ```
@@ -489,7 +489,7 @@ The second way is to create our own mapping function. An equivalent outcome to
 the above is shown below just to demonstrate use of your own function, but we
 are simply just reusing `mapCasteToColonyPheno()` twice;)
 
-```{r colony_pheno_2a}
+```{r colony_pheno_2b}
 myMapCasteToColonyPheno <- function(colony) {
   yield <- mapCasteToColonyPheno(colony,
                                  queenTrait = "yieldQueenTrait",
@@ -592,7 +592,7 @@ correlation on average between fecundityQueenTrait and the other two traits and
 negative correlation on average between yieldQueenTrait and yieldWorkersTrait.
 Just like we defined in the global simulation parameters.
 
-```{r queen_values}
+```{r queen_values, echo = FALSE, fig.height = 5, fig.width = 6}
 getQueenGv(apiary, collapse = TRUE)
 queenPheno <- getQueenPheno(apiary, collapse = TRUE) |> as.data.frame()
 cor(queenPheno)
@@ -619,7 +619,7 @@ now see a positive correlation because our individual to colony mapping function
 sums workers effect across all workers and the more workers there are the larger
 the sum.
 
-```{r colony_pheno_3}
+```{r colony_pheno_3, echo = FALSE, fig.height = 5.5, fig.width = 6.5}
 colonyValuesPheno <- calcColonyPheno(apiary,
                                      queenTrait = "yieldQueenTrait",
                                      workersTrait = "yieldWorkersTrait")

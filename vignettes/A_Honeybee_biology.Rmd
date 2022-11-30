@@ -1,7 +1,12 @@
 ---
 title: "SIMplyBee - Honeybee biology"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+    pdf_document:
+    toc: true
+    number_sections: true
+    highlight: tango
+    fig_caption: yes
 vignette: >
   %\VignetteIndexEntry{HoneybeeBiology}
   %\VignetteEngine{knitr::rmarkdown}
@@ -36,28 +41,22 @@ SIMplyBee implements honeybee biology. Specifically, it describes:
 First, you need to install the package with
 `install.packages(pkg = "SIMplyBee")`.
 
-Now load the package and dive in!
+Now load the package and dive in! You load the package by running
 
-```{r load package}
+```{r}
 library(package = "SIMplyBee")
 ```
 
-TODO: Say something about the image (covering 1-4) and how you can use it as a
-guide?
+# Initiating simulation with founder genomes and global parameters
 
-TODO: add colony creation image - not working yet \#
-knitr::include_graphics("\~/Desktop/GitHub/SIMplyBee/SIMplyBee/vignettes/images/founderpop_diagram2.pdf",
-auto_pdf = getOption("knitr.graphics.auto_pdf",FALSE))
-
-# Initiating simulation with founder genomes and global parameters,
-
-First, we need to simulate some genomes that represent the founder population.
-You can quickly generate random genomes using AlphaSimR's `quickHaplo()`. These
-founder genomes are rapidly simulated by randomly sampling 0s and 1s, and do not
-include any species specific demographic history. This is equivalent to having
-all loci with allele frequency 0.5 and being in linkage equilibrium. This method
-is only used when you want to generate "something", in other words a non
-specific group of genomes.
+Figure shows visualizes the initiation of the simulation. First, we need to
+simulate some genomes that represent the founder population. You can quickly
+generate random genomes using AlphaSimR's `quickHaplo()`. These founder genomes
+are rapidly simulated by randomly sampling 0s and 1s, and do not include any
+species specific demographic history. This is equivalent to having all loci with
+allele frequency 0.5 and being in linkage equilibrium. This method is only used
+when you want to generate "something", in other words a non specific group of
+genomes.
 
 Alternatively, you can simulate an accurate honeybee genome by use SIMplyBee's
 `simulateHoneybeeGenomes()`. `simulateHoneybeeGenomes()` simulates the honeybee
@@ -118,7 +117,8 @@ and would not recommend its change.
 Now we are ready to setup global simulation parameters using `SimParamBee`.
 `SimParamBee` builds upon AlphaSimR's `SimParam`, which includes genome and
 trait parameters, but also global pedigree and recombination events.
-`SimParamBee` additionally holds honeybee specific simulation information:
+`SimParamBee` additionally holds honeybee specific simulation information
+(Figure 1):
 
 -   default number of workers (`SP$nWorkers`) and drones (`SP$nDrones`) in a
     full-sized colony that are in functions such as `createWorkers/Drones()`,
@@ -153,20 +153,24 @@ with the basic functionality!
 show(SP)
 ```
 
-From the simulated founder genomes, we first need to create virgin queens. These
-will serve as our our first honeybee individuals (so called base population). In
-AlphaSimR and SIMplyBee, individuals are stored in so called `Pop` class, that
-holds a group of individuals with their individual identification, parent
-identifications, as well as genomes and trait values. So, the `basePop` is a
-population (`Pop` class object) of two individuals, our virgin queens. If we
-call our `basePop`, we see some basic information about our population: the
-ploidy, number of individuals, chromosome, loci, and traits. We next check
-whether our individuals are of certain caste with `is*()` functions, where `*`
-can be either `queen`, `worker`, `drone`, `virginQueen`, or `father`. These
-functions return `TRUE` if the individual is a member of the caste in question
-and `FALSE` is it is not. These functions check the caste information in the
-`SP$caste`. Here, we use `isVirginQueen()` to check whether our base population
-is all virgin queens.
+```{r initialization_diagram, echo=FALSE, out.width='100%'}
+knitr::include_graphics("../man/figures/founderpop_diagram.pdf")
+```
+
+From the simulated founder genomes, we first need to create virgin queens
+(Figure 1). These will serve as our our first honeybee individuals (so called
+base population). In AlphaSimR and SIMplyBee, individuals are stored in so
+called `Pop` class, that holds a group of individuals with their individual
+identification, parent identifications, as well as genomes and trait values. So,
+the `basePop` is a population (`Pop` class object) of two individuals, our
+virgin queens. If we call our `basePop`, we see some basic information about our
+population: the ploidy, number of individuals, chromosome, loci, and traits. We
+next check whether our individuals are of certain caste with `is*()` functions,
+where `*` can be either `queen`, `worker`, `drone`, `virginQueen`, or `father`.
+These functions return `TRUE` if the individual is a member of the caste in
+question and `FALSE` is it is not. These functions check the caste information
+in the `SP$caste`. Here, we use `isVirginQueen()` to check whether our base
+population is all virgin queens.
 
 ```{r base pop virgin queens}
 baseQueens <- createVirginQueens(founderGenomes)
@@ -287,27 +291,6 @@ nDrones(colony)
 nVirginQueens(colony)
 ```
 
-Next, you can extract the caste of each individual with the `getCaste()`
-function. As already mentioned above, a similar group of functions is the
-`is*()` functions that check whether an individual is of specific caste. Let's
-now obtain the caste of colony members:
-
-```{r caste queen}
-getCaste(queen)
-```
-
-```{r caste fathers}
-getCaste(fathers)
-```
-
-and so on. When you have a bunch of bees at hand and you might not know their
-source, the `getCaste()` can be very useful.
-
-```{r caste bees}
-bees <- c(queen, fathers[1:2], workers[1:2], drones[1:2])
-getCaste(bees)
-```
-
 Next, we can access the individuals of each caste with `get*()` functions. These
 functions leave the colony and its members untact (do not change the colony),
 but make a copy of the individuals instead.
@@ -349,6 +332,27 @@ colony
 ```{r}
 pulledWorkers <- tmp$pulled
 pulledWorkers
+```
+
+Next, you can extract the caste of each individual with the `getCaste()`
+function. As already mentioned above, a similar group of functions is the
+`is*()` functions that check whether an individual is of specific caste. Let's
+now obtain the caste of colony members:
+
+```{r caste queen}
+getCaste(queen)
+```
+
+```{r caste fathers}
+getCaste(fathers)
+```
+
+and so on. When you have a bunch of bees at hand and you might not know their
+source, the `getCaste()` can be very useful.
+
+```{r caste bees}
+bees <- c(queen, fathers[1:2], workers[1:2], drones[1:2])
+getCaste(bees)
 ```
 
 # Complementary sex determining locus

@@ -1,15 +1,20 @@
 ---
 title: "SIMplyBee - Colony events"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{ColonyEvents}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  pdf_document: null
+  toc: yes
+  number_sections: yes
+  highlight: tango
+  fig_caption: yes
+  html_document:
+    df_print: paged
+vignette: "%\\VignetteIndexEntry{ColonyEvents} %\\VignetteEngine{knitr::rmarkdown}
+  %\\VignetteEncoding{UTF-8}\n"
 editor_options:
-   markdown:
-     wrap: 80
-     canonical: true
+  markdown:
+    wrap: 80
+    canonical: yes
 ---
 
 ```{r setup, include = FALSE}
@@ -26,6 +31,12 @@ This vignette will introduce you to colony events. We implemented the most
 important natural events like swarming, supersedure, and collapse of the colony,
 and a beekeeping management practice called splitting. All functions that
 implement colony events work both on `Colony` and `MultiColony` objects.
+
+First, we again load the package, if we haven't already.
+
+```{r}
+library(package = "SIMplyBee")
+```
 
 # Swarming
 
@@ -67,13 +78,17 @@ apiary <- cross(apiary, drones = fatherGroups[2:7])
 apiary <- buildUp(apiary, nWorkers = 100, nDrones = 20, exact = TRUE)
 ```
 
-In SIMplyBee, we developed a function `swarm()` that simulates swarming. The
-function takes a `Colony` class object and a percentage `p` of workers that
-leave with the swarm. The function returns is a list with two `Colony` class
-objects, `swarm` and `remnant`. The `swarm` contains the old queen and `p`
+In SIMplyBee, we developed a function `swarm()` that simulates swarming (Figure
+1). The function takes a `Colony` class object and a percentage `p` of workers
+that leave with the swarm. The function returns is a list with two `Colony`
+class objects, `swarm` and `remnant`. The `swarm` contains the old queen and `p`
 percentage of workers that left the hive. The `remnant` contains the rest of
 workers `(1-p)`, all the drones, and virgin queens that are daughters of the old
 queen that swarmed.
+
+```{r swarm_figure, echo=FALSE, out.width='100%', fig.cap="Swarm function."}
+knitr::include_graphics("../man/figures/swarm.pdf")
+```
 
 Let's swarm our `colony`. Since the output of a function is a list with
 colonies, we must save it in a new (temporary) object.
@@ -184,11 +199,15 @@ apiary <- buildUp(apiary)
 Colony splitting is a common beekeeping technique for managing swarming. A
 percentage of workers, brood, and food stores are removed and combined in a new
 colony. Old queen normally stays with split colony (remnant in our function). We
-created a function `split()` that works on `Colony` and `Multicolony` objects.
-Argument `p` is proportion of workers that will go to new colony. The output of
-the function is a list of two `Colony` or `MultiColony` objects. The `split()`
-function follows the same principles as the `swarm()`, hence we will spent less
-time explaining the outputs.
+created a function `split()` that works on `Colony` and `Multicolony` objects
+(Figure 2). Argument `p` is proportion of workers that will go to new colony.
+The output of the function is a list of two `Colony` or `MultiColony` objects.
+The `split()` function follows the same principles as the `swarm()`, hence we
+will spent less time explaining the outputs.
+
+```{r split_figure, echo=FALSE, out.width='100%', fig.cap = "Split function"}
+knitr::include_graphics("../man/figures/split.pdf")
+```
 
 ```{r split a colony}
 tmp <- split(colony, p = 0.3)
@@ -258,8 +277,12 @@ colony
 ```
 
 SIMplyBee contains a function `supersede()` that removes the old queen and
-triggers the creation of new virgin queens from the brood. The function returns
-a single `Colony` or `MultiColony` object (not a list of two).
+triggers the creation of new virgin queens from the brood (Figure 3). The
+function returns a single `Colony` or `MultiColony` object (not a list of two).
+
+```{r supersede_figure, echo=FALSE, out.width='100%', fig.cap = "Supersede function"}
+knitr::include_graphics("../man/figures/supersede.pdf")
+```
 
 ```{r supersede Colony object}
 colony <- supersede(colony)
@@ -291,7 +314,7 @@ influence genetic structure of a population and genetic gain.
 
 Let's again create a fresh colony and an apiary.
 
-```{r create the colony and Mlticolony }
+```{r create the colony and Multicolony }
 colony <- createColony(x = basePop[20])
 colony <- cross(colony, drones = fatherGroups[[20]])
 colony <- buildUp(colony, nWorkers = 100, nDrones = 20)
@@ -302,12 +325,16 @@ apiary <- buildUp(apiary, nWorkers = 100, nDrones = 20, exact = TRUE)
 ```
 
 SIMplyBee includes a function `collapse()` that simulates the collapse of a
-colony. This function does not remove individuals from the colony, but sets the
-`collapse()` status of the colony to `TRUE` and `production` status to `FALSE`.
-In reality, bees would still be present in the colony, although dead. This
-allows us to extract any genetic material from the colony even after collapse.
-However, future operations in terms of reproduction or simulation of events are
-not allowed with a collapsed colony.
+colony (Figure 4). This function does not remove individuals from the colony,
+but sets the `collapse()` status of the colony to `TRUE` and `production` status
+to `FALSE`. In reality, bees would still be present in the colony, although
+dead. This allows us to extract any genetic material from the colony even after
+collapse. However, future operations in terms of reproduction or simulation of
+events are not allowed with a collapsed colony.
+
+```{r collapse_figure, echo=FALSE, out.width='50%', fig.cap = "Collapse function"}
+knitr::include_graphics("../man/figures/collapse.pdf")
+```
 
 ```{r collapse the colony}
 colony <- collapse(colony)

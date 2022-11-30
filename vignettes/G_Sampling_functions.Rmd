@@ -1,7 +1,11 @@
 ---
 title: "SIMplyBee - Sampling functions"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+    highlight: tango
 vignette: >
   %\VignetteIndexEntry{SamplingFunctions}
   %\VignetteEngine{knitr::rmarkdown}
@@ -24,6 +28,12 @@ knitr::opts_chunk$set(
 
 SIMplyBee includes functions to sample the number or percentage of caste
 individuals.
+
+We again load the package, if we haven't already.
+
+```{r}
+library(package = "SIMplyBee")
+```
 
 # Functions to sample numbers
 
@@ -58,10 +68,11 @@ to sample variable number of drones from a DCA. The default average for this
 function is 15, but you can use any value you want. Let's use this function to
 sample 1000 values and inspect the distribution and the mean.
 
-```{r}
-hist(nFathersPoisson(n = 1000))
+```{r, echo = FALSE, fig.height = 3, fig.width = 6}
+par(mfrow=c(1,2))
+hist(nFathersPoisson(n = 1000), main = "Average = 15", xlab = "nFathers")
 # Change the average to 10
-hist(nFathersPoisson(n = 1000, average = 10))
+hist(nFathersPoisson(n = 1000, average = 10), main = "Average = 10", xlab = "nFathers")
 ```
 
 Let's now use this functionality to sample a variable number of drones from the
@@ -104,8 +115,8 @@ function that takes a `min` and a `max` values and sample a value between them.
 By default, the `min` is set to 0.4 and `max` to 0.6. Let's use this function to
 sample a 1000 values between 0.5 and 0.7 and inspect the mean.
 
-```{r}
-hist(swarmPUnif(n = 1000, min = 0.5, max = 0.7))
+```{r, echo = FALSE, fig.height = 3, fig.width = 3}
+hist(swarmPUnif(n = 1000, min = 0.5, max = 0.7), xlab = "swarmP", main = "min=0.5, max=0.7")
 ```
 
 Let's now swarm all the colonies in our apiary with a variable percentage of
@@ -118,6 +129,3 @@ nWorkers(tmp$swarm)
 ```
 
 We see that each colony swarmed with a different percentage between 0.5 and 0.7.
-
-TODO: Do you think we need to add a splitPColonyStrength example?
-

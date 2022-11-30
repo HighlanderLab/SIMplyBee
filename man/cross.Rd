@@ -12,15 +12,16 @@ cross(x, drones, crossPlan = NULL, checkMating = "error", simParamBee = NULL)
 one or more virgin queens / colonies to be mated;}
 
 \item{drones}{\code{\link{Pop-class}} or a list of \code{\link{Pop-class}},
-group(s) of drones that will be mated with virgin queen(s);
-if there is more than one virgin queen, the user has to provide
-a list of drone \code{\link{Pop-class}}. For this, the user can use
-\code{\link{pullDroneGroupsFromDCA}}}
+group(s) of drones that will be mated with virgin queen(s); if there is
+more than one virgin queen, the user has to provide a list of drone
+\code{\link{Pop-class}}. For this, the user can use \code{\link{pullDroneGroupsFromDCA}}}
 
-\item{crossPlan, }{named list with names being virgin queen or colony IDs with each
-list element holding the IDs of selected drones. Also see \code{\link{createRandomCrossPlan}}.
- of \code{drones}, which should be the same length as the number of virgin queens
- If the cross plan is provided, the \code{drones} argument must be a single \code{\link{Pop-class}}.}
+\item{crossPlan, }{named list with names being virgin queen or colony IDs with
+each list element holding the IDs of selected drones. Also see
+\code{\link{createRandomCrossPlan}}. If cross plan is \code{NULL}, we cross
+each virgin queen with the element-wise element of \code{drones}, which
+should be the same length as the number of virgin queens If the cross plan
+is provided, the \code{drones} argument must be a single \code{\link{Pop-class}}.}
 
 \item{checkMating}{character, throw a warning (when \code{checkMating = "warning"}),
 or stop error (when \code{checkMating = "error"}) when some matings fail (see
@@ -38,25 +39,25 @@ Details)}
 Level 1 function that crosses (mates) a virgin queen to a group
   of drones. The virgin queen(s) could be within a population (\code{\link{Pop-class}}),
   in a colony (\code{\link{Colony-class}}), or multi-colony (\code{\link{MultiColony-class}}).
-  This function does not create any progeny, it only stores the
-  mated drones (fathers) so we can later create progeny as needed.
-  When input is a  (\code{\link{Colony-class}}) or  (\code{\link{MultiColony-class}}),
-  one virgin queens is selected at random, mated, and promoted to the queen of the colony.
-  Other virgin queens are destroyed. Mated drones (fathers) are stored for
-  producing progeny at a later stage.
+  This function does not create any progeny, it only stores the mated drones
+  (fathers) so we can later create progeny as needed. When input is a
+  (\code{\link{Colony-class}}) or  (\code{\link{MultiColony-class}}), one
+  virgin queens is selected at random, mated, and promoted to the queen of
+  the colony. Other virgin queens are destroyed. Mated drones (fathers) are
+  stored for producing progeny at a later stage.
 }
 \details{
 This function changes caste for the mated drones to fathers, and
   mated virgin queens to queens. See examples. This means that you can not
-  use these individuals in matings anymore!
+  use these individuals in matings any more!
 
-If the supplied drone population is empty (has 0 individuals), which
+  If the supplied drone population is empty (has 0 individuals), which
   can happen in edge cases or when \code{\link{nFathersPoisson}} is used
   instead of \code{\link{nFathersTruncPoisson}}, then mating of a virgin
   queen will fail and she will stay virgin. This can happen for just a few
   of many virgin queens, which can be annoying to track down, but you can use
-  \code{\link{isQueen}} or \code{\link{isVirginQueen}}  to find such virgin queens. You can use
-  \code{checkMating} to alert you about this situation.
+  \code{\link{isQueen}} or \code{\link{isVirginQueen}} to find such virgin
+  queens. You can use \code{checkMating} to alert you about this situation.
 }
 \examples{
 founderGenomes <- quickHaplo(nInd = 20, nChr = 1, segSites = 100)

@@ -27,6 +27,9 @@ navbar:
         href: articles/4_Genomics.html
       - text: Sampling functions
         href: articles/5_Sampling_functions.html
+      - text: Quantitative Genetics
+        href: articles/6_Quantitative_Genetics.html
+      
 reference:
   - title: Class
     contents:

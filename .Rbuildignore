@@ -11,3 +11,4 @@
 ^tests/*
 ^\.github$
 ^LICENSE\.md$
+^vignettes/F2_Variance_calculations\.Rmd$

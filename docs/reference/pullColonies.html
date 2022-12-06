@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SIMplyBee</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -59,9 +59,6 @@
     <li>
       <a href="../articles/5_Sampling_functions.html">Sampling functions</a>
     </li>
-    <li>
-      <a href="../articles/6_Quantitative_Genetics.html">Quantitative Genetics</a>
-    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -92,7 +89,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pullColonies</span><span class="op">(</span><span class="va">multicolony</span>, ID <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">NULL</span>, p <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pullColonies</span><span class="op">(</span></span>
+<span>  <span class="va">multicolony</span>,</span>
+<span>  ID <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  p <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pullTop <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -102,7 +106,7 @@
 
 
 <dt>ID</dt>
-<dd><p>character, ID of a colony (one or more) to be pulled
+<dd><p>character or numeric, ID of a colony (one or more) to be pulled
 out</p></dd>
 
 
@@ -111,8 +115,21 @@ out</p></dd>
 
 
 <dt>p</dt>
-<dd><p>numeric, probability of a colony being pulled out (takes precedence
+<dd><p>numeric, percentage of colonies pulled out (takes precedence
 over <code>n</code>)</p></dd>
+
+
+<dt>by</dt>
+<dd><p>matrix, matrix of values to select by with names being
+colony IDs (can be obtained with <code><a href="calcColonyValue.html">calcColonyValue</a></code>.
+If NULL, the colonies are pulled at random.
+This parameter is used in combination
+with <code>n</code> or <code>p</code> to determine the number of pulled colonies, and
+<code>pullTop</code> to determine whether to pull the best or the worst colonies.</p></dd>
+
+
+<dt>pullTop</dt>
+<dd><p>logical, pull highest (lowest) values if <code>TRUE</code> (<code>FALSE</code>)</p></dd>
 
 </dl></div>
     <div id="value">
@@ -129,49 +146,73 @@ over <code>n</code>)</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">8</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">5</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span> <span class="op">/</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">varA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span> <span class="op">/</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">corA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fl">1.0</span>, <span class="op">-</span><span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>  <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1.0</span></span></span>
+<span class="r-in"><span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">varE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span> <span class="op">/</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">varA</span> <span class="op">/</span> <span class="op">(</span><span class="va">varA</span> <span class="op">+</span> <span class="va">varE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.25 0.25</span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="fu">addTraitADE</span><span class="op">(</span>nQtlPerChr <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>               mean <span class="op">=</span> <span class="va">mean</span>,</span></span>
+<span class="r-in"><span>               var <span class="op">=</span> <span class="va">varA</span>, corA <span class="op">=</span> <span class="va">corA</span>,</span></span>
+<span class="r-in"><span>               meanDD <span class="op">=</span> <span class="fl">0.1</span>, varDD <span class="op">=</span> <span class="fl">0.2</span>, corD <span class="op">=</span> <span class="va">corA</span>,</span></span>
+<span class="r-in"><span>               relAA <span class="op">=</span> <span class="fl">0.1</span>, corAA <span class="op">=</span> <span class="va">corA</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="fu">setVarE</span><span class="op">(</span>varE <span class="op">=</span> <span class="va">varE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .newPop(rawPop = rawPop, simParam = simParam, ...):</span> sapply(simParam$genMap, length) == rawPop@nLoci are not all TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">drones</span> <span class="op">&lt;-</span> <span class="fu"><a href="createCastePop.html">createDrones</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
-<span class="r-in"><span><span class="va">fatherGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA</a></span><span class="op">(</span><span class="va">drones</span>, n <span class="op">=</span> <span class="fl">10</span>, nFathers <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "MapPop"):</span> object 'basePop' not found</span>
+<span class="r-in"><span><span class="va">droneGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA</a></span><span class="op">(</span><span class="va">drones</span>, n <span class="op">=</span> <span class="fl">10</span>, nDrones <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "Pop"):</span> object 'drones' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in createMultiColony(basePop[2:5], n = 4):</span> object 'basePop' not found</span>
-<span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, fathers <span class="op">=</span> <span class="va">fatherGroups</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
+<span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "Pop"):</span> object 'apiary' not found</span>
+<span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "Colony"):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="fu"><a href="getId.html">getId</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in getId(apiary):</span> object 'apiary' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">pullColonies</span><span class="op">(</span><span class="va">apiary</span>, ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "MultiColony"):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="fu"><a href="getId.html">getId</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">pulled</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in getId(tmp$pulled):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tmp$pulled:</span> $ operator not defined for this S4 class</span>
 <span class="r-in"><span><span class="fu"><a href="getId.html">getId</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">remnant</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in getId(tmp$remnant):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tmp$remnant:</span> $ operator not defined for this S4 class</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">pullColonies</span><span class="op">(</span><span class="va">apiary</span>, ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"3"</span>, <span class="st">"4"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "MultiColony"):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="fu"><a href="getId.html">getId</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">pulled</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in getId(tmp$pulled):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tmp$pulled:</span> $ operator not defined for this S4 class</span>
 <span class="r-in"><span><span class="fu"><a href="getId.html">getId</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">remnant</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in getId(tmp$remnant):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tmp$remnant:</span> $ operator not defined for this S4 class</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">pullColonies</span><span class="op">(</span><span class="va">apiary</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "MultiColony"):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="fu"><a href="getId.html">getId</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">pulled</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in getId(tmp$pulled):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tmp$pulled:</span> $ operator not defined for this S4 class</span>
 <span class="r-in"><span><span class="fu"><a href="getId.html">getId</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">remnant</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in getId(tmp$remnant):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tmp$remnant:</span> $ operator not defined for this S4 class</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">pullColonies</span><span class="op">(</span><span class="va">apiary</span>, p <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "MultiColony"):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="fu"><a href="getId.html">getId</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">pulled</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in getId(tmp$pulled):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tmp$pulled:</span> $ operator not defined for this S4 class</span>
 <span class="r-in"><span><span class="fu"><a href="getId.html">getId</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">remnant</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in getId(tmp$remnant):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in tmp$remnant:</span> $ operator not defined for this S4 class</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># How to pull out colonies based on colony values?</span></span></span>
+<span class="r-in"><span><span class="va">colonyGv</span> <span class="op">&lt;-</span> <span class="fu"><a href="calcColonyValue.html">calcColonyGv</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "Colony"):</span> object 'apiary' not found</span>
+<span class="r-in"><span><span class="fu">pullColonies</span><span class="op">(</span><span class="va">apiary</span>, n <span class="op">=</span> <span class="fl">1</span>, by <span class="op">=</span> <span class="va">colonyGv</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is(x, class2 = "MultiColony"):</span> object 'apiary' not found</span>
 </code></pre></div>
     </div>
   </div>

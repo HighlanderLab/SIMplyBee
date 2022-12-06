@@ -27,9 +27,6 @@ navbar:
         href: articles/4_Genomics.html
       - text: Sampling functions
         href: articles/5_Sampling_functions.html
-      - text: Quantitative Genetics
-        href: articles/6_Quantitative_Genetics.html
-
 reference:
   - title: Class
     contents:
@@ -207,120 +204,107 @@ reference:
      - reduceDroneGeno
   - subtitle: Get segregating sites' haplotypes or genotypes
     contents:
-     - getCasteSegSiteHaplo
      - getSegSiteHaplo
      - getQueenSegSiteHaplo
      - getFathersSegSiteHaplo
      - getWorkersSegSiteHaplo
      - getDronesSegSiteHaplo
      - getVirginQueensSegSiteHaplo
-     - getColonySegSiteHaplo
 
-     - getCasteSegSiteGeno
+
      - getSegSiteGeno
      - getQueenSegSiteGeno
      - getFathersSegSiteGeno
      - getWorkersSegSiteGeno
      - getDronesSegSiteGeno
      - getVirginQueensSegSiteGeno
-     - getColonySegSiteGeno
   - subtitle: Get QTL haplotypes or genotypes
     contents:
-    - getCasteQtlHaplo
     - getQtlHaplo
     - getQueenQtlHaplo
     - getFathersQtlHaplo
     - getWorkersQtlHaplo
     - getDronesQtlHaplo
     - getVirginQueensQtlHaplo
-    - getColonyQtlHaplo
 
-    - getCasteQtlGeno
     - getQtlGeno
     - getQueenQtlGeno
     - getFathersQtlGeno
     - getWorkersQtlGeno
     - getDronesQtlGeno
     - getVirginQueensQtlGeno
-    - getColonyQtlGeno
   - subtitle: Get SNP haplotypes or genotypes
     contents:
-    - getCasteSnpHaplo
     - getSnpHaplo
     - getQueenSnpHaplo
     - getFathersSnpHaplo
     - getWorkersSnpHaplo
     - getDronesSnpHaplo
     - getVirginQueensSnpHaplo
-    - getColonySnpHaplo
 
     - getSnpGeno
-    - getCasteSnpGeno
     - getQueenSnpGeno
     - getFathersSnpGeno
     - getWorkersSnpGeno
     - getDronesSnpGeno
     - getVirginQueensSnpGeno
-    - getColonySnpGeno
   - subtitle: Get IBD (Identity-By-Descent) haplotypes
     contents:
-    - getCasteIbdHaplo
     - getIbdHaplo
     - getQueenIbdHaplo
     - getFathersIbdHaplo
     - getWorkersIbdHaplo
     - getDronesIbdHaplo
     - getVirginQueensIbdHaplo
-    - getColonyIbdHaplo
   - subtitle: Calculate genomic information
     contents:
     - calcBeeGRMIbs
     - calcBeeGRMIbd
     - calcBeeAlleleFreq
+  - subtitle: Calculate phenotypic information
+    contents:
+    - getPheno
+  - subtitle: Calculate criterion
+    contents:
+    - calcColonyValue
+    - calcInheritanceCriterion
+    - calcPerformanceCriterion
+    - calcSelectionCriterion
 
-
-
-
+  - title: Planned mating
+  - subtitile:
+    contents:
+    - createMatingStationDCA
+    - createRandomCrossPlan
+    - mapCasteToColonyValue
 
   - title: Quantitative Genetics
-  - subtitle: Phenotype values
-    contents:
-    - calcColonyPhenoFromCaste
-    - getCastePheno
-    - getColonyPheno
-    - setColonyPheno
   - subtitle: Genetic values
     contents:
-    - getCasteGv
     - getQueenGv
     - getFathersGv
     - getWorkersGv
     - getDronesGv
     - getVirginQueensGv
     - getWorkersGv
-    - getColonyGv
   - subtitle: Breeding values
     contents:
-    - getCasteBv
     - getQueenBv
     - getFathersBv
     - getWorkersBv
     - getDronesBv
     - getVirginQueensBv
-    - getColonyBv
   - subtitle: Dominance deviations
     contents:
-    - getCasteDd
     - getQueenDd
     - getFathersDd
     - getWorkersDd
     - getDronesDd
     - getVirginQueensDd
-    - getColonyDd
-  - subtitle: Epistatic deviations
+  - subtitle: Epistatic devaitions
     contents:
-    - getCasteAa
-    - getColonyAa
+    - getAa
+
 
 
 

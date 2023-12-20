@@ -220,29 +220,29 @@ them out all at once.</p>
 number of drones in each group because we used a sampling function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">droneGroups</span>, FUN <span class="op">=</span> <span class="va">nInd</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 12 13 18 13 10 16 17  7 10 10 18 15  9 16 15 11 17  5 15 18</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] 19 18 13 17  9 16 13 15 10 12 16 22 12 11 21 16 20 13 17 14</span></span></code></pre></div>
 <p>Now, we can cross our virgin queens to drone groups.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># A single virgin queen</span></span>
 <span><span class="va">virginQueen1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">virginQueen1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">virginQueen1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 12</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 19</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Multiple virgin queens</span></span>
 <span><span class="va">virginQueens1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">virginQueens1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">virginQueens1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 13 18 13</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 18 13 17</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># A colony</span></span>
 <span><span class="va">colony1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">colony1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 9</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># An apiary</span></span>
 <span><span class="va">apiary1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">apiary1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  5  6  7  8  9 </span></span>
-<span><span class="co">#&gt; 16 17  7 10 10</span></span></code></pre></div>
+<span><span class="co">#&gt; 16 13 15 10 12</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="cross-according-to-a-cross-plan">Cross according to a cross plan<a class="anchor" aria-label="anchor" href="#cross-according-to-a-cross-plan"></a>
@@ -274,20 +274,20 @@ from an apiary.</p>
 <span>                                         drones <span class="op">=</span> <span class="va">DCA</span>,</span>
 <span>                                         nDrones <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`2`</span></span>
-<span><span class="co">#&gt;  [1] "2897" "394"  "723"  "3080" "2029" "92"   "6337" "919"  "1311" "5167"</span></span>
-<span><span class="co">#&gt; [11] "6635" "6356" "1948" "8698" "8637"</span></span>
+<span><span class="co">#&gt;  [1] "926"  "8408" "3760" "8475" "5397" "6144" "5173" "3610" "3191" "3255"</span></span>
+<span><span class="co">#&gt; [11] "3947" "4560" "8868" "5382" "2930"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`7`</span></span>
-<span><span class="co">#&gt;  [1] "3237" "8608" "6598" "2153" "4655" "2947" "1374" "238"  "4537" "1118"</span></span>
-<span><span class="co">#&gt; [11] "5573" "8442" "325"  "2276" "1884"</span></span>
+<span><span class="co">#&gt;  [1] "4377" "4084" "497"  "3394" "7407" "1770" "4929" "8410" "2996" "1630"</span></span>
+<span><span class="co">#&gt; [11] "7172" "2242" "7096" "6225" "1830"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`8`</span></span>
-<span><span class="co">#&gt;  [1] "4489" "6859" "5446" "8084" "7058" "6151" "899"  "6712" "3739" "1641"</span></span>
-<span><span class="co">#&gt; [11] "4284" "4159" "6953" "3039" "2798"</span></span>
+<span><span class="co">#&gt;  [1] "5893" "8590" "7512" "7238" "7891" "4989" "454"  "1042" "8090" "2695"</span></span>
+<span><span class="co">#&gt; [11] "4181" "4916" "3741" "1602" "3082"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`9`</span></span>
-<span><span class="co">#&gt;  [1] "7234" "5828" "6569" "6016" "7227" "4545" "1995" "361"  "2822" "5889"</span></span>
-<span><span class="co">#&gt; [11] "6119" "3733" "3878" "8832" "4891"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "807"  "7197" "8181" "6420" "3408" "2724" "5117" "7359" "2699" "749" </span></span>
+<span><span class="co">#&gt; [11] "3721" "5351" "8023" "6339" "2547"</span></span></code></pre></div>
 <p>We see that the created cross plan is a list with IDs corresponding
 to the virgin queen’s IDs and the elements of each list being the IDs of
 the drones the virgin queen will mate with. Now we can cross these
@@ -310,27 +310,28 @@ IDs.</p>
 <span>                                           drones <span class="op">=</span> <span class="va">DCA</span>,</span>
 <span>                                           nDrones <span class="op">=</span> <span class="va">nFathersPoisson</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`2`</span></span>
-<span><span class="co">#&gt;  [1] "5619" "3652" "354"  "803"  "7923" "3371" "7708" "5584" "2662" "3845"</span></span>
-<span><span class="co">#&gt; [11] "4415" "5219" "8196" "8452"</span></span>
+<span><span class="co">#&gt;  [1] "4953" "8812" "2421" "8871" "2792" "358"  "5769" "1026" "1739" "1290"</span></span>
+<span><span class="co">#&gt; [11] "8116" "4620" "79"   "4713"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`10`</span></span>
-<span><span class="co">#&gt;  [1] "1004" "5700" "191"  "3330" "7608" "7398" "172"  "1306" "6157" "3692"</span></span>
-<span><span class="co">#&gt; [11] "3027" "5490" "8757" "8610" "8160" "1457"</span></span>
+<span><span class="co">#&gt;  [1] "570"  "6897" "5654" "5002" "2592" "989"  "3094" "681"  "3855" "2773"</span></span>
+<span><span class="co">#&gt; [11] "3064"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`11`</span></span>
-<span><span class="co">#&gt;  [1] "6989" "576"  "1246" "839"  "1446" "3432" "5600" "181"  "1022" "2008"</span></span>
-<span><span class="co">#&gt; [11] "6616" "3959" "2403" "5460" "6321" "2340" "439"  "589" </span></span>
+<span><span class="co">#&gt;  [1] "513"  "5308" "2461" "4215" "4466" "5274" "3693" "5325" "8205" "2023"</span></span>
+<span><span class="co">#&gt; [11] "1350" "6829" "3887" "3084" "3301"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`12`</span></span>
-<span><span class="co">#&gt;  [1] "4987" "3501" "2003" "2120" "5420" "5943" "2649" "4146" "5973" "8272"</span></span>
-<span><span class="co">#&gt; [11] "8032" "5324" "302" </span></span>
+<span><span class="co">#&gt;  [1] "4388" "7019" "7121" "8595" "6545" "937"  "8952" "8671" "4785" "6643"</span></span>
+<span><span class="co">#&gt; [11] "2265" "1011" "1586" "8388" "4143" "3766" "8055"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`13`</span></span>
-<span><span class="co">#&gt; [1] "1276" "4470" "6010" "4194" "4800" "1310" "5885"</span></span>
+<span><span class="co">#&gt;  [1] "6898" "7908" "6075" "2827" "1968" "8077" "2159" "2803" "2319" "2235"</span></span>
+<span><span class="co">#&gt; [11] "1334" "3440" "7916" "5717"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`14`</span></span>
-<span><span class="co">#&gt;  [1] "5757" "7688" "8586" "5144" "2953" "501"  "813"  "6277" "7664" "7037"</span></span>
-<span><span class="co">#&gt; [11] "367"  "4235" "1768" "2651" "3096" "1283" "4942"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "2255" "4771" "3559" "1727" "2260" "4151" "9039" "1376" "6395" "1497"</span></span>
+<span><span class="co">#&gt; [11] "4505" "2952" "8734" "4220"</span></span></code></pre></div>
 <p>We again see that the cross plan is a list, now with colony IDs and
 elements of the list being the ID of drones the virgin queen within each
 colony will mate with. Now, we can cross our “colonies” by providing the
@@ -344,7 +345,7 @@ colony will mate with. Now, we can cross our “colonies” by providing the
 <span><span class="va">apiary2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">apiary2</span>, drones <span class="op">=</span> <span class="va">DCA</span>, crossPlan <span class="op">=</span> <span class="va">crossPlanColonies</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 10 11 12 13 14 </span></span>
-<span><span class="co">#&gt; 16 18 13  7 17</span></span></code></pre></div>
+<span><span class="co">#&gt; 11 15 17 14 14</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -388,12 +389,12 @@ cross plan.</p>
 <span><span class="co"># Cross a colony</span></span>
 <span><span class="va">colony3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony3</span>, crossPlan <span class="op">=</span> <span class="va">crossPlanMatingStation</span>, drones <span class="op">=</span> <span class="va">matingStationDCA</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">colony3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 19</span></span>
+<span><span class="co">#&gt; [1] 21</span></span>
 <span><span class="co"># Cross an apiary</span></span>
 <span><span class="va">apiary3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary3</span>, crossPlan <span class="op">=</span> <span class="va">crossPlanMatingStation</span>, drones <span class="op">=</span> <span class="va">matingStationDCA</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 15 16 17 18 19 </span></span>
-<span><span class="co">#&gt; 10 18 16 14 13</span></span></code></pre></div>
+<span><span class="co">#&gt; 15 13 12 15  8</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="cross-virgin-queens-with-different-methods">Cross virgin queens with different methods<a class="anchor" aria-label="anchor" href="#cross-virgin-queens-with-different-methods"></a>
@@ -426,7 +427,7 @@ multicolony <code>apiary4</code> in such a manner.</p>
 <span>                 drones <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">singleDrone</span>, <span class="va">DCA</span>, <span class="va">matingStationDCA</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 20 21 22 23 24 25 26 27 28 29 </span></span>
-<span><span class="co">#&gt;  1 12 14 21 10 17 16 14 15 10</span></span></code></pre></div>
+<span><span class="co">#&gt;  1  9 17 20 18 17 13 15 15 14</span></span></code></pre></div>
 </div>
   </div>
 

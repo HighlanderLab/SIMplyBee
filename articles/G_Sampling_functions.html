@@ -185,9 +185,9 @@ mean.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  1  2  3  4  5  6  7  8  9 10 </span></span>
-<span><span class="co">#&gt; 13 18 12 10 14 14 19 16 18 12</span></span>
+<span><span class="co">#&gt; 18 11 18 16 14 16 17 11 17 17</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 14.6</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 15.5</span></span></code></pre></div>
 <p>Second, we have a group of functions that will sample the number of
 individuals according to the colony phenotype, whatever that might be.
 These functions are named <code>n*ColonyPhenotype()</code>, where
@@ -227,7 +227,7 @@ percentage of workers that leave.</p>
 <span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/swarm.html">swarm</a></span><span class="op">(</span><span class="va">apiary</span>, p <span class="op">=</span> <span class="fu"><a href="../reference/swarmPFun.html">swarmPUnif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, min <span class="op">=</span> <span class="fl">0.5</span>, max <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nWorkers</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">swarm</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  11  13  15  17  19  21  23  25  27  29 </span></span>
-<span><span class="co">#&gt; 687 671 561 603 568 696 587 522 519 682</span></span></code></pre></div>
+<span><span class="co">#&gt; 505 611 499 684 610 632 514 640 522 525</span></span></code></pre></div>
 <p>We see that each colony swarmed with a different percentage between
 0.5 and 0.7.</p>
 </div>

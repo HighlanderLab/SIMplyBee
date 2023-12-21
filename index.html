@@ -120,33 +120,17 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div class="section level1">
-<div class="page-header"><h1 id="simplybee-readme-">SIMplyBee README <img src="reference/figures/SIMplyBeelogo_small.png" align="right" height="200"><a class="anchor" aria-label="anchor" href="#simplybee-readme-"></a>
-</h1></div>
-<p>SIMplyBee R package extends <a href="https://CRAN.R-project.org/package=AlphaSimR" class="external-link">AlphaSimR</a> for simulating honeybee populations and breeding programmes</p>
-<div class="section level2">
-<h2 id="publication">Publication<a class="anchor" aria-label="anchor" href="#publication"></a>
-</h2>
-<p>Obšteter J., Strachan. L. K., Bubnič J., Prešern J., Gorjanc G. 2023. Genetics Selection Evolution, 55, 31. <a href="https://doi.org/10.1186/s12711-023-00798-y" class="external-link uri">https://doi.org/10.1186/s12711-023-00798-y</a></p>
-</div>
-<div class="section level2">
-<h2 id="download">Download<a class="anchor" aria-label="anchor" href="#download"></a>
-</h2>
-<p>SIMplyBee is available on CRAN. You can install it with :</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="at">pkg =</span> <span class="st">"SIMplyBee"</span>)</span></code></pre></div>
-<p>The development (and potentially unstable!) versions of SIMplyBee can be accessed from the main and devel GitHub branches using:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># New stable version of SIMplyBee before its submitted to CRAN</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="at">repo=</span><span class="st">"HighlanderLab/SIMplyBee@main"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Development version of SIMplyBee</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="at">repo=</span><span class="st">"HighlanderLab/SIMplyBee@devel"</span>)</span></code></pre></div>
-<p><!-- badges: start --> <a href="https://github.com/HighlanderLab/SIMplyBee/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/HighlanderLab/SIMplyBee/actions/workflows/R-CMD-check.yaml/badge.svg?branch=devel" alt="R-CMD-check"></a> <!-- badges: end --></p>
-<!-- badges: start -->
-<p><a href="https://github.com/HighlanderLab/SIMplyBee/actions/workflows/pages/pages-build-deployment" class="external-link"><img src="https://github.com/HighlanderLab/SIMplyBee/actions/workflows/pages/pages-build-deployment/badge.svg" alt="pages-build-deployment"></a> <!-- badges: end --></p>
-<!-- badges: start -->
-<p><a href="https://github.com/HighlanderLab/SIMplyBee/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/HighlanderLab/SIMplyBee/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a> <!-- badges: end --></p>
-</div>
-</div>
+An extension of the 'AlphaSimR' package
+  (&lt;<a href="https://cran.r-project.org/package=AlphaSimR" class="external-link">https://cran.r-project.org/package=AlphaSimR</a>&gt;) for stochastic simulations of
+  honeybee populations and breeding programmes. 'SIMplyBee' enables simulation of
+  individual bees that form a colony, which includes a queen, fathers (drones
+  the queen mated with), virgin queens, workers, and drones. Multiple colony can
+  be merged into a population of colonies, such as an apiary or a whole country
+  of colonies. Functions enable operations on castes, colony, or colonies, to
+  ease 'R' scripting of whole populations. All 'AlphaSimR' functionality with
+  respect to genomes and genetic and phenotype values is available and further
+  extended for honeybees, including haplo-diploidy, complementary sex determiner
+  locus, colony events (swarming, supersedure, etc.), and colony phenotype values.
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

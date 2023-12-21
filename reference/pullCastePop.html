@@ -106,22 +106,30 @@
 <span>  nInd <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  use <span class="op">=</span> <span class="st">"rand"</span>,</span>
 <span>  removeFathers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  collapse <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  collapse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  simParamBee <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">pullQueen</span><span class="op">(</span><span class="va">x</span>, collapse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">pullQueen</span><span class="op">(</span><span class="va">x</span>, collapse <span class="op">=</span> <span class="cn">FALSE</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">pullWorkers</span><span class="op">(</span><span class="va">x</span>, nInd <span class="op">=</span> <span class="cn">NULL</span>, use <span class="op">=</span> <span class="st">"rand"</span>, collapse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">pullWorkers</span><span class="op">(</span><span class="va">x</span>, nInd <span class="op">=</span> <span class="cn">NULL</span>, use <span class="op">=</span> <span class="st">"rand"</span>, collapse <span class="op">=</span> <span class="cn">FALSE</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">pullDrones</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  nInd <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  use <span class="op">=</span> <span class="st">"rand"</span>,</span>
 <span>  removeFathers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  collapse <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  collapse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  simParamBee <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">pullVirginQueens</span><span class="op">(</span><span class="va">x</span>, nInd <span class="op">=</span> <span class="cn">NULL</span>, use <span class="op">=</span> <span class="st">"rand"</span>, collapse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pullVirginQueens</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  nInd <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use <span class="op">=</span> <span class="st">"rand"</span>,</span>
+<span>  collapse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  simParamBee <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -154,6 +162,10 @@ virgin queens, say via insemination</p></dd>
 <dt>collapse</dt>
 <dd><p>logical, whether to return a single merged population
 for the pulled individuals (does not affect the remnant colonies)</p></dd>
+
+
+<dt>simParamBee</dt>
+<dd><p><code><a href="SimParamBee.html">SimParamBee</a></code>, global simulation parameters</p></dd>
 
 </dl></div>
     <div id="value">
@@ -191,6 +203,7 @@ for the pulled individuals (does not affect the remnant colonies)</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">8</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span></span></span>
@@ -210,7 +223,7 @@ for the pulled individuals (does not affect the remnant colonies)</p></dd>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'basePop' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="buildUp.html">buildUp</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">apiary</span>, nWorkers <span class="op">=</span> <span class="fl">100</span>, nDrones <span class="op">=</span> <span class="fl">10</span>, exact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -221,35 +234,35 @@ for the pulled individuals (does not affect the remnant colonies)</p></dd>
 <span class="r-in"><span><span class="co"># pullCastePop on Colony class</span></span></span>
 <span class="r-in"><span><span class="co"># We can't pull the queen and leave the colony queenless</span></span></span>
 <span class="r-in"><span><span class="fu">pullCastePop</span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"virginQueens"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'colony' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu">pullCastePop</span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"virginQueens"</span>, nInd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'colony' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="co"># Or use aliases</span></span></span>
 <span class="r-in"><span><span class="fu">pullVirginQueens</span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'colony' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu">pullVirginQueens</span><span class="op">(</span><span class="va">colony</span>, nInd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'colony' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="co"># Same aliases exist for all the castes!!!</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># pullCastePop on MultiColony class - same behaviour as for the Colony!</span></span></span>
 <span class="r-in"><span><span class="fu">pullCastePop</span><span class="op">(</span><span class="va">apiary</span>, caste <span class="op">=</span> <span class="st">"workers"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="co"># Or pull out unequal number of workers from colonies</span></span></span>
 <span class="r-in"><span><span class="fu">pullCastePop</span><span class="op">(</span><span class="va">apiary</span>, caste <span class="op">=</span> <span class="st">"workers"</span>, nInd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu">pullWorkers</span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu"><a href="nCaste.html">nWorkers</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu"><a href="nCaste.html">nWorkers</a></span><span class="op">(</span><span class="fu">pullWorkers</span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span><span class="op">$</span><span class="va">remnant</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Merge all the pulled populations into a single population</span></span></span>
 <span class="r-in"><span><span class="fu">pullCastePop</span><span class="op">(</span><span class="va">apiary</span>, caste <span class="op">=</span> <span class="st">"queen"</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu">pullCastePop</span><span class="op">(</span><span class="va">apiary</span>, caste <span class="op">=</span> <span class="st">"virginQueens"</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 </code></pre></div>
     </div>
   </div>

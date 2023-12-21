@@ -95,15 +95,22 @@
 <ul><li>2023-MM-DD TODO</li>
 </ul><div class="section level3">
 <h3 id="major-changes-0-4-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-4-0"></a></h3>
-<ul><li>TODO</li>
+<ul><li>createColony() and createMultiColony() do not have the location argument anymore; use setLocation() instead; by default, location is now c(0, 0) PR#500</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-4-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-4-0"></a></h3>
-<ul><li>TODO</li>
+<ul><li><p>In setLocation(MultiColony) we can set one location (numeric) or multiple (list or data.frame) PR#500</p></li>
+<li><p>getLocation(MultiColony) got the collapse argument Commit#f4e629c3e8920948ad576eae3615a86b26300790</p></li>
+<li><p>We can now sample location of a swarm - see sampleLocation and radius arugments in swarm() PR#500 PR#502</p></li>
+<li><p>New function rcircle() to sample a random point within a circle with a given radius PR#502</p></li>
+<li><p>Removed the function createRandomCrossPlan() - that option is now included in the newly added createCrossPlan() fuction</p></li>
+<li><p>Added the funcionality for spatially-aware mating of honeybee colonies. The new funcionality is included in the createCrossPlan(), that allows to create the cross plan according to the colonies’ locations, and in the cross() function, that crosses bees according to their location</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-4-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h3>
-</div>
+<ul><li><p>Bug fix - get*Haplo() functions were returning diploid drones when input was a Pop-class</p></li>
+<li>
+</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="simplybee-version-030">SIMplyBee version 0.3.0<small>2022-12-15</small><a class="anchor" aria-label="anchor" href="#simplybee-version-030"></a></h2>

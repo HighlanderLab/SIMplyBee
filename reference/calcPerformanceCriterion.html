@@ -107,7 +107,8 @@
 <span>  queenTrait <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  workersTrait <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  workersTraitFUN <span class="op">=</span> <span class="va">sum</span>,</span>
-<span>  use <span class="op">=</span> <span class="st">"gv"</span></span>
+<span>  use <span class="op">=</span> <span class="st">"gv"</span>,</span>
+<span>  simParamBee <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -140,6 +141,10 @@ function will depend on how you will setup simulation!</p></dd>
 either "gv" (genetic value),"ebv" (estimated breeding value),
 or "pheno" (phenotypic value)</p></dd>
 
+
+<dt>simParamBee</dt>
+<dd><p><code><a href="SimParamBee.html">SimParamBee</a></code>, global simulation parameters</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -168,6 +173,7 @@ or "pheno" (phenotypic value)</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">8</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span><span class="va">meanA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span> <span class="op">/</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">varA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span> <span class="op">/</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">corA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> <span class="fl">1.0</span>, <span class="op">-</span><span class="fl">0.5</span>,</span></span>
@@ -195,22 +201,22 @@ or "pheno" (phenotypic value)</p></dd>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'basePop' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">calcPerformanceCriterion</span><span class="op">(</span><span class="va">colony</span>, queenTrait <span class="op">=</span> <span class="fl">1</span>, workersTrait <span class="op">=</span> <span class="fl">2</span>, workersTraitFUN <span class="op">=</span> <span class="va">sum</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'colony' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu">calcPerformanceCriterion</span><span class="op">(</span><span class="va">apiary</span>, queenTrait <span class="op">=</span> <span class="fl">1</span>, workersTrait <span class="op">=</span> <span class="fl">2</span>, workersTraitFUN <span class="op">=</span> <span class="va">sum</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">apiary</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="removeCastePop.html">removeQueen</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu">calcPerformanceCriterion</span><span class="op">(</span><span class="va">apiary</span>, queenTrait <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>                         workersTrait <span class="op">=</span> <span class="fl">2</span>, workersTraitFUN <span class="op">=</span> <span class="va">sum</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

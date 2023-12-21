@@ -7,9 +7,6 @@
     <loc>http://www.simplybee.info/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>http://www.simplybee.info/LICENSE.html</loc>
-  </url>
-  <url>
     <loc>http://www.simplybee.info/articles/A_Honeybee_biology.html</loc>
   </url>
   <url>
@@ -23,6 +20,9 @@
   </url>
   <url>
     <loc>http://www.simplybee.info/articles/E_Genomics.html</loc>
+  </url>
+  <url>
+    <loc>http://www.simplybee.info/articles/F2_Variance_calculations.html</loc>
   </url>
   <url>
     <loc>http://www.simplybee.info/articles/F_Quantitative_Genetics.html</loc>
@@ -106,6 +106,9 @@
     <loc>http://www.simplybee.info/reference/createColony.html</loc>
   </url>
   <url>
+    <loc>http://www.simplybee.info/reference/createCrossPlan.html</loc>
+  </url>
+  <url>
     <loc>http://www.simplybee.info/reference/createDCA.html</loc>
   </url>
   <url>
@@ -113,9 +116,6 @@
   </url>
   <url>
     <loc>http://www.simplybee.info/reference/createMultiColony.html</loc>
-  </url>
-  <url>
-    <loc>http://www.simplybee.info/reference/createRandomCrossPlan.html</loc>
   </url>
   <url>
     <loc>http://www.simplybee.info/reference/cross.html</loc>
@@ -290,6 +290,9 @@
   </url>
   <url>
     <loc>http://www.simplybee.info/reference/pullInd.html</loc>
+  </url>
+  <url>
+    <loc>http://www.simplybee.info/reference/rcircle.html</loc>
   </url>
   <url>
     <loc>http://www.simplybee.info/reference/reQueen.html</loc>

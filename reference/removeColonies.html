@@ -104,7 +104,8 @@
 <span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  p <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  removeTop <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  removeTop <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  simParamBee <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -140,6 +141,10 @@ with <code>n</code> or <code>p</code> to determine the number of removed colonie
 <dt>removeTop</dt>
 <dd><p>logical, remove highest (lowest) values if <code>TRUE</code> (<code>FALSE</code>)</p></dd>
 
+
+<dt>simParamBee</dt>
+<dd><p><code><a href="SimParamBee.html">SimParamBee</a></code>, global simulation parameters</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -152,6 +157,7 @@ with <code>n</code> or <code>p</code> to determine the number of removed colonie
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">5</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span> <span class="op">/</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">varA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span> <span class="op">/</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">corA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
@@ -176,7 +182,7 @@ with <code>n</code> or <code>p</code> to determine the number of removed colonie
 <span class="r-in"><span><span class="va">droneGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA</a></span><span class="op">(</span><span class="va">drones</span>, n <span class="op">=</span> <span class="fl">10</span>, nDrones <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'basePop' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span></span>

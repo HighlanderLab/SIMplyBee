@@ -98,7 +98,7 @@
         </td>
         <td><p>Honeybee colony</p></td>
       </tr><tr><td>
-          <p><code><a href="MultiColony-class.html">isMultiColony()</a></code> <code><a href="MultiColony-class.html">show(<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">c(<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">c(<i>&lt;MultiColonyOrNULL&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogical&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;character&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogical&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;character&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[&lt;-`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogicalOrCharacter&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[&lt;-`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogicalOrCharacter&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;Colony&gt;</i>)</a></code> </p>
+          <p><code><a href="MultiColony-class.html">isMultiColony()</a></code> <code><a href="MultiColony-class.html">show(<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">c(<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">c(<i>&lt;MultiColonyOrNULL&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogical&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;character&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogical&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;character&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[&lt;-`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogicalOrCharacter&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[&lt;-`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogicalOrCharacter&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;Colony&gt;</i>)</a></code> </p>
         </td>
         <td><p>Honeybee multicolony object</p></td>
       </tr><tr><td>
@@ -145,6 +145,10 @@
           <p><code><a href="getId.html">getId()</a></code> </p>
         </td>
         <td><p>Get the colony ID</p></td>
+      </tr><tr><td>
+          <p><code><a href="rcircle.html">rcircle()</a></code> </p>
+        </td>
+        <td><p>Sample random points within a circle</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h3 id="events">Events <a href="#events" class="anchor" aria-hidden="true"></a></h3>
           <p class="section-desc"></p>
@@ -328,7 +332,7 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="isCaste.html">isCaste()</a></code> <code><a href="isCaste.html">isQueen()</a></code> <code><a href="isCaste.html">isFather()</a></code> <code><a href="isCaste.html">isWorker()</a></code> <code><a href="isCaste.html">isDrone()</a></code> <code><a href="isCaste.html">isVirginQueen()</a></code> </p>
+          <p><code><a href="isCaste.html">isCaste()</a></code> <code><a href="isCaste.html">isQueen()</a></code> <code><a href="isCaste.html">isFather()</a></code> <code><a href="isCaste.html">isWorker()</a></code> <code><a href="isCaste.html">isDrone()</a></code> <code><a href="isCaste.html">isVirginQueens()</a></code> <code><a href="isCaste.html">isVirginQueen()</a></code> </p>
         </td>
         <td><p>Is individual a member of a specific caste</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
@@ -352,7 +356,7 @@
         </td>
         <td><p>Are drones present</p></td>
       </tr><tr><td>
-          <p><code><a href="isVirginQueensPresent.html">isVirginQueensPresent()</a></code> <code><a href="isVirginQueensPresent.html">areVirginQueensPresent()</a></code> </p>
+          <p><code><a href="isVirginQueensPresent.html">isVirginQueensPresent()</a></code> <code><a href="isVirginQueensPresent.html">isVirginQueenPresent()</a></code> <code><a href="isVirginQueensPresent.html">areVirginQueensPresent()</a></code> </p>
         </td>
         <td><p>Are virgin queen(s) present</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
@@ -369,7 +373,7 @@
         <td><p>Check whether a population, colony or a multicolony
   object has no individuals within</p></td>
       </tr><tr><td>
-          <p><code><a href="MultiColony-class.html">isMultiColony()</a></code> <code><a href="MultiColony-class.html">show(<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">c(<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">c(<i>&lt;MultiColonyOrNULL&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogical&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;character&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogical&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;character&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[&lt;-`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogicalOrCharacter&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[&lt;-`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogicalOrCharacter&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;Colony&gt;</i>)</a></code> </p>
+          <p><code><a href="MultiColony-class.html">isMultiColony()</a></code> <code><a href="MultiColony-class.html">show(<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">c(<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">c(<i>&lt;MultiColonyOrNULL&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogical&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;character&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;ANY&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogical&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[`(<i>&lt;MultiColony&gt;</i>,<i>&lt;character&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[&lt;-`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogicalOrCharacter&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;MultiColony&gt;</i>)</a></code> <code><a href="MultiColony-class.html">`[[&lt;-`(<i>&lt;MultiColony&gt;</i>,<i>&lt;integerOrNumericOrLogicalOrCharacter&gt;</i>,<i>&lt;ANY&gt;</i>,<i>&lt;Colony&gt;</i>)</a></code> </p>
         </td>
         <td><p>Honeybee multicolony object</p></td>
       </tr><tr><td>
@@ -604,10 +608,9 @@
         </td>
         <td><p>Create a DCA of drones at a mating stations</p></td>
       </tr><tr><td>
-          <p><code><a href="createRandomCrossPlan.html">createRandomCrossPlan()</a></code> </p>
+          <p><code><a href="createCrossPlan.html">createCrossPlan()</a></code> </p>
         </td>
-        <td><p>Create a cross plan by randomly sampling drones for each queen
-  from a drone population</p></td>
+        <td><p>Create a plan for crossing virgin queens</p></td>
       </tr><tr><td>
           <p><code><a href="mapCasteToColonyValue.html">mapCasteToColonyValue()</a></code> <code><a href="mapCasteToColonyValue.html">mapCasteToColonyPheno()</a></code> <code><a href="mapCasteToColonyValue.html">mapCasteToColonyGv()</a></code> <code><a href="mapCasteToColonyValue.html">mapCasteToColonyBv()</a></code> <code><a href="mapCasteToColonyValue.html">mapCasteToColonyDd()</a></code> <code><a href="mapCasteToColonyValue.html">mapCasteToColonyAa()</a></code> </p>
         </td>

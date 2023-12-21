@@ -134,6 +134,8 @@ parameters,</p></li>
 <li><p>colony structure, and</p></li>
 <li><p>complementary sex determining (<em>CSD</em>) locus.</p></li>
 </ol>
+<p>Further topics about honeybee biology, such as colony events,
+reproduction, and other aspects, are covered in other vignettes.</p>
 <p>First, you need to install the package with
 <code>install.packages(pkg = "SIMplyBee")</code>.</p>
 <p>Now load the package and dive in! You load the package by
@@ -161,7 +163,7 @@ demographic history. This is equivalent to all loci having allele
 frequency 0.5 and being in linkage equilibrium. We use this approach
 only for demonstrations and testing.</p>
 <p>Alternatively, you can more accurately simulate honeybee genomes with
-SIMplyBee’s <code>simulateHoneybeeGenomes()</code>. This function
+SIMplyBee’s <code><a href="../reference/simulateHoneyBeeGenomes.html">simulateHoneyBeeGenomes()</a></code>. This function
 simulates the honeybee genome using MaCS (Chen et al., 2009) for three
 subspecies: <em>A. m. ligustica</em>, <em>A. m. carnica</em>, and <em>A.
 m. mellifera</em> according to the demographic model described by
@@ -174,7 +176,7 @@ more segregating sites per chromosome, but we want a quick simulation
 here.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/quickHaplo.html" class="external-link">quickHaplo</a></span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">2</span>, nChr <span class="op">=</span> <span class="fl">3</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
-<p>Alternatively, we use <code>simulateHoneybeeGenomes()</code> to
+<p>Alternatively, we use <code><a href="../reference/simulateHoneyBeeGenomes.html">simulateHoneyBeeGenomes()</a></code> to
 sample genomes of a founder population including 4 <em>A. m.
 mellifera</em> (North) individuals and 2 <em>A. m. carnica</em>
 individuals. The genomes will be represented by only three chromosomes
@@ -193,9 +195,12 @@ to run. We suggest running this part to an external server and save the
 outcome as an RData file, which we can load in our environment and work
 with it.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">founderGenomes2</span>, file<span class="op">=</span><span class="st">"FounderGenomes2_3chr.RData"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Save the genomes on a server</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">founderGenomes2</span>, file <span class="op">=</span> <span class="st">"FounderGenomes2_3chr.RData"</span><span class="op">)</span></span>
+<span><span class="co"># Loade the saved genomes elsewhere</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"FounderGenomes2_3chr.RData"</span><span class="op">)</span></span></code></pre></div>
 <p>Besides specifying the number of individuals, chromosomes, and
-segregating sites, <code>simulateHoneybeeGenomes()</code>, also takes a
+segregating sites, <code><a href="../reference/simulateHoneyBeeGenomes.html">simulateHoneyBeeGenomes()</a></code>, also takes a
 number of genomic parameters: effective population size, ploidy, length
 of chromosomes in base pairs, genetic length of a chromosome in Morgans,
 mutation rate, recombination rate, and time of population splits. The
@@ -203,9 +208,8 @@ default values for these numbers follow published references (Wallberg
 et al., 2014). While you can change these parameters, we don’t advise
 doing this because such demographic models, and their parameters, are
 estimated jointly, so we should not be changing them independently. You
-can read more about these parameters in the help page:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">?</span><span class="op">?</span><span class="va">simulateHoneybeeGenomes</span></span></code></pre></div>
+can read more about these parameters in the help page
+<code><a href="../reference/simulateHoneyBeeGenomes.html">help(simulateHoneyBeeGenomes)</a></code>.</p>
 <p>Now we are ready to setup global simulation parameters using
 <code>SimParamBee</code>. <code>SimParamBee</code> builds upon
 AlphaSimR’s <code>SimParam</code>, which includes genome and trait
@@ -243,17 +247,17 @@ chromosomes, the <em>CSD</em> is placed on chromosome 1;</li>
 (<code><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html" class="external-link">help(SimParam)</a></code> and <code><a href="../reference/SimParamBee.html">help(SimParamBee)</a></code>).</p>
 <p>Below we use set the number of <em>CSD</em> alleles and default
 number of workers and drones in a colony:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span>, nCsdAlleles <span class="op">=</span> <span class="fl">32</span><span class="op">)</span></span>
 <span><span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">SP</span><span class="op">$</span><span class="va">nDrones</span> <span class="op">&lt;-</span> <span class="fl">10</span></span></code></pre></div>
 <p>After creating the <code>SimParamBee</code> object, you can inspect
 it! This returns a lot of output and we suggest you return back to this
 point once you are comfortable with the basic functionality!</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">SP</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="../reference/figures/founderpop.png" alt="Simulation initiation." width="100%"><p class="caption">
+<img src="../articles/founderpop.png" alt="Simulation initiation." width="100%"><p class="caption">
 Simulation initiation.
 </p>
 </div>
@@ -276,7 +280,7 @@ and <code>FALSE</code> is it is not. These functions check the caste
 information in the <code>SP$caste</code>. Here, we use
 <code><a href="../reference/isCaste.html">isVirginQueen()</a></code> to check whether our base population
 individuals are virgin queens.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">baseQueens</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
 <span><span class="va">baseQueens</span></span>
 <span><span class="co">#&gt; An object of class "Pop" </span></span>
@@ -297,7 +301,7 @@ both with virgin queens or colonies (we will present colonies in the
 next section). You can use more than one virgin queen to create the
 drones or even an entire drone congregation area (DCA) with as many
 drones per virgin queen as you want (<code>nInd</code>).</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">baseDrones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">baseQueens</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
 <span><span class="va">baseDrones</span></span>
 <span><span class="co">#&gt; An object of class "Pop" </span></span>
@@ -331,12 +335,12 @@ size and has not swarmed. The production is turned off when a colony
 downsizes, collapses, or swarms, and for the split of a split colony.
 You will learn about these colony events in the Colony events
 vignette.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">baseQueens</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">colony</span></span>
 <span><span class="co">#&gt; An object of class "Colony" </span></span>
 <span><span class="co">#&gt; Id: 1 </span></span>
-<span><span class="co">#&gt; Location: </span></span>
+<span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: NA </span></span>
 <span><span class="co">#&gt; Number of fathers: 0 </span></span>
 <span><span class="co">#&gt; Number of workers: 0 </span></span>
@@ -357,12 +361,12 @@ events vignette) and the colony is not productive, since it does not
 include any individuals.</p>
 <p>Let’s now mate our virgin queen, so that she is promoted to a queen
 and can start laying eggs of her own workers and drones.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony</span>, drones <span class="op">=</span> <span class="va">baseDrones</span><span class="op">)</span></span>
 <span><span class="va">colony</span></span>
 <span><span class="co">#&gt; An object of class "Colony" </span></span>
 <span><span class="co">#&gt; Id: 1 </span></span>
-<span><span class="co">#&gt; Location: </span></span>
+<span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: 2 </span></span>
 <span><span class="co">#&gt; Number of fathers: 15 </span></span>
 <span><span class="co">#&gt; Number of workers: 0 </span></span>
@@ -385,11 +389,11 @@ numbers from the <code>SimParamBee</code> object
 also always turns the <code>production</code> status to
 <code>TRUE</code>, since it assumes we are building the colony up to its
 full-size.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">colony</span>, nWorkers <span class="op">=</span> <span class="fl">10</span>, nDrones <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class "Colony" </span></span>
 <span><span class="co">#&gt; Id: 1 </span></span>
-<span><span class="co">#&gt; Location: </span></span>
+<span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: 2 </span></span>
 <span><span class="co">#&gt; Number of fathers: 15 </span></span>
 <span><span class="co">#&gt; Number of workers: 10 </span></span>
@@ -403,7 +407,7 @@ full-size.</p>
 <span><span class="fu"><a href="../reference/buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class "Colony" </span></span>
 <span><span class="co">#&gt; Id: 1 </span></span>
-<span><span class="co">#&gt; Location: </span></span>
+<span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: 2 </span></span>
 <span><span class="co">#&gt; Number of fathers: 15 </span></span>
 <span><span class="co">#&gt; Number of workers: 100 </span></span>
@@ -416,12 +420,12 @@ full-size.</p>
 <span><span class="co">#&gt; Is productive: TRUE</span></span></code></pre></div>
 <p>All the functions in SIMplyBee return objects, hence we need to save
 them as an object, otherwise they are lost.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span><span class="va">colony</span></span>
 <span><span class="co">#&gt; An object of class "Colony" </span></span>
 <span><span class="co">#&gt; Id: 1 </span></span>
-<span><span class="co">#&gt; Location: </span></span>
+<span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: 2 </span></span>
 <span><span class="co">#&gt; Number of fathers: 15 </span></span>
 <span><span class="co">#&gt; Number of workers: 100 </span></span>
@@ -449,26 +453,26 @@ in each caste, where <code>*</code> is <code>queen</code>,
 <code>fathers</code>, <code>workers</code>, <code>drones</code>, and
 <code>virginQueens</code>. Let’s count how many individuals we have for
 each caste in our colony.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nCaste.html">nQueens</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 15</span></span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nCaste.html">nWorkers</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 100</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nCaste.html">nDrones</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nCaste.html">nVirginQueens</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span></code></pre></div>
 <p>Next, we can access the individuals of each caste with
 <code>get*()</code> functions. These functions leave the colony and its
 members intact (they do not change the colony) by copying the
 individuals.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">queen</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCastePop.html">getQueen</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class "Pop" </span></span>
 <span><span class="co">#&gt; Ploidy: 2 </span></span>
@@ -476,7 +480,7 @@ individuals.</p>
 <span><span class="co">#&gt; Chromosomes: 3 </span></span>
 <span><span class="co">#&gt; Loci: 300 </span></span>
 <span><span class="co">#&gt; Traits: 0</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">fathers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCastePop.html">getFathers</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class "Pop" </span></span>
 <span><span class="co">#&gt; Ploidy: 2 </span></span>
@@ -484,7 +488,7 @@ individuals.</p>
 <span><span class="co">#&gt; Chromosomes: 3 </span></span>
 <span><span class="co">#&gt; Loci: 300 </span></span>
 <span><span class="co">#&gt; Traits: 0</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">workers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCastePop.html">getWorkers</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class "Pop" </span></span>
 <span><span class="co">#&gt; Ploidy: 2 </span></span>
@@ -492,7 +496,7 @@ individuals.</p>
 <span><span class="co">#&gt; Chromosomes: 3 </span></span>
 <span><span class="co">#&gt; Loci: 300 </span></span>
 <span><span class="co">#&gt; Traits: 0</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">drones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCastePop.html">getDrones</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class "Pop" </span></span>
 <span><span class="co">#&gt; Ploidy: 2 </span></span>
@@ -500,7 +504,7 @@ individuals.</p>
 <span><span class="co">#&gt; Chromosomes: 3 </span></span>
 <span><span class="co">#&gt; Loci: 300 </span></span>
 <span><span class="co">#&gt; Traits: 0</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">virginQueens</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCastePop.html">getVirginQueens</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p>As you see above, there are no virgin queens present in the colony at
@@ -511,13 +515,13 @@ have a look at <code>pull*()</code> functions. These functions return a
 list of objects: <code>pulled</code> being the pulled individuals
 (<code>Pop</code> object), and <code>remnant</code> being the remaining
 colony without the pulled individuals.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pullCastePop.html">pullWorkers</a></span><span class="op">(</span><span class="va">colony</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">$</span><span class="va">remnant</span></span>
 <span><span class="va">colony</span></span>
 <span><span class="co">#&gt; An object of class "Colony" </span></span>
 <span><span class="co">#&gt; Id: 1 </span></span>
-<span><span class="co">#&gt; Location: </span></span>
+<span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: 2 </span></span>
 <span><span class="co">#&gt; Number of fathers: 15 </span></span>
 <span><span class="co">#&gt; Number of workers: 90 </span></span>
@@ -528,7 +532,7 @@ colony without the pulled individuals.</p>
 <span><span class="co">#&gt; Has superseded: FALSE </span></span>
 <span><span class="co">#&gt; Has collapsed: FALSE </span></span>
 <span><span class="co">#&gt; Is productive: TRUE</span></span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pulledWorkers</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">$</span><span class="va">pulled</span></span>
 <span><span class="va">pulledWorkers</span></span>
 <span><span class="co">#&gt; An object of class "Pop" </span></span>
@@ -542,10 +546,10 @@ colony without the pulled individuals.</p>
 group of functions are the <code>is*()</code> functions that check
 whether an individual is of specific caste. Let’s now obtain the caste
 of colony members:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getCaste.html">getCaste</a></span><span class="op">(</span><span class="va">queen</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "queen"</span></span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getCaste.html">getCaste</a></span><span class="op">(</span><span class="va">fathers</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "fathers" "fathers" "fathers" "fathers" "fathers" "fathers" "fathers"</span></span>
 <span><span class="co">#&gt;  [8] "fathers" "fathers" "fathers" "fathers" "fathers" "fathers" "fathers"</span></span>
@@ -553,7 +557,7 @@ of colony members:</p>
 <p>and so on. When you have a collection of bees at hand and you might
 not know their source, the <code><a href="../reference/getCaste.html">getCaste()</a></code> can be very
 useful:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bees</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">queen</span>, <span class="va">fathers</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">workers</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">drones</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/getCaste.html">getCaste</a></span><span class="op">(</span><span class="va">bees</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "queen"   "fathers" "fathers" "workers" "workers" "drones"  "drones"</span></span></code></pre></div>
@@ -580,7 +584,7 @@ functions that can be applied either on the queen (<code>Pop</code>
 class) or colony (<code>Colony</code> class) directly. You can obtain
 the entire <code>misc</code> slot with the <code><a href="https://gaynorr.github.io/AlphaSimR/reference/getMisc.html" class="external-link">getMisc()</a></code>
 function.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/getMisc.html" class="external-link">getMisc</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCastePop.html">getQueen</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [[1]]$fathers</span></span>
@@ -618,17 +622,17 @@ shows haplotype identifications (individual_haplotype). The alleles are
 represented with a sequence of 0’s and 1’s. You can see that the two
 sequences are different, meaning that the queen is heterozygous, as
 expected.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getCsdAlleles.html">getCsdAlleles</a></span><span class="op">(</span><span class="va">queen</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 2_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 2_2    1    1    0    1    0</span></span></code></pre></div>
+<span><span class="co">#&gt; 2_1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; 2_2    0    0    1    0    0</span></span></code></pre></div>
 <p>A keen geneticist would immediately inspect <em>CSD</em> alleles of
 fathers to check for any similarity with the queen’s <em>CSD</em>
 alleles. Let’s boost a chance of such an event by creating an inbreed
 colony. We will create a virgin queen from the current colony and mate
 her with her brothers. Oh, dear.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">inbredColony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="../reference/createCastePop.html">createVirginQueens</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">colony</span>, nInd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">fathers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/selectInd.html" class="external-link">selectInd</a></span><span class="op">(</span><span class="va">drones</span>, nInd <span class="op">=</span> <span class="va">SP</span><span class="op">$</span><span class="va">nFathers</span>, use <span class="op">=</span> <span class="st">"rand"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in selectInd(drones, nInd = SP$nFathers, use = "rand"): Suitable</span></span>
@@ -637,21 +641,21 @@ her with her brothers. Oh, dear.</p>
 <span><span class="fu"><a href="../reference/getCsdAlleles.html">getCsdAlleles</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $queen</span></span>
 <span><span class="co">#&gt;       3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 255_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 255_2    1    1    1    0    0</span></span>
+<span><span class="co">#&gt; 255_1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; 255_2    0    0    0    1    1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $fathers</span></span>
 <span><span class="co">#&gt;       3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 247_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 251_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 250_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 245_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 249_1    1    1    0    1    0</span></span>
-<span><span class="co">#&gt; 248_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 253_1    1    1    0    1    0</span></span>
-<span><span class="co">#&gt; 252_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 246_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 254_1    0    0    1    1    0</span></span>
+<span><span class="co">#&gt; 254_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 249_1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; 252_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 245_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 250_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 246_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 247_1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; 251_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 248_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 253_1    0    0    1    0    0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $workers</span></span>
 <span><span class="co">#&gt; NULL</span></span>
@@ -664,13 +668,13 @@ her with her brothers. Oh, dear.</p>
 <span><span class="fu"><a href="../reference/getCsdAlleles.html">getCsdAlleles</a></span><span class="op">(</span><span class="va">inbredColony</span>, unique <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $queen</span></span>
 <span><span class="co">#&gt;       3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 255_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 255_2    1    1    1    0    0</span></span>
+<span><span class="co">#&gt; 255_1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; 255_2    0    0    0    1    1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $fathers</span></span>
 <span><span class="co">#&gt;       3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 245_1    0    0    1    1    0</span></span>
-<span><span class="co">#&gt; 253_1    1    1    0    1    0</span></span>
+<span><span class="co">#&gt; 253_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 247_1    1    1    1    1    1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $workers</span></span>
 <span><span class="co">#&gt; NULL</span></span>
@@ -682,21 +686,43 @@ her with her brothers. Oh, dear.</p>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p>Can you spot any matches? Let’s calculate the expected proportion of
 homozygous brood from this mating.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/calcQueensPHomBrood.html">pHomBrood</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.4</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.1</span></span></code></pre></div>
 <p>Let’s see how many homozygotes will we observe. Note that inheritance
 is a random process, so a realised number of homozygotes will deviate
 from the expected proportion.</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">inbredColony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addCastePop.html">addWorkers</a></span><span class="op">(</span><span class="va">inbredColony</span>, nInd <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">inbredColony</span></span>
+<span><span class="co">#&gt; An object of class "Colony" </span></span>
+<span><span class="co">#&gt; Id: 2 </span></span>
+<span><span class="co">#&gt; Location: 0 0 </span></span>
+<span><span class="co">#&gt; Queen: 255 </span></span>
+<span><span class="co">#&gt; Number of fathers: 10 </span></span>
+<span><span class="co">#&gt; Number of workers: 94 </span></span>
+<span><span class="co">#&gt; Number of drones: 0 </span></span>
+<span><span class="co">#&gt; Number of virgin queens: 0 </span></span>
+<span><span class="co">#&gt; Has split: FALSE </span></span>
+<span><span class="co">#&gt; Has swarmed: FALSE </span></span>
+<span><span class="co">#&gt; Has superseded: FALSE </span></span>
+<span><span class="co">#&gt; Has collapsed: FALSE </span></span>
+<span><span class="co">#&gt; Is productive: FALSE</span></span>
+<span><span class="fu"><a href="../reference/calcQueensPHomBrood.html">nHomBrood</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
+<p>We tried adding 100 workers, but we only got 94. The difference of 6
+is due to <em>CSD</em> homozygous brood. Let’s add another set of
+workers to show variation in the realised numbers and accumulation of
+information.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">inbredColony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addCastePop.html">addWorkers</a></span><span class="op">(</span><span class="va">inbredColony</span>, nInd <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">inbredColony</span></span>
 <span><span class="co">#&gt; An object of class "Colony" </span></span>
 <span><span class="co">#&gt; Id: 2 </span></span>
-<span><span class="co">#&gt; Location: </span></span>
+<span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: 255 </span></span>
 <span><span class="co">#&gt; Number of fathers: 10 </span></span>
-<span><span class="co">#&gt; Number of workers: 63 </span></span>
+<span><span class="co">#&gt; Number of workers: 179 </span></span>
 <span><span class="co">#&gt; Number of drones: 0 </span></span>
 <span><span class="co">#&gt; Number of virgin queens: 0 </span></span>
 <span><span class="co">#&gt; Has split: FALSE </span></span>
@@ -705,35 +731,13 @@ from the expected proportion.</p>
 <span><span class="co">#&gt; Has collapsed: FALSE </span></span>
 <span><span class="co">#&gt; Is productive: FALSE</span></span>
 <span><span class="fu"><a href="../reference/calcQueensPHomBrood.html">nHomBrood</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 37</span></span></code></pre></div>
-<p>We tried adding 100 workers, but we only got 63. The difference of 37
-is due to <em>CSD</em> homozygous brood. Let’s add another set of
-workers to show variation in the realised numbers and accumulation of
-information.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">inbredColony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addCastePop.html">addWorkers</a></span><span class="op">(</span><span class="va">inbredColony</span>, nInd <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">inbredColony</span></span>
-<span><span class="co">#&gt; An object of class "Colony" </span></span>
-<span><span class="co">#&gt; Id: 2 </span></span>
-<span><span class="co">#&gt; Location: </span></span>
-<span><span class="co">#&gt; Queen: 255 </span></span>
-<span><span class="co">#&gt; Number of fathers: 10 </span></span>
-<span><span class="co">#&gt; Number of workers: 123 </span></span>
-<span><span class="co">#&gt; Number of drones: 0 </span></span>
-<span><span class="co">#&gt; Number of virgin queens: 0 </span></span>
-<span><span class="co">#&gt; Has split: FALSE </span></span>
-<span><span class="co">#&gt; Has swarmed: FALSE </span></span>
-<span><span class="co">#&gt; Has superseded: FALSE </span></span>
-<span><span class="co">#&gt; Has collapsed: FALSE </span></span>
-<span><span class="co">#&gt; Is productive: FALSE</span></span>
-<span><span class="fu"><a href="../reference/calcQueensPHomBrood.html">nHomBrood</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 77</span></span></code></pre></div>
-<p>In total we tried adding 200 workers. We got 123 workers and 77
+<span><span class="co">#&gt; [1] 21</span></span></code></pre></div>
+<p>In total we tried adding 200 workers. We got 179 workers and 21
 homozygous brood. To see all this information, we can inspect the
 miscellaneous slot of the queen that contains the fathers population as
 well as the cumulative number of workers, drones, homozygous brood, and
 the expected proportion of homozygous brood.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/getMisc.html" class="external-link">getMisc</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCastePop.html">getQueen</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [[1]]$fathers</span></span>
@@ -745,16 +749,16 @@ the expected proportion of homozygous brood.</p>
 <span><span class="co">#&gt; Traits: 0 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$nWorkers</span></span>
-<span><span class="co">#&gt; [1] 123</span></span>
+<span><span class="co">#&gt; [1] 179</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$nDrones</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$nHomBrood</span></span>
-<span><span class="co">#&gt; [1] 77</span></span>
+<span><span class="co">#&gt; [1] 21</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$pHomBrood</span></span>
-<span><span class="co">#&gt; [1] 0.4</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

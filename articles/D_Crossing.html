@@ -125,16 +125,113 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette shows how you can cross virgin queens in SIMplyBee.
-Here, we present how you can cross:</p>
+<p>Crossing the queen is the most complicated action in SIMplyBee, since
+mating of honeybees is versatile. Virgin queens can be mated in a
+controlled manner, either using artificial insemination or a mating
+station, or uncontrolled in an open mating setting. In the latter case,
+the mating depends on the distance between the virgin queens and the
+drones or drone producing colonies.</p>
+<p>In this vignette, we first explain five ways of mating virgin queens
+and at the end we describe two special cases of mating virgin queens on
+a mating station and mating multiple virgin queens in different
+ways.</p>
+<div class="figure">
+<img src="../articles/decisionTreeCrossing.png" alt="Crossing decision tree" width="90%"><p class="caption">
+Crossing decision tree
+</p>
+</div>
+<p>To facilitate the understanding of the crossing function and choosing
+the correct option for your need, we created a diagram with a decision
+tree following the questions:</p>
+<ol style="list-style-type: decimal">
+<li>How many virgin queens/colonies are you mating?</li>
+</ol>
 <ul>
-<li>single or multiple virgin queens (class <code>Pop</code>), virgin
-queen in a colony (class <code>Colony</code>), or all the virgin queens
-in an apiary or population (class <code>MultiColony</code>);</li>
-<li>cross either with pre-selected population of drones or according to
-a cross plan, and</li>
-<li>cross queens at an open drone congregation area (DCA) or at a mating
-station.</li>
+<li>
+<strong>one virgin queen</strong> (Pop-class with one individual) or
+one virgin colony (Colony-class or MultiColony-class with a single
+colony). This is marked as <strong>option 1</strong> on the diagram. For
+this, you need to provide the females as either <code>Pop</code>,
+<code>Colony</code>, <code>MultiColony</code> class and males as a
+single <code>Pop</code> class object.</li>
+<li>
+<strong>multiple virgin queens</strong> (Pop-class with multiple
+individuals) or multiple virgin colonies (MultiColony-class with
+multiple colonies). Continue to question 2.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>If you are mating <strong>multiple virgin queens/colonies</strong>,
+do you want to:</li>
+</ol>
+<ul>
+<li>cross with <strong>drone packages</strong>, that is pre-prepared
+populations of drones for each queen? You probably want to use this if
+you want more control over the drones that mate with each queen, such as
+in artificial insemination. This crossing option is suitable when mating
+a smaller number of virgin queens since it is computationally not the
+most efficient. For this option, you need to provide the females as
+either <code>Pop</code>, <code>Colony</code>, <code>MultiColony</code>
+class and males as a list of <code>Pop</code> class object - one for
+each virgin queen/colony.</li>
+<li>cross <strong>according to a cross plan</strong>. This option is the
+recommended option when mating a larger number of virgin
+queens/colonies. Continue to question
+<ol start="3" style="list-style-type: decimal">
+<li>
+</ol>
+</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>When mating <strong>according to a cross plan</strong>, you can
+either:</li>
+</ol>
+<ul>
+<li>
+<strong>provide a cross plan</strong>, which is a list where the
+list names are either virgin queens’ or virgin colonies IDs and the
+content for each virgin queen/colony is either
+<ul>
+<li>the IDs drones she will mate with; in this case, you also have to
+provide <code>drones</code> argument as a single <code>Pop</code> class
+that represents the DCA with all the drones;</li>
+<li>the IDs of the drone producing colonies that she will mate with; in
+this case, you also have to provide the <code>droneColonies</code>
+argument as a <code>MultiColony</code> class with all drone producing
+colonies. You probably want to use this option when you are simulating
+an existing pedigree or trying to have more control over mating for a
+larger number of queens, such as on a mating stations. You can also use
+an auxiliary function <code><a href="../reference/createCrossPlan.html">createCrossPlan()</a></code> to create the cross
+plan, but in this case, you probably want to move to question 4.</li>
+</ul>
+</li>
+<li>
+<strong>create the cross plan internally</strong>, either by
+sampling the drones or drone producing colonies randomly or spatially.
+Continue to question 4.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>When mating <strong>according to an internally created cross
+plan</strong>, you can either:</li>
+</ol>
+<ul>
+<li>cross according to a <strong>random cross plan</strong>, where the
+mates for mating are sampled randomly. For this, you need to provide the
+females as either <code>Pop</code>, <code>Colony</code>,
+<code>MultiColony</code> class and males either through the
+<code>drones</code> argument as a <code>Pop</code> class object, or
+through the <code>droneColonies</code> argument as a
+<code>MultiColony</code> class object. You probably want to use this
+option if you are not concerned with spatial simulation or are
+simulation a small area with a single DCA. You can also use this option
+to mate virgin queens on a mating station in combination with the
+<code>createMatingStationsDCA()</code> function.</li>
+<li>cross according to a <strong>spatial cross plan</strong>, where the
+mates for mating are sampled according to their geographic location in a
+set radius. For this, you need to provide both females and males as
+<code>MultiColony</code> objects with <strong>the location set</strong>,
+hence males have to be provided through the <code>droneColonies</code>
+argument. You probably want to use this option when simulating realistic
+breeding programs and populations.</li>
 </ul>
 <p>Start by loading the package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -145,12 +242,15 @@ station.</li>
 <span><span class="co">#&gt; Attaching package: 'SIMplyBee'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     split</span></span></code></pre></div>
-<p>First, we create a founder population and some virgin queen, virgin
-colonies, and virgin apiaries that we will later cross.</p>
+<span><span class="co">#&gt;     split</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"ggplot2"</span><span class="op">)</span></span></code></pre></div>
+<p>First, we create a founder population and some virgin queen and
+virgin colonies for crossing. We will also create four
+<code>MultiColony</code> objects that will represent colonies from four
+different beekeepers.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Simulate 40 founder genomes</span></span>
-<span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/quickHaplo.html" class="external-link">quickHaplo</a></span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">50</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/quickHaplo.html" class="external-link">quickHaplo</a></span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">60</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="co"># Set global population paramaters</span></span>
 <span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
 <span><span class="co"># Create a base population of 40 virgin queens</span></span>
@@ -158,22 +258,16 @@ colonies, and virgin apiaries that we will later cross.</p>
 <span></span>
 <span><span class="co"># Prepare populations with a single virgin queen</span></span>
 <span><span class="va">virginQueen1</span> <span class="op">&lt;-</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="va">virginQueen2</span> <span class="op">&lt;-</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
-<span><span class="va">virginQueen3</span> <span class="op">&lt;-</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="co"># Prepare populations with multiple virgin queens</span></span>
-<span><span class="va">virginQueens1</span> <span class="op">&lt;-</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span>
-<span><span class="va">virginQueens2</span> <span class="op">&lt;-</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span></span>
-<span><span class="va">virginQueens3</span> <span class="op">&lt;-</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">10</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span></span>
-<span><span class="co"># Prepare virgin Colony objects</span></span>
-<span><span class="va">colony1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">13</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">colony2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">14</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">colony3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">15</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">colony4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">16</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">virginQueens1</span> <span class="op">&lt;-</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span><span class="co"># Prepare virgin MultiColony objects</span></span>
-<span><span class="va">apiary1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">17</span><span class="op">:</span><span class="fl">21</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">apiary2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">22</span><span class="op">:</span><span class="fl">26</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">apiary3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">27</span><span class="op">:</span><span class="fl">31</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">apiary4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">32</span><span class="op">:</span><span class="fl">41</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">beekeeper1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">11</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">beekeeper2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">12</span><span class="op">:</span><span class="fl">16</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">beekeeper3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">17</span><span class="op">:</span><span class="fl">21</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">beekeeper4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">22</span><span class="op">:</span><span class="fl">31</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">beekeeper5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">32</span><span class="op">:</span><span class="fl">40</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">beekeeper6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">41</span><span class="op">:</span><span class="fl">50</span><span class="op">]</span><span class="op">)</span> </span>
+<span><span class="va">beekeeper7</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">51</span><span class="op">:</span><span class="fl">60</span><span class="op">]</span><span class="op">)</span> </span></code></pre></div>
 <p>We will now create a groups of drones from the remaining queens with
 1,000 drones per queen that will represent a drone congregation area
 (DCA).</p>
@@ -182,13 +276,35 @@ colonies, and virgin apiaries that we will later cross.</p>
 <span><span class="va">DCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">42</span><span class="op">:</span><span class="fl">50</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="cross-virgin-queens-at-an-open-dca">Cross virgin queens at an open DCA<a class="anchor" aria-label="anchor" href="#cross-virgin-queens-at-an-open-dca"></a>
+<h2 id="option-1-cross-a-single-virgin-queencolony">Option 1: Cross a single virgin queen/colony<a class="anchor" aria-label="anchor" href="#option-1-cross-a-single-virgin-queencolony"></a>
 </h2>
-<div class="section level3">
-<h3 id="cross-by-pre-selecting-drone-populations">Cross by pre-selecting drone populations<a class="anchor" aria-label="anchor" href="#cross-by-pre-selecting-drone-populations"></a>
-</h3>
-<p>We start by crossing our populations and colonies to pre-selected
-populations of drones. We pre-select the groups by pulling a desired
+<p>We start by crossing a single virgin queen that can be provided
+either in a <code>Pop</code>, <code>Colony</code>, or
+<code>MultiColony</code> objects. In this case, you just need to provide
+a <code>Pop</code> of drones she will mate with. Note that no sampling
+is applied to the drones! Hence, if you provide a <code>Pop</code> with
+100 drones, she will be mated to 100 drones!</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Samples some drone for mating from the DCA</span></span>
+<span><span class="va">drones</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/selectInd.html" class="external-link">selectInd</a></span><span class="op">(</span><span class="va">DCA</span>, nInd <span class="op">=</span> <span class="fl">10</span>, use <span class="op">=</span> <span class="st">"rand"</span><span class="op">)</span></span>
+<span><span class="co"># Mate the virgin queen with the drones</span></span>
+<span><span class="va">queen1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">virginQueen1</span>, drones <span class="op">=</span> <span class="va">drones</span><span class="op">)</span></span>
+<span><span class="co"># Check the number of fathers for the queen</span></span>
+<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">queen1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
+<p>The above code shows an example for mating the virgin queen in a
+<code>Pop</code> object, but exact same holds for <code>Colony</code>
+and <code>MultiColony</code> objects with a single queen.</p>
+</div>
+<div class="section level2">
+<h2 id="option2-cross-with-drone-packages-pre-selecting-drone-populations">Option2: Cross with drone packages (pre-selecting drone
+populations)<a class="anchor" aria-label="anchor" href="#option2-cross-with-drone-packages-pre-selecting-drone-populations"></a>
+</h2>
+<p>We continue by crossing our virgin females to drone packages, that is
+a pre-selected populations of drones. We recommend this option when
+mating a larger number of queens, although it could be used for mating a
+single virgin queen/colony as well, and when you want more control over
+the drone selection. We pre-select the groups by pulling a desired
 number of drone packages from a DCA with the function
 <code><a href="../reference/pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA()</a></code>. This function requires you to
 specify a group of drones (<code>DCA</code>), how many groups you want
@@ -213,145 +329,247 @@ value 0.</li>
 own sampling function(s).</p>
 <p>We can pull the drone groups out separately for each crossing or pull
 them out all at once.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pre-select drone (father) populations from a DCA</span></span>
 <span><span class="va">droneGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA</a></span><span class="op">(</span><span class="va">DCA</span>, n <span class="op">=</span> <span class="fl">20</span>, nDrones <span class="op">=</span> <span class="va">nFathersTruncPoisson</span><span class="op">)</span></span></code></pre></div>
-<p>Once we inspect these drone groups, we see there is a different
-number of drones in each group because we used a sampling function:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">droneGroups</span>, FUN <span class="op">=</span> <span class="va">nInd</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 15 26 13 22 13 17 11 16 14 13 12 10 23 17 15 19 18 11 19 12</span></span></code></pre></div>
-<p>Now, we can cross our virgin queens to drone groups.</p>
+<p>There is a different number of drones in each group because we used a
+sampling function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># A single virgin queen</span></span>
-<span><span class="va">virginQueen1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">virginQueen1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">virginQueen1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 15</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">droneGroups</span>, FUN <span class="op">=</span> <span class="va">nInd</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] 14 17 18 15 15 18 14 20 23  8 22  8 17 23 14 15 16 15 14  8</span></span></code></pre></div>
+<p>Now, we can cross our virgin queens to drone groups.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Multiple virgin queens</span></span>
-<span><span class="va">virginQueens1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">virginQueens1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">virginQueens1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 26 13 22</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Pop-class with multiple queens</span></span>
+<span><span class="va">queens1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">virginQueens1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">queens1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 14 17 18</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># A colony</span></span>
-<span><span class="va">colony1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">colony1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 13</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># An apiary</span></span>
-<span><span class="va">apiary1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">apiary1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary1</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  5  6  7  8  9 </span></span>
-<span><span class="co">#&gt; 17 11 16 14 13</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="cross-according-to-a-cross-plan">Cross according to a cross plan<a class="anchor" aria-label="anchor" href="#cross-according-to-a-cross-plan"></a>
-</h3>
-<p>Another option is to provide a cross plan with IDs of the virgin
-queens/colonies and drones, and a single drone population with all the
-drones listed in the cross plan. You can create a cross plan with the
-function <code><a href="../reference/createRandomCrossPlan.html">createRandomCrossPlan()</a></code>. This function creates a
-cross plan by randomly sampling a desired number of drone IDs from a DCA
-and assigning them to either virgin queen ID or colony ID. When crossing
-a virgin queen from a colony, you have to provide the colony ID, since
-there could be multiple virgin queens within the colony. In that case,
-the random selection of one virgin queen occurs within the
-<code><a href="../reference/cross.html">cross()</a></code> function. To create a cross plan you therefore have
-to provide the IDs of either the virgin queens or the colonies you want
-to cross (but not both in the same cross plan!!!), the drone population,
-and the number of drones you want to cross to a particular virgin queen.
-This can again be a fixed number or a sampling function. We can create a
-separate cross plan for each mating or create one combined cross plan
-for multiple matings (but can not have virgin queen and colony IDs in
-the cross plan at the same time!!!). Here, we again mate a single virgin
-queen, a population of virgin queens, virgin queens from a colony, and
-from an apiary.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create a combined cross for mating a single queen (virginQueen2) and a population</span></span>
-<span><span class="co"># of virgin queen (virginQueens2)</span></span>
-<span><span class="op">(</span><span class="va">crossPlanQueens</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createRandomCrossPlan.html">createRandomCrossPlan</a></span><span class="op">(</span>IDs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">virginQueen2</span><span class="op">)</span>,</span>
-<span>                                                  <span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">virginQueens2</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                                         drones <span class="op">=</span> <span class="va">DCA</span>,</span>
-<span>                                         nDrones <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $`2`</span></span>
-<span><span class="co">#&gt;  [1] "7906" "2382" "1788" "1973" "7020" "5776" "7156" "2114" "2052" "7101"</span></span>
-<span><span class="co">#&gt; [11] "5958" "4097" "7724" "867"  "2866"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`7`</span></span>
-<span><span class="co">#&gt;  [1] "3625" "1442" "6283" "6910" "870"  "8219" "662"  "4177" "7934" "7139"</span></span>
-<span><span class="co">#&gt; [11] "5781" "8420" "3043" "1286" "8825"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`8`</span></span>
-<span><span class="co">#&gt;  [1] "2108" "2897" "3686" "6833" "2157" "2250" "709"  "4797" "1831" "1024"</span></span>
-<span><span class="co">#&gt; [11] "5716" "2046" "3518" "3898" "4140"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`9`</span></span>
-<span><span class="co">#&gt;  [1] "3516" "274"  "5579" "2131" "3563" "171"  "4811" "7913" "6755" "509" </span></span>
-<span><span class="co">#&gt; [11] "4987" "3899" "7930" "8762" "6040"</span></span></code></pre></div>
-<p>We see that the created cross plan is a list with IDs corresponding
-to the virgin queen’s IDs and the elements of each list being the IDs of
-the drones the virgin queen will mate with. Now we can cross these
-virgin queens by providing the <code>crossPlanQueens</code> to the
-<code><a href="../reference/cross.html">cross()</a></code> functions.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Cross a single virgin queen</span></span>
-<span><span class="va">virginQueen2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">virginQueen2</span>, drones <span class="op">=</span> <span class="va">DCA</span>, crossPlan <span class="op">=</span> <span class="va">crossPlanQueens</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">virginQueen2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 15</span></span>
-<span><span class="co"># Cross multiple virgin queens</span></span>
-<span><span class="va">virginQueens2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">virginQueens2</span>, drones <span class="op">=</span> <span class="va">DCA</span>, crossPlan <span class="op">=</span> <span class="va">crossPlanQueens</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">virginQueens2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 15 15 15</span></span></code></pre></div>
-<p>As already mentioned, we need to create a separate plan for crossing
-virgin queens already in colonies, since here we need to provide colony
-IDs.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">crossPlanColonies</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createRandomCrossPlan.html">createRandomCrossPlan</a></span><span class="op">(</span>IDs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">colony2</span><span class="op">)</span>, <span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">apiary2</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                                           drones <span class="op">=</span> <span class="va">DCA</span>,</span>
-<span>                                           nDrones <span class="op">=</span> <span class="va">nFathersPoisson</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $`2`</span></span>
-<span><span class="co">#&gt;  [1] "3185" "2599" "6080" "3571" "2196" "1828" "6806" "1149" "3945" "7683"</span></span>
-<span><span class="co">#&gt; [11] "5769" "143"  "4277" "1662"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`10`</span></span>
-<span><span class="co">#&gt;  [1] "2636" "3579" "1222" "2375" "4885" "8832" "6025" "6389" "552"  "1767"</span></span>
-<span><span class="co">#&gt; [11] "3529" "8889" "2789" "3665" "4815" "6438"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`11`</span></span>
-<span><span class="co">#&gt;  [1] "5799" "5292" "6314" "6837" "4546" "8896" "5909" "8023" "5493" "4644"</span></span>
-<span><span class="co">#&gt; [11] "8422" "8700" "5913" "7182" "6073" "3365" "5082" "5058" "3070" "5187"</span></span>
-<span><span class="co">#&gt; [21] "504" </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`12`</span></span>
-<span><span class="co">#&gt;  [1] "4428" "5202" "4180" "1029" "7248" "6814" "1487" "52"   "7891" "5861"</span></span>
-<span><span class="co">#&gt; [11] "8392" "101"  "4462" "4478" "5432" "5841" "4631" "6232"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`13`</span></span>
-<span><span class="co">#&gt;  [1] "4042" "5601" "3241" "7093" "4371" "7204" "3001" "7576" "3562" "7206"</span></span>
-<span><span class="co">#&gt; [11] "6238" "8319" "2006" "2430" "1374" "3421" "4017" "8268"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $`14`</span></span>
-<span><span class="co">#&gt;  [1] "3229" "5452" "2411" "968"  "6078" "3473" "2009" "7994" "6411" "4764"</span></span>
-<span><span class="co">#&gt; [11] "8033" "4437" "5852" "6508"</span></span></code></pre></div>
-<p>We again see that the cross plan is a list, now with colony IDs and
-elements of the list being the ID of drones the virgin queen within each
-colony will mate with. Now, we can cross our “colonies” by providing the
-<code>crossPlanColonies</code> to the <code><a href="../reference/cross.html">cross()</a></code> function.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Cross a single colony</span></span>
-<span><span class="va">colony2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony2</span>, drones <span class="op">=</span> <span class="va">DCA</span>, crossPlan <span class="op">=</span> <span class="va">crossPlanColonies</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">colony2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 14</span></span>
-<span><span class="co"># Cross an apiary</span></span>
-<span><span class="va">apiary2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">apiary2</span>, drones <span class="op">=</span> <span class="va">DCA</span>, crossPlan <span class="op">=</span> <span class="va">crossPlanColonies</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 10 11 12 13 14 </span></span>
-<span><span class="co">#&gt; 16 21 18 18 14</span></span></code></pre></div>
-</div>
+<code class="sourceCode R"><span><span class="co"># MultiColony-class</span></span>
+<span><span class="va">beekeeper1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  1  2  3  4  5  6 </span></span>
+<span><span class="co">#&gt; 15 15 18 14 20 23</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="cross-virgin-queens-at-a-mating-station">Cross virgin queens at a mating station<a class="anchor" aria-label="anchor" href="#cross-virgin-queens-at-a-mating-station"></a>
+<h2 id="option-3-cross-according-to-a-provided-cross-plan">Option 3: Cross according to a provided cross plan<a class="anchor" aria-label="anchor" href="#option-3-cross-according-to-a-provided-cross-plan"></a>
 </h2>
+<p>When mating a large number of queens, creating drone populations can
+be computationally demanding! A better option is to cross according to a
+cross plan that includes all the females and the males that they will
+mate with, and males as a single object. The cross plan is a list whose
+names are the IDs of either the virgin queens or the colonies you want
+to cross (but not both in the same cross plan!), and the content for
+each queen is either the IDs of drone or drone producing colonies she
+will mate with (again, use either only drone or only drone producing
+colony’s IDs in one cross plan!). When providing drone IDs, you also
+have to provide the males through the <code>drones</code> argument as a
+single <code>Pop</code> class that represents the DCA with all the
+drones. The DCA can represent a DCA of randomly assembled drones in the
+vicinity, a ‘global’ DCA of all drones available at a time, or a DCA at
+a mating station. If you are providing drone producing colonies’ IDs,
+you need to provide the males through the <code>droneColonies</code>
+argument as a single <code>MultiColony</code> class. Mating with drone
+producing colonies might be computationally more efficient since only
+the drones needed for mating are created on the spot.</p>
+<p>You can use the cross plan either to gain more control over mating
+and create the cross plan in a manual manner, or to simply reduce the
+computational burden when mating a large number of virgin queens. For
+that, you can either use the function <code><a href="../reference/createCrossPlan.html">createCrossPlan()</a></code>, if
+you want to inspect the cross plan before deployment, or simply let the
+<code><a href="../reference/cross.html">cross()</a></code> function to create the cross plan internally (see
+options 5 and 6). The latter is just a shortcut since it calls the
+<code><a href="../reference/createCrossPlan.html">createCrossPlan()</a></code> function from within the
+<code><a href="../reference/cross.html">cross()</a></code>. Both option hence allow to create the cross plan
+by randomly sampling available drones or drone producing queens, or
+sample them according to their geographical proximity to the virgin
+colony. Do note that to perform spatial sampling, the females and males
+have to be provided and <code>MultiColony</code> objects with a set
+location. Another situation where you would want to use the cross plan
+is when you want.</p>
+<p>NOTE: You can create one cross plan for a number of virgin queens or
+colonies and then mate each one separately. Let’s say you have 100
+colonies from two beekeepers. You can create a cross plan for all of
+them in one go, and then mate colonies from each beekeeper separately by
+providing the same cross plan. Do note again, that one cross plan can
+either contain only virgin queen or only virgin colonies’ IDs, no mix
+and and match!</p>
+<p>Let us now create a random cross plan with drone IDs to mate the
+virgin colonies from one of the beekeepers.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">crossPlan1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCrossPlan.html">createCrossPlan</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper2</span>,</span>
+<span>                              drones <span class="op">=</span> <span class="va">DCA</span>,</span>
+<span>                              nDrones <span class="op">=</span> <span class="va">nFathersPoisson</span><span class="op">)</span></span>
+<span><span class="co"># Inspect the cross plan</span></span>
+<span><span class="va">crossPlan1</span></span>
+<span><span class="co">#&gt; $`7`</span></span>
+<span><span class="co">#&gt;  [1] "5597" "221"  "6454" "6606" "2728" "5506" "3365" "8181" "978"  "6702"</span></span>
+<span><span class="co">#&gt; [11] "7844" "100"  "4774"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`8`</span></span>
+<span><span class="co">#&gt;  [1] "5541" "6303" "334"  "1846" "1061" "4045" "6207" "8419" "5570" "7753"</span></span>
+<span><span class="co">#&gt; [11] "8688" "1519" "4483" "838"  "8425" "2210" "1465"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`9`</span></span>
+<span><span class="co">#&gt;  [1] "5995" "5318" "1876" "2304" "6052" "8659" "7024" "1795" "1390" "6421"</span></span>
+<span><span class="co">#&gt; [11] "7869" "7343" "7624" "8393" "2012" "2768" "3352" "6653" "7708" "2209"</span></span>
+<span><span class="co">#&gt; [21] "8364"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`10`</span></span>
+<span><span class="co">#&gt;  [1] "7711" "2424" "2088" "1531" "4088" "4249" "1106" "2287" "1187" "5194"</span></span>
+<span><span class="co">#&gt; [11] "5915" "7370" "8182"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`11`</span></span>
+<span><span class="co">#&gt;  [1] "4532" "3744" "3317" "1627" "6074" "1112" "5886" "2621" "3644" "5578"</span></span>
+<span><span class="co">#&gt; [11] "4006" "478"  "7736"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">crossPlan1</span>, <span class="va">length</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  7  8  9 10 11 </span></span>
+<span><span class="co">#&gt; 13 17 21 13 13</span></span></code></pre></div>
+<p>We see that the cross plan is a list, with names being colony IDs and
+elements of the list being the ID of drones that each virgin colony will
+mate with. Now, we can cross the colonies of each beekeeper by providing
+the <code>crossPlan1</code> to the <code><a href="../reference/cross.html">cross()</a></code> function and the
+created DCA through the <code>drones</code> argument.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Cross the colonies of the beekeeper 2</span></span>
+<span><span class="va">beekeeper2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper2</span>, drones <span class="op">=</span> <span class="va">DCA</span>, crossPlan <span class="op">=</span> <span class="va">crossPlan1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper2</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  7  8  9 10 11 </span></span>
+<span><span class="co">#&gt; 13 17 21 13 13</span></span></code></pre></div>
+<p>Now, let us now create a spatial cross plan, this time by sampling
+drone producing colonies that will provide drones to mate with another
+one of our virgin apiaries. We will mate colonies of beekeeper 3. In
+this examples, colonies from beekeeper 1 and beekeeper 2 will serve as
+drone producing colonies. Although we are not sampling drones directly,
+you still need to provide <code>nDrones</code> argument to determine the
+number of sampled drone producing colonies.</p>
+<p>For spatial mating, we need to set the location to our apiaries (all
+the colonies within an beekeeper will have the same location). Here, we
+are setting this locations randomly, but these could be actual
+coordinated of colonies within a country.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Set location to apiaries</span></span>
+<span><span class="va">beekeeper1</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/setLocation.html">setLocation</a></span><span class="op">(</span><span class="va">beekeeper1</span>, </span>
+<span>                           location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="va">c</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper1</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper1</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">beekeeper2</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/setLocation.html">setLocation</a></span><span class="op">(</span><span class="va">beekeeper2</span>, </span>
+<span>                           location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="va">c</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper2</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper2</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">beekeeper3</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/setLocation.html">setLocation</a></span><span class="op">(</span><span class="va">beekeeper3</span>, </span>
+<span>                           location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="va">c</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper2</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper3</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>We can plot the location of colonies to see how they arrange in
+space. Again, we want to mate the virgin queens of beekeeper 3 with
+drone produced by colonies of beekeepers 1 and 2.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">locationsDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Location <span class="op">=</span> <span class="fu"><a href="../reference/getLocation.html">getLocation</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">beekeeper1</span>, <span class="va">beekeeper2</span>, <span class="va">beekeeper3</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>                          Beekeeper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Beekeeper1"</span>, <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Beekeeper2"</span>, <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"Beekeeper3"</span>, <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">locationsDF</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Location.1</span>, y <span class="op">=</span> <span class="va">Location.2</span>, colour <span class="op">=</span> <span class="va">Beekeeper</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="D_Crossing_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p>Next, we create a spatial cross plan for mating our colonies. We set
+the radius to however far we believe our drone can fly according to the
+scale of locations coordinates. All the drones within that area then
+have the same probability of mating with the queen, which follows the
+believe that drones aggregate in a DCA.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">crossPlan2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCrossPlan.html">createCrossPlan</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper3</span>,</span>
+<span>                              droneColonies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">beekeeper1</span>, <span class="va">beekeeper2</span><span class="op">)</span>,</span>
+<span>                              spatial <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                              radius <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                              nDrones <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span>
+<span><span class="co"># Inspect the cross plan</span></span>
+<span><span class="va">crossPlan2</span></span>
+<span><span class="co">#&gt; $`12`</span></span>
+<span><span class="co">#&gt; [1] "11" "4"  "9"  "6"  "1" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`13`</span></span>
+<span><span class="co">#&gt; [1] "5" "3" "2"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`14`</span></span>
+<span><span class="co">#&gt; [1] "11" "4"  "9"  "6"  "1" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`15`</span></span>
+<span><span class="co">#&gt; [1] "1" "7" "9" "8"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`16`</span></span>
+<span><span class="co">#&gt; [1] "7"  "8"  "9"  "6"  "10" "1"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">crossPlan2</span>, <span class="va">length</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 12 13 14 15 16 </span></span>
+<span><span class="co">#&gt;  5  3  5  4  6</span></span></code></pre></div>
+<p>We see that there is a different number of drone producing queen for
+each virgin queen in the specified radius . It could also happen, there
+are no drone producing colonies in that radius. In that case, you can
+either increase the radius, if you think that is sensible, or some
+virgin queens will remain unmated. Once we have the spatial cross plan,
+we can mate our colonies.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">beekeeper3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper3</span>, </span>
+<span>                    crossPlan <span class="op">=</span> <span class="va">crossPlan2</span>,</span>
+<span>                    droneColonies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">beekeeper1</span>, <span class="va">beekeeper2</span><span class="op">)</span>,</span>
+<span>                    nDrones <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span>
+<span><span class="co"># Inspect the number of fathers</span></span>
+<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 12 13 14 15 16 </span></span>
+<span><span class="co">#&gt; 13 13 13 13 13</span></span></code></pre></div>
+<p>As you see, we have duplicated quite some information in running
+first a function that creates a cross plan and then performing the
+crossing. If you are not really keen on inspecting the cross plan before
+mating, we suggest you use the options 4 and 5 (see below).</p>
+<p>You may also want to provide an existing cross plan if you want to
+create more tailored cross plans and cross virgin queens with different
+methods (i.e. you want to mate one queen in the apiary in an artificial
+insemination, some of them would be open mated etc.). For that, see the
+section “Special cases” at the end of this vignette.</p>
+</div>
+<div class="section level2">
+<h2 id="options-4-and-5-cross-according-to-an-internally-created-cross-plan">Options 4 and 5: Cross according to an internally created cross
+plan<a class="anchor" aria-label="anchor" href="#options-4-and-5-cross-according-to-an-internally-created-cross-plan"></a>
+</h2>
+<p>The procedure behind this option is exactly the same as described in
+option 4 with using <code><a href="../reference/createCrossPlan.html">createCrossPlan()</a></code> function to create
+either a random and spatial cross plan and then crossing according to
+the plan. The difference is that in this option, the two steps are
+combined within the <code><a href="../reference/cross.html">cross()</a></code> function.</p>
+<p>Let us mate the colonies of the remaining beekeepers 4 and 5 with
+colonies of beekeepers 1 to 3 as drone producing colonies. Let’s first
+set the locations of the beekeepers 4 and 5 colonies.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">beekeeper4</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/setLocation.html">setLocation</a></span><span class="op">(</span><span class="va">beekeeper4</span>, </span>
+<span>                           location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="va">c</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper4</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper4</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">beekeeper5</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/setLocation.html">setLocation</a></span><span class="op">(</span><span class="va">beekeeper5</span>, </span>
+<span>                           location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="va">c</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper5</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">beekeeper5</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Now, we will mate the colonies of beekeeper 4 in a random manner and
+colonies of beekeeper 5 in a spatial manner, all within the
+<code><a href="../reference/cross.html">cross()</a></code> function. For this, you have to pass a keyword
+“create” to the <code>crossPlan</code> argument in the
+<code><a href="../reference/cross.html">cross()</a></code>.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">beekeeper4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper4</span>,</span>
+<span>                    droneColonies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">beekeeper1</span>, <span class="va">beekeeper2</span>, <span class="va">beekeeper3</span><span class="op">)</span>,</span>
+<span>                    crossPlan <span class="op">=</span> <span class="st">"create"</span>,</span>
+<span>                    spatial <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                    nDrones <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Cross plan, drone colonies"</span></span>
+<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 17 18 19 20 21 22 23 24 25 26 </span></span>
+<span><span class="co">#&gt; 12 12 12 12 12 12 12 12 12 12</span></span>
+<span></span>
+<span><span class="va">beekeeper5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper5</span>,</span>
+<span>                    droneColonies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">beekeeper1</span>, <span class="va">beekeeper2</span>, <span class="va">beekeeper3</span><span class="op">)</span>,</span>
+<span>                    crossPlan <span class="op">=</span> <span class="st">"create"</span>,</span>
+<span>                    spatial <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                    radius <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                    nDrones <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 27 28 29 30 31 32 33 34 35 </span></span>
+<span><span class="co">#&gt; 12 12 12 12 12 12 12 12 12</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="special-cases">Special cases<a class="anchor" aria-label="anchor" href="#special-cases"></a>
+</h2>
+<div class="section level3">
+<h3 id="cross-virgin-queens-at-a-mating-station">Cross virgin queens at a mating station<a class="anchor" aria-label="anchor" href="#cross-virgin-queens-at-a-mating-station"></a>
+</h3>
 <p>Mating virgin queens at a mating station is no different than mating
 them at an open DCA - the difference is in the DCA itself. In the case
 of open mating, the DCA consists of drones from multiple queens, all of
@@ -359,15 +577,21 @@ which are usually unknown. In the case of a mating station, the DCA
 consists of drones coming from a sister group of drone producing queens
 (DPQ), the queen of which is known. This allows us to track the pedigree
 on the paternal side.</p>
-<p>To simulate this situation, we first create a mating station DCA
-using <code><a href="../reference/createMatingStationDCA.html">createMatingStationDCA()</a></code> function, which takes a
-single “sire” colony (queen of the DPQs). From the “sire” colony, the
-function first produces a desired number of sister DPQs, and next
-produces a desired number of drones per DPQ. The produced drones
+<p>To simulate this, you can either: * create a group of sister queens
+and provide them to the <code><a href="../reference/cross.html">cross()</a></code> function through the
+<code>droneColonies</code> argument; * create a mating stations DCA and
+then either pull drone packages from it, create a random plan from it,
+or provide it directly to the <code><a href="../reference/cross.html">cross()</a></code> function through the
+<code>drones</code> argument.</p>
+<p>Here, we will demonstrate one of the options. We will create a mating
+station DCA using <code><a href="../reference/createMatingStationDCA.html">createMatingStationDCA()</a></code> function, which
+takes a single “sire” colony (queen of the DPQs). From the “sire”
+colony, the function first produces a desired number of sister DPQs, and
+next produces a desired number of drones per DPQ. The produced drones
 represent the mating station’s DCA.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a DCA at a mating station from colony1</span></span>
-<span><span class="op">(</span><span class="va">matingStationDCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMatingStationDCA.html">createMatingStationDCA</a></span><span class="op">(</span><span class="va">colony1</span>, nDPQs <span class="op">=</span> <span class="fl">20</span>, nDronePerDPQ <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">matingStationDCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMatingStationDCA.html">createMatingStationDCA</a></span><span class="op">(</span><span class="va">beekeeper1</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>, nDPQs <span class="op">=</span> <span class="fl">20</span>, nDronePerDPQ <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class "Pop" </span></span>
 <span><span class="co">#&gt; Ploidy: 2 </span></span>
 <span><span class="co">#&gt; Individuals: 20000 </span></span>
@@ -375,60 +599,56 @@ represent the mating station’s DCA.</p>
 <span><span class="co">#&gt; Loci: 100 </span></span>
 <span><span class="co">#&gt; Traits: 0</span></span></code></pre></div>
 <p>We see that the output of the function is a single population of
-20,000 drones that represents the DCA. Once you have the DCA, you can
-cross virgin queens either by pulling out populations of drones or
-creating a mating plan as described above.</p>
-<p>Here, we will mate a single colony (<code>colony3</code>) and a group
-of colonies (<code>apiary3</code>) at a mating station according to a
-cross plan.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Mate only an apiary</span></span>
-<span><span class="va">crossPlanMatingStation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createRandomCrossPlan.html">createRandomCrossPlan</a></span><span class="op">(</span>IDs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">colony3</span><span class="op">)</span>, </span>
-<span>                                                        <span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">apiary3</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                                                drones <span class="op">=</span> <span class="va">matingStationDCA</span>,</span>
-<span>                                                nDrones <span class="op">=</span> <span class="va">nFathersTruncPoisson</span><span class="op">)</span></span>
-<span><span class="co"># Cross a colony</span></span>
-<span><span class="va">colony3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony3</span>, crossPlan <span class="op">=</span> <span class="va">crossPlanMatingStation</span>, drones <span class="op">=</span> <span class="va">matingStationDCA</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">colony3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 15</span></span>
-<span><span class="co"># Cross an apiary</span></span>
-<span><span class="va">apiary3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary3</span>, crossPlan <span class="op">=</span> <span class="va">crossPlanMatingStation</span>, drones <span class="op">=</span> <span class="va">matingStationDCA</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 15 16 17 18 19 </span></span>
-<span><span class="co">#&gt; 14 16 12 17 18</span></span></code></pre></div>
+20,000 drones that represents the DCA. As mentioned, once you have the
+DCA, you can use it in different manners. Here, we will feed it directly
+to the <code><a href="../reference/cross.html">cross()</a></code> function and assume random sampling of
+drones. Spatial sampling does not make sense here, since all the drones
+and the virgin colonies are at the same location - the mating
+station.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Mate only an beekeeper</span></span>
+<span><span class="va">beekeeper6</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">beekeeper6</span>,</span>
+<span>                    drones <span class="op">=</span> <span class="va">matingStationDCA</span>,</span>
+<span>                    spatial <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                    crossPlan <span class="op">=</span> <span class="st">"create"</span>,</span>
+<span>                    nDrones <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper6</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 36 37 38 39 40 41 42 43 44 45 </span></span>
+<span><span class="co">#&gt; 15 15 15 15 15 15 15 15 15 15</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="cross-virgin-queens-with-different-methods">Cross virgin queens with different methods<a class="anchor" aria-label="anchor" href="#cross-virgin-queens-with-different-methods"></a>
-</h2>
+<div class="section level3">
+<h3 id="cross-colonies-with-varying-methods">Cross colonies with varying methods<a class="anchor" aria-label="anchor" href="#cross-colonies-with-varying-methods"></a>
+</h3>
 <p>It could happen that you have some virgin colonies in an apiary and
 you want to inseminate one of the virgin queens artificially with a
 single drone, take three of them to a mating station, and mate the rest
 of them openly at a local DCA. Since the cross plan is a named list, you
 can concatenate multiple cross plans into one. Let’s mate the
-multicolony <code>apiary4</code> in such a manner.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+multicolony of beekeeper 4 in such a manner.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create a single drone for single drone insemination</span></span>
-<span><span class="va">singleDrone</span> <span class="op">=</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span><span class="va">colony2</span>, nInd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">singleDrone</span> <span class="op">=</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span><span class="va">beekeeper1</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co"># Create a cross plan for crossing some of the colonies in an open DCA, </span></span>
 <span><span class="co"># some with single drone, and some on a mating station</span></span>
-<span><span class="va">crossPlanApiary4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/createRandomCrossPlan.html">createRandomCrossPlan</a></span><span class="op">(</span>IDs <span class="op">=</span> <span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">apiary4</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, </span>
-<span>                        drones <span class="op">=</span> <span class="va">singleDrone</span>, </span>
-<span>                        nDrones <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="../reference/createRandomCrossPlan.html">createRandomCrossPlan</a></span><span class="op">(</span>IDs <span class="op">=</span> <span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">apiary4</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, </span>
-<span>                        drones <span class="op">=</span> <span class="va">DCA</span>, </span>
-<span>                        nDrones <span class="op">=</span> <span class="va">nFathersTruncPoisson</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="../reference/createRandomCrossPlan.html">createRandomCrossPlan</a></span><span class="op">(</span>IDs <span class="op">=</span> <span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">apiary4</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, </span>
-<span>                        drones <span class="op">=</span> <span class="va">matingStationDCA</span>, </span>
-<span>                        nDrones <span class="op">=</span> <span class="va">nFathersTruncPoisson</span><span class="op">)</span></span>
+<span><span class="va">crossPlanBeekeeper7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/createCrossPlan.html">createCrossPlan</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper7</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, </span>
+<span>                  drones <span class="op">=</span> <span class="va">singleDrone</span>, </span>
+<span>                  nDrones <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/createCrossPlan.html">createCrossPlan</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper7</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, </span>
+<span>                  drones <span class="op">=</span> <span class="va">DCA</span>, </span>
+<span>                  nDrones <span class="op">=</span> <span class="va">nFathersTruncPoisson</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/createCrossPlan.html">createCrossPlan</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper7</span><span class="op">[</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, </span>
+<span>                  drones <span class="op">=</span> <span class="va">matingStationDCA</span>, </span>
+<span>                  nDrones <span class="op">=</span> <span class="va">nFathersTruncPoisson</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="va">apiary4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary4</span>, </span>
-<span>                 crossPlan <span class="op">=</span> <span class="va">crossPlanApiary4</span>, </span>
-<span>                 drones <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">singleDrone</span>, <span class="va">DCA</span>, <span class="va">matingStationDCA</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 20 21 22 23 24 25 26 27 28 29 </span></span>
-<span><span class="co">#&gt;  1 11 16 16 13 19 19 18 25 11</span></span></code></pre></div>
+<span><span class="va">beekeeper7</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper7</span>, </span>
+<span>                    crossPlan <span class="op">=</span> <span class="va">crossPlanBeekeeper7</span>, </span>
+<span>                    drones <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">singleDrone</span>, <span class="va">DCA</span>, <span class="va">matingStationDCA</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper7</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 46 47 48 49 50 51 52 53 54 55 </span></span>
+<span><span class="co">#&gt;  1 17  9 13 10 14 12 15 13 21</span></span></code></pre></div>
+</div>
 </div>
   </div>
 

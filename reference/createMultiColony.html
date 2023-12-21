@@ -98,7 +98,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createMultiColony</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">NULL</span>, location <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createMultiColony</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">NULL</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -115,8 +115,8 @@ given then <code><a href="MultiColony-class.html">MultiColony-class</a></code> i
 <code>NULL</code>) individual colony - this is mostly useful for programming)</p></dd>
 
 
-<dt>location</dt>
-<dd><p>list, location of the colonies as <code>c(x, y)</code></p></dd>
+<dt>simParamBee</dt>
+<dd><p><code><a href="SimParamBee.html">SimParamBee</a></code>, global simulation parameters</p></dd>
 
 </dl></div>
     <div id="value">
@@ -137,49 +137,35 @@ given then <code><a href="MultiColony-class.html">MultiColony-class</a></code> i
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">3</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Create 2 empty (NULL) colonies</span></span></span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu">createMultiColony</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> An object of class "MultiColony" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of colonies: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Are empty: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Are NULL: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have split: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have swarmed: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have superseded: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have collapsed: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Are productive: 0 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="va">apiary</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="va">apiary</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Create 2 virgin colonies</span></span></span>
-<span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu">createMultiColony</span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># specify n</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'basePop' not found</span>
-<span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu">createMultiColony</span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># take all provided</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'basePop' not found</span>
+<span class="r-in"><span><span class="co"># Create 3 virgin colonies</span></span></span>
+<span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu">createMultiColony</span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="co"># specify n</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
+<span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu">createMultiColony</span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span> <span class="co"># take all provided</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> An object of class "MultiColony" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of colonies: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Are empty: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Are NULL: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have split: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have swarmed: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have superseded: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have collapsed: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Are productive: 0 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="va">apiary</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="va">apiary</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Create mated colonies by crossing</span></span></span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu">createMultiColony</span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'basePop' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">drones</span> <span class="op">&lt;-</span> <span class="fu"><a href="createCastePop.html">createDrones</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">droneGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA</a></span><span class="op">(</span><span class="va">drones</span>, n <span class="op">=</span> <span class="fl">2</span>, nDrones <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></span>
@@ -187,19 +173,12 @@ given then <code><a href="MultiColony-class.html">MultiColony-class</a></code> i
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> An object of class "MultiColony" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of colonies: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Are empty: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Are NULL: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have split: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have swarmed: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have superseded: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Have collapsed: 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Are productive: 0 </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="va">apiary</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
 <span class="r-in"><span><span class="va">apiary</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

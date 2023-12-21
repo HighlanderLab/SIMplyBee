@@ -112,6 +112,7 @@ This is just an example. You can provide your own functions that satisfy
 <span>  workersTrait <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  checkProduction <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  lowerLimit <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  simParamBee <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -152,6 +153,10 @@ status of colony; if yes and production is not <code>TRUE</code>, the result is
 above <code>lowerLimit</code></p></dd>
 
 
+<dt>simParamBee</dt>
+<dd><p><code><a href="SimParamBee.html">SimParamBee</a></code>, global simulation parameters</p></dd>
+
+
 <dt>...</dt>
 <dd><p>other arguments of <code><a href="mapCasteToColonyValue.html">mapCasteToColonyPheno</a></code></p></dd>
 
@@ -189,42 +194,41 @@ colony phenotype, say queen's fecundity</p></li>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">nWorkersPoisson</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 104</span>
 <span class="r-in"><span><span class="fu">nWorkersPoisson</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 106</span>
 <span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu">nWorkersPoisson</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">n</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="nWorkersFun-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  70  72  73  74  75  77  78  79  80  81  82  83  84  85  86  87  88  89  90  91 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1   1   2   1   2   3   3   5   4   6   4   9  12  23  12  17  19  18  30  33 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  92  93  94  95  96  97  98  99 100 101 102 103 104 105 106 107 108 109 110 111 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  31  19  37  39  36  38  34  34  45  42  36  31  30  29  42  45  27  35  18  17 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  18  15  19  12   9   7   7  10   9   3   3   3   4   1   1   2   1   2   1   1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 132 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  69  70  73  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90  91  92 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1   1   1   1   2   3   7   1   5   5   8  13   7  20  28  17  22  26  20  41 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  93  94  95  96  97  98  99 100 101 102 103 104 105 106 107 108 109 110 111 112 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  26  40  32  30  38  43  31  44  40  35  42  32  32  40  25  28  30  31  23  14 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 113 114 115 116 117 118 119 120 121 122 123 124 125 126 128 129 132 133 134 135 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  20  14  13   6  13  16   7   7   3   2   2   2   2   2   1   1   1   1   1   1 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">nWorkersTruncPoisson</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 117</span>
 <span class="r-in"><span><span class="fu">nWorkersTruncPoisson</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 85</span>
 <span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu">nWorkersTruncPoisson</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">n</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="nWorkersFun-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  69  71  73  74  75  77  79  80  81  82  83  84  85  86  87  88  89  90  91  92 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1   1   2   3   1   4   6   7   6   6   9   4  13  10  11  17  26  24  29  25 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  93  94  95  96  97  98  99 100 101 102 103 104 105 106 107 108 109 110 111 112 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  26  28  39  31  42  49  40  44  33  40  37  38  40  31  36  33  22  26  23  16 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 113 114 115 116 117 118 119 120 121 122 123 125 126 127 128 132 137 147 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  15  12  17   9  11  14   6   8   4   7   6   2   3   2   2   1   1   1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  73  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90  91  92  93 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1   1   5   2   5   5   6   5  10  10  16  11  17  16  14  24  20  25  36  30 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  94  95  96  97  98  99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  18  38  29  55  37  48  51  43  34  50  36  43  32  21  34  27  25  21   9   9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 132 136 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  11  12   5   6   8   8   5   2   2   5   4   6   1   1   2   1   1   1 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example for nWorkersColonyPhenotype()</span></span></span>
 <span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">3</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span><span class="va">average</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></span>
 <span class="r-in"><span><span class="va">h2</span> <span class="op">&lt;-</span> <span class="fl">0.1</span></span></span>
 <span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="fu">addTraitA</span><span class="op">(</span>nQtlPerChr <span class="op">=</span> <span class="fl">100</span>, mean <span class="op">=</span> <span class="va">average</span>, var <span class="op">=</span> <span class="va">average</span> <span class="op">*</span> <span class="va">h2</span><span class="op">)</span></span></span>

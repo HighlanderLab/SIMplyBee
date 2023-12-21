@@ -4,7 +4,8 @@
   leaves with a proportion of workers to create a new colony (the swarm). The
   remnant colony retains the other proportion of workers and all drones, and
   the workers raise virgin queens, of which only one prevails. Location of
-  the swarm is the same as for the remnant (for now)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+  the swarm is the same as for the remnant or sampled as deviation from the
+  remnant."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -102,11 +103,21 @@
   leaves with a proportion of workers to create a new colony (the swarm). The
   remnant colony retains the other proportion of workers and all drones, and
   the workers raise virgin queens, of which only one prevails. Location of
-  the swarm is the same as for the remnant (for now).</p>
+  the swarm is the same as for the remnant or sampled as deviation from the
+  remnant.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">swarm</span><span class="op">(</span><span class="va">x</span>, p <span class="op">=</span> <span class="cn">NULL</span>, year <span class="op">=</span> <span class="cn">NULL</span>, nVirginQueens <span class="op">=</span> <span class="cn">NULL</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">swarm</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  p <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  year <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nVirginQueens <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sampleLocation <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  radius <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  simParamBee <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -134,6 +145,18 @@ remnant colony. If <code>NULL</code>, the value from <code>simParamBee$nVirginQu
 is used</p></dd>
 
 
+<dt>sampleLocation</dt>
+<dd><p>logical, sample location of the swarm by taking
+the current colony location and adding deviates to each coordinate using
+<code><a href="rcircle.html">rcircle</a></code></p></dd>
+
+
+<dt>radius</dt>
+<dd><p>numeric, radius of a circle within which swarm will go; if
+<code>NULL</code> then <code><a href="SimParamBee.html">SimParamBee</a>$swarmRadius</code> is used (which uses
+<code>0</code>, so by default swarm does not fly far away)</p></dd>
+
+
 <dt>simParamBee</dt>
 <dd><p><code><a href="SimParamBee.html">SimParamBee</a></code>, global simulation parameters</p></dd>
 
@@ -148,8 +171,8 @@ when these arguments are functions</p></dd>
     
 
 <p>list with two <code><a href="Colony-class.html">Colony-class</a></code> or <code><a href="MultiColony-class.html">MultiColony-class</a></code>,
-the <code>swarm</code> and the <code>remnant</code> (see the description what each colony holds!); both
-outputs have the swarm event set to <code>TRUE</code></p>
+  the <code>swarm</code> and the <code>remnant</code> (see the description what each
+  colony holds!); both outputs have the swarm event set to <code>TRUE</code></p>
 
 
     </div>
@@ -158,6 +181,7 @@ outputs have the swarm event set to <code>TRUE</code></p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">8</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">drones</span> <span class="op">&lt;-</span> <span class="fu"><a href="createCastePop.html">createDrones</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
@@ -173,7 +197,7 @@ outputs have the swarm event set to <code>TRUE</code></p>
 <span class="r-in"><span><span class="op">(</span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">colony</span>, nWorkers <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'basePop' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">apiary</span>, nWorkers <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
@@ -191,18 +215,18 @@ outputs have the swarm event set to <code>TRUE</code></p>
 <span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">swarm</span><span class="op">(</span><span class="va">apiary</span>, p <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu"><a href="nCaste.html">nWorkers</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">swarm</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu"><a href="nCaste.html">nWorkers</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">remnant</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="co"># Swarm with different proportions</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="nCaste.html">nWorkers</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'apiary' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">swarm</span><span class="op">(</span><span class="va">apiary</span>, p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.34</span>, <span class="fl">0.56</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu"><a href="nCaste.html">nWorkers</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">swarm</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span><span class="fu"><a href="nCaste.html">nWorkers</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">remnant</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'tmp' not found</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Sample colonies from the apiary that will swarm (sample with probability of 0.2)</span></span></span>
 <span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="pullColonies.html">pullColonies</a></span><span class="op">(</span><span class="va">apiary</span>, p <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></span>

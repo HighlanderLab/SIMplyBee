@@ -148,6 +148,22 @@ package.</p>
 <span><span class="co">#&gt;     split</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="initial-settings">Initial settings<a class="anchor" aria-label="anchor" href="#initial-settings"></a>
+</h2>
+<p>We first initiate our simulation with founders genomes, simulation
+parameters, base population of virgin queens and a drone congregation
+area (DCA).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create 20 founder genomes</span></span>
+<span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/quickHaplo.html" class="external-link">quickHaplo</a></span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">30</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="co"># Set up new global simulation parameters</span></span>
+<span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
+<span><span class="co"># Create a base population of 20 virgin queens</span></span>
+<span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
+<span><span class="co"># Create a DCA from the drones of the first 10 queens</span></span>
+<span><span class="va">DCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="creating-a-multicolony-object">Creating a MultiColony object<a class="anchor" aria-label="anchor" href="#creating-a-multicolony-object"></a>
 </h2>
 <p>We create a <code>MultiColony</code> object with
@@ -156,7 +172,7 @@ a <code>MultiColony</code> object that represents a single apiary. The
 first option is to initialise an empty <code>MultiColony</code> object
 that represents an empty apiary without any colonies and individuals
 within them.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create an empty apiary</span></span>
 <span><span class="va">emptyApiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">emptyApiary</span></span>
@@ -180,7 +196,7 @@ yield.</p>
 <p>The second option is again to create an empty
 <code>MultiColony</code> object that represents an empty apiary without
 any individuals within, but with a defined number of colony slots.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create an empty apiary with 10 colony slots</span></span>
 <span><span class="va">emptyApiary1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">emptyApiary1</span></span>
@@ -197,16 +213,8 @@ any individuals within, but with a defined number of colony slots.</p>
 a population of either virgin or mated queens. For this, we first have
 to initialise the simulation with founder genomes and creating a base
 population of virgin queens. We will use 10 virgin queens to produce
-drones and create a DCA.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create 20 founder genomes</span></span>
-<span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/quickHaplo.html" class="external-link">quickHaplo</a></span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">30</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="co"># Set up new global simulation parameters</span></span>
-<span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
-<span><span class="co"># Create a base population of 20 virgin queens</span></span>
-<span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
-<span><span class="co"># Create a DCA from the drones of the first 10 queens</span></span>
-<span><span class="va">DCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+drones and create a DCA - we will take these from the initial settings
+above.</p>
 <p>We will now create an apiary with 10 virgin colonies with the
 <code><a href="../reference/createMultiColony.html">createMultiColony()</a></code> function by providing the second set of
 10 virgin queens as the input parameter. Let’s call this apiary

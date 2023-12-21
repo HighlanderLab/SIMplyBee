@@ -241,6 +241,15 @@
 <p>You can provide your own functions that satisfy your needs!</p></dd>
 
 
+<dt><code>swarmRadius</code></dt>
+<dd><p>numeric, radius within which to sample a location of
+  of the swarm - used in <code><a href="swarm.html">swarm</a></code> - see its <code>radius</code>
+  argument.</p>
+<p>The default value is <code>0</code>, that is, swarm gets the same location as
+  the original colony.</p>
+<p>You can change this setting to your needs!</p></dd>
+
+
 <dt><code>splitP</code></dt>
 <dd><p>numeric or a function, the split proportion - the
   proportion of workers removed in a managed split - used in
@@ -352,6 +361,7 @@ generate this object</p></dd>
 <li><p><a href="#method-SimParamBee-updateLastColonyId"><code>SimParamBee$updateLastColonyId()</code></a></p></li>
 <li><p><a href="#method-SimParamBee-clone"><code>SimParamBee$clone()</code></a></p></li>
 </ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="addSnpChip"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-addSnpChip"><code>AlphaSimR::SimParam$addSnpChip()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="addSnpChipByName"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-addSnpChipByName"><code>AlphaSimR::SimParam$addSnpChipByName()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="addStructuredSnpChip"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-addStructuredSnpChip"><code>AlphaSimR::SimParam$addStructuredSnpChip()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="addToPed"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-addToPed"><code>AlphaSimR::SimParam$addToPed()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="addToRec"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-addToRec"><code>AlphaSimR::SimParam$addToRec()</code></a></span></li>
@@ -371,6 +381,7 @@ generate this object</p></dd>
 <li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="resetPed"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-resetPed"><code>AlphaSimR::SimParam$resetPed()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="restrSegSites"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-restrSegSites"><code>AlphaSimR::SimParam$restrSegSites()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="setCorE"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-setCorE"><code>AlphaSimR::SimParam$setCorE()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="setFounderHap"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-setFounderHap"><code>AlphaSimR::SimParam$setFounderHap()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="setRecombRatio"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-setRecombRatio"><code>AlphaSimR::SimParam$setRecombRatio()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="setSexes"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-setSexes"><code>AlphaSimR::SimParam$setSexes()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="AlphaSimR" data-topic="SimParam" data-id="setTrackPed"><a href="https://gaynorr.github.io/AlphaSimR/reference/SimParam.html#method-setTrackPed"><code>AlphaSimR::SimParam$setTrackPed()</code></a></span></li>
@@ -394,6 +405,7 @@ generate this object</p></dd>
 <span>  nVirginQueens <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  nFathers <span class="op">=</span> <span class="fl">15</span>,</span>
 <span>  swarmP <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  swarmRadius <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  splitP <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  downsizeP <span class="op">=</span> <span class="fl">0.85</span>,</span>
 <span>  csdChr <span class="op">=</span> <span class="fl">3</span>,</span>
@@ -428,6 +440,10 @@ genomes</p></dd>
 
 <dt><code>swarmP</code></dt>
 <dd><p>see <code>SimParamBee</code> field <code>swarmP</code></p></dd>
+
+
+<dt><code>swarmRadius</code></dt>
+<dd><p>see <code>SimParamBee</code> field <code>swarmRadius</code></p></dd>
 
 
 <dt><code>splitP</code></dt>
@@ -469,17 +485,22 @@ to 128, which is at the upper end of the reported number of csd alleles
 </div>
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">10</span>, nChr <span class="op">=</span> <span class="fl">3</span>, segSites <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span>, nCsdAlleles <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># We need enough segregating sites</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span>, nCsdAlleles <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">10</span>, nChr <span class="op">=</span> <span class="fl">3</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span>, nCsdAlleles <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># We can save the csd locus on chromosome 1 or 2, too, for quick simulations</span></span>
-<span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">10</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span>, nCsdAlleles <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code>founderGenomes &lt;- quickHaplo(nInd = 10, nChr = 3, segSites = 10)
+SP &lt;- SimParamBee$new(founderGenomes, nCsdAlleles = 2)
+\dontshow{SP$nThreads = 1L}
+
+# We need enough segregating sites
+try(SP &lt;- SimParamBee$new(founderGenomes, nCsdAlleles = 100))
+\dontshow{SP$nThreads = 1L}
+founderGenomes &lt;- quickHaplo(nInd = 10, nChr = 3, segSites = 100)
+SP &lt;- SimParamBee$new(founderGenomes, nCsdAlleles = 100)
+\dontshow{SP$nThreads = 1L}
+
+# We can save the csd locus on chromosome 1 or 2, too, for quick simulations
+founderGenomes &lt;- quickHaplo(nInd = 10, nChr = 1, segSites = 100)
+SP &lt;- SimParamBee$new(founderGenomes, nCsdAlleles = 100)
+\dontshow{SP$nThreads = 1L}
+</code></pre></div><p></p></div>
 </div>
 
 
@@ -505,20 +526,22 @@ drones, "V" for virgin queens, and "F" for fathers</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">2</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
-<span><span class="va">SP</span><span class="op">$</span><span class="fu">setTrackPed</span><span class="op">(</span>isTrackPed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">drones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony</span>, drones <span class="op">=</span> <span class="va">drones</span><span class="op">)</span></span>
-<span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addCastePop.html">addWorkers</a></span><span class="op">(</span><span class="va">colony</span>, nInd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addCastePop.html">addDrones</a></span><span class="op">(</span><span class="va">colony</span>, nInd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addCastePop.html">addVirginQueens</a></span><span class="op">(</span><span class="va">colony</span>, nInd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">SP</span><span class="op">$</span><span class="va">pedigree</span></span>
-<span><span class="va">SP</span><span class="op">$</span><span class="va">caste</span></span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code>founderGenomes &lt;- quickHaplo(nInd = 2, nChr = 1, segSites = 100)
+SP &lt;- SimParamBee$new(founderGenomes)
+\dontshow{SP$nThreads = 1L}
+SP$setTrackPed(isTrackPed = TRUE)
+basePop &lt;- createVirginQueens(founderGenomes)
+
+drones &lt;- createDrones(x = basePop[1], nInd = 10)
+colony &lt;- createColony(x = basePop[2])
+colony &lt;- cross(colony, drones = drones)
+colony &lt;- addWorkers(colony, nInd = 5)
+colony &lt;- addDrones(colony, nInd = 5)
+colony &lt;- addVirginQueens(colony, nInd = 2)
+
+SP$pedigree
+SP$caste
+</code></pre></div><p></p></div>
 </div>
 
 
@@ -544,18 +567,20 @@ drones, "V" for virgin queens, and "F" for fathers</p></dd>
 </div>
 <div class="section">
 <h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">2</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
-<span><span class="va">SP</span><span class="op">$</span><span class="fu">setTrackPed</span><span class="op">(</span>isTrackPed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
-<span><span class="va">SP</span><span class="op">$</span><span class="va">pedigree</span></span>
-<span><span class="va">SP</span><span class="op">$</span><span class="va">caste</span></span>
-<span></span>
-<span><span class="va">drones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony</span>, drones <span class="op">=</span> <span class="va">drones</span><span class="op">)</span></span>
-<span><span class="va">SP</span><span class="op">$</span><span class="va">pedigree</span></span>
-<span><span class="va">SP</span><span class="op">$</span><span class="va">caste</span></span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code>founderGenomes &lt;- quickHaplo(nInd = 2, nChr = 1, segSites = 100)
+SP &lt;- SimParamBee$new(founderGenomes)
+\dontshow{SP$nThreads = 1L}
+SP$setTrackPed(isTrackPed = TRUE)
+basePop &lt;- createVirginQueens(founderGenomes)
+SP$pedigree
+SP$caste
+
+drones &lt;- createDrones(x = basePop[1], nInd = 10)
+colony &lt;- createColony(x = basePop[2])
+colony &lt;- cross(colony, drones = drones)
+SP$pedigree
+SP$caste
+</code></pre></div><p></p></div>
 </div>
 
 
@@ -606,17 +631,21 @@ drones, "V" for virgin queens, and "F" for fathers</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">10</span>, nChr <span class="op">=</span> <span class="fl">3</span>, segSites <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va">SimParamBee</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span>, nCsdAlleles <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># We need enough segregating sites</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va">SimParamBee</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span>, nCsdAlleles <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Error in initialize(...) : </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Too few segregagting sites to simulate 100 csd alleles at the given position!</span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">10</span>, nChr <span class="op">=</span> <span class="fl">3</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va">SimParamBee</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span>, nCsdAlleles <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># We can save the csd locus on chromosome 1 or 2, too, for quick simulations</span></span></span>
 <span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">10</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va">SimParamBee</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span>, nCsdAlleles <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
 <span class="r-in"><span><span class="co">## Method `SimParamBee$addToCaste`</span></span></span>
@@ -624,6 +653,7 @@ drones, "V" for virgin queens, and "F" for fathers</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">2</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va">SimParamBee</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="fu">setTrackPed</span><span class="op">(</span>isTrackPed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>
@@ -653,6 +683,7 @@ drones, "V" for virgin queens, and "F" for fathers</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">2</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va">SimParamBee</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="fu">setTrackPed</span><span class="op">(</span>isTrackPed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get(x = "SP", envir = .GlobalEnv):</span> object 'SP' not found</span>

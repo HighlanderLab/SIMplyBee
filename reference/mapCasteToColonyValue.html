@@ -138,13 +138,13 @@ This is just an example - quite a flexible one! You can provide your
 <span></span>
 <span><span class="fu">mapCasteToColonyPheno</span><span class="op">(</span><span class="va">colony</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">mapCasteToColonyGv</span><span class="op">(</span><span class="va">colony</span>, checkProduction <span class="op">=</span> <span class="cn">FALSE</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">mapCasteToColonyGv</span><span class="op">(</span><span class="va">colony</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">mapCasteToColonyBv</span><span class="op">(</span><span class="va">colony</span>, checkProduction <span class="op">=</span> <span class="cn">FALSE</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">mapCasteToColonyBv</span><span class="op">(</span><span class="va">colony</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">mapCasteToColonyDd</span><span class="op">(</span><span class="va">colony</span>, checkProduction <span class="op">=</span> <span class="cn">FALSE</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">mapCasteToColonyDd</span><span class="op">(</span><span class="va">colony</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">mapCasteToColonyAa</span><span class="op">(</span><span class="va">colony</span>, checkProduction <span class="op">=</span> <span class="cn">FALSE</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">mapCasteToColonyAa</span><span class="op">(</span><span class="va">colony</span>, simParamBee <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -259,6 +259,7 @@ you can pass more than one logical value here (one per trait coming out of
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu">quickHaplo</span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">5</span>, nChr <span class="op">=</span> <span class="fl">1</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">SP</span><span class="op">$</span><span class="va">nThreads</span> <span class="op">=</span> <span class="fl">1L</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Define two traits that collectively affect colony honey yield:</span></span></span>
 <span class="r-in"><span><span class="co"># 1) queen's effect on colony honey yield, say via pheromone secretion phenotype</span></span></span>

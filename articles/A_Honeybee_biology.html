@@ -197,7 +197,7 @@ with it.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Save the genomes on a server</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/save.html" class="external-link">save</a></span><span class="op">(</span><span class="va">founderGenomes2</span>, file <span class="op">=</span> <span class="st">"FounderGenomes2_3chr.RData"</span><span class="op">)</span></span>
-<span><span class="co"># Loade the saved genomes elsewhere</span></span>
+<span><span class="co"># Load the saved genomes elsewhere</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"FounderGenomes2_3chr.RData"</span><span class="op">)</span></span></code></pre></div>
 <p>Besides specifying the number of individuals, chromosomes, and
 segregating sites, <code><a href="../reference/simulateHoneyBeeGenomes.html">simulateHoneyBeeGenomes()</a></code>, also takes a
@@ -257,7 +257,7 @@ point once you are comfortable with the basic functionality!</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">SP</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="../articles/founderpop.png" alt="Simulation initiation." width="100%"><p class="caption">
+<img src="founderpop.png" alt="Simulation initiation." width="100%"><p class="caption">
 Simulation initiation.
 </p>
 </div>
@@ -625,8 +625,8 @@ expected.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getCsdAlleles.html">getCsdAlleles</a></span><span class="op">(</span><span class="va">queen</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 2_1    1    1    1    1    1</span></span>
-<span><span class="co">#&gt; 2_2    0    0    1    0    0</span></span></code></pre></div>
+<span><span class="co">#&gt; 2_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 2_2    0    1    0    1    1</span></span></code></pre></div>
 <p>A keen geneticist would immediately inspect <em>CSD</em> alleles of
 fathers to check for any similarity with the queen’s <em>CSD</em>
 alleles. Let’s boost a chance of such an event by creating an inbreed
@@ -641,21 +641,21 @@ her with her brothers. Oh, dear.</p>
 <span><span class="fu"><a href="../reference/getCsdAlleles.html">getCsdAlleles</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $queen</span></span>
 <span><span class="co">#&gt;       3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 255_1    1    1    1    1    1</span></span>
-<span><span class="co">#&gt; 255_2    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; 255_1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; 255_2    1    0    0    1    0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $fathers</span></span>
 <span><span class="co">#&gt;       3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 254_1    0    0    1    0    0</span></span>
-<span><span class="co">#&gt; 249_1    1    1    1    1    1</span></span>
-<span><span class="co">#&gt; 252_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 252_1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; 250_1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; 253_1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; 251_1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; 254_1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; 247_1    0    1    0    1    1</span></span>
 <span><span class="co">#&gt; 245_1    0    0    1    0    0</span></span>
-<span><span class="co">#&gt; 250_1    0    0    1    0    0</span></span>
+<span><span class="co">#&gt; 249_1    0    1    0    1    1</span></span>
 <span><span class="co">#&gt; 246_1    0    0    1    0    0</span></span>
-<span><span class="co">#&gt; 247_1    1    1    1    1    1</span></span>
-<span><span class="co">#&gt; 251_1    0    0    1    0    0</span></span>
 <span><span class="co">#&gt; 248_1    0    0    1    0    0</span></span>
-<span><span class="co">#&gt; 253_1    0    0    1    0    0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $workers</span></span>
 <span><span class="co">#&gt; NULL</span></span>
@@ -668,13 +668,13 @@ her with her brothers. Oh, dear.</p>
 <span><span class="fu"><a href="../reference/getCsdAlleles.html">getCsdAlleles</a></span><span class="op">(</span><span class="va">inbredColony</span>, unique <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $queen</span></span>
 <span><span class="co">#&gt;       3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 255_1    1    1    1    1    1</span></span>
-<span><span class="co">#&gt; 255_2    0    0    0    1    1</span></span>
+<span><span class="co">#&gt; 255_1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; 255_2    1    0    0    1    0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $fathers</span></span>
 <span><span class="co">#&gt;       3_86 3_87 3_88 3_89 3_90</span></span>
-<span><span class="co">#&gt; 253_1    0    0    1    0    0</span></span>
-<span><span class="co">#&gt; 247_1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; 249_1    0    1    0    1    1</span></span>
+<span><span class="co">#&gt; 245_1    0    0    1    0    0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $workers</span></span>
 <span><span class="co">#&gt; NULL</span></span>
@@ -688,7 +688,7 @@ her with her brothers. Oh, dear.</p>
 homozygous brood from this mating.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/calcQueensPHomBrood.html">pHomBrood</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.1</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.35</span></span></code></pre></div>
 <p>Let’s see how many homozygotes will we observe. Note that inheritance
 is a random process, so a realised number of homozygotes will deviate
 from the expected proportion.</p>
@@ -700,7 +700,7 @@ from the expected proportion.</p>
 <span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: 255 </span></span>
 <span><span class="co">#&gt; Number of fathers: 10 </span></span>
-<span><span class="co">#&gt; Number of workers: 94 </span></span>
+<span><span class="co">#&gt; Number of workers: 68 </span></span>
 <span><span class="co">#&gt; Number of drones: 0 </span></span>
 <span><span class="co">#&gt; Number of virgin queens: 0 </span></span>
 <span><span class="co">#&gt; Has split: FALSE </span></span>
@@ -709,8 +709,8 @@ from the expected proportion.</p>
 <span><span class="co">#&gt; Has collapsed: FALSE </span></span>
 <span><span class="co">#&gt; Is productive: FALSE</span></span>
 <span><span class="fu"><a href="../reference/calcQueensPHomBrood.html">nHomBrood</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 6</span></span></code></pre></div>
-<p>We tried adding 100 workers, but we only got 94. The difference of 6
+<span><span class="co">#&gt; [1] 32</span></span></code></pre></div>
+<p>We tried adding 100 workers, but we only got 68. The difference of 32
 is due to <em>CSD</em> homozygous brood. Let’s add another set of
 workers to show variation in the realised numbers and accumulation of
 information.</p>
@@ -722,7 +722,7 @@ information.</p>
 <span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: 255 </span></span>
 <span><span class="co">#&gt; Number of fathers: 10 </span></span>
-<span><span class="co">#&gt; Number of workers: 179 </span></span>
+<span><span class="co">#&gt; Number of workers: 133 </span></span>
 <span><span class="co">#&gt; Number of drones: 0 </span></span>
 <span><span class="co">#&gt; Number of virgin queens: 0 </span></span>
 <span><span class="co">#&gt; Has split: FALSE </span></span>
@@ -731,8 +731,8 @@ information.</p>
 <span><span class="co">#&gt; Has collapsed: FALSE </span></span>
 <span><span class="co">#&gt; Is productive: FALSE</span></span>
 <span><span class="fu"><a href="../reference/calcQueensPHomBrood.html">nHomBrood</a></span><span class="op">(</span><span class="va">inbredColony</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 21</span></span></code></pre></div>
-<p>In total we tried adding 200 workers. We got 179 workers and 21
+<span><span class="co">#&gt; [1] 67</span></span></code></pre></div>
+<p>In total we tried adding 200 workers. We got 133 workers and 67
 homozygous brood. To see all this information, we can inspect the
 miscellaneous slot of the queen that contains the fathers population as
 well as the cumulative number of workers, drones, homozygous brood, and
@@ -749,16 +749,16 @@ the expected proportion of homozygous brood.</p>
 <span><span class="co">#&gt; Traits: 0 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$nWorkers</span></span>
-<span><span class="co">#&gt; [1] 179</span></span>
+<span><span class="co">#&gt; [1] 133</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$nDrones</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$nHomBrood</span></span>
-<span><span class="co">#&gt; [1] 21</span></span>
+<span><span class="co">#&gt; [1] 67</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[1]]$pHomBrood</span></span>
-<span><span class="co">#&gt; [1] 0.1</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.35</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

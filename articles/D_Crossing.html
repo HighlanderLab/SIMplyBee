@@ -336,19 +336,19 @@ them out all at once.</p>
 sampling function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">droneGroups</span>, FUN <span class="op">=</span> <span class="va">nInd</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 14 17 18 15 15 18 14 20 23  8 22  8 17 23 14 15 16 15 14  8</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] 13  6 18 10 18 11 18 16 14 15  9 11 13 21 18 11 18 12 14  8</span></span></code></pre></div>
 <p>Now, we can cross our virgin queens to drone groups.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pop-class with multiple queens</span></span>
 <span><span class="va">queens1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">virginQueens1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">queens1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 14 17 18</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 13  6 18</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># MultiColony-class</span></span>
 <span><span class="va">beekeeper1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  1  2  3  4  5  6 </span></span>
-<span><span class="co">#&gt; 15 15 18 14 20 23</span></span></code></pre></div>
+<span><span class="co">#&gt; 10 18 11 18 16 14</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="option-3-cross-according-to-a-provided-cross-plan">Option 3: Cross according to a provided cross plan<a class="anchor" aria-label="anchor" href="#option-3-cross-according-to-a-provided-cross-plan"></a>
@@ -402,28 +402,30 @@ virgin colonies from one of the beekeepers.</p>
 <span><span class="co"># Inspect the cross plan</span></span>
 <span><span class="va">crossPlan1</span></span>
 <span><span class="co">#&gt; $`7`</span></span>
-<span><span class="co">#&gt;  [1] "5597" "221"  "6454" "6606" "2728" "5506" "3365" "8181" "978"  "6702"</span></span>
-<span><span class="co">#&gt; [11] "7844" "100"  "4774"</span></span>
+<span><span class="co">#&gt;  [1] "3718" "7820" "8240" "5775" "4281" "6871" "6648" "6183" "8616" "2837"</span></span>
+<span><span class="co">#&gt; [11] "5332" "7904" "7940" "7489" "1780" "4373" "3238" "5607" "7893" "5498"</span></span>
+<span><span class="co">#&gt; [21] "4722"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`8`</span></span>
-<span><span class="co">#&gt;  [1] "5541" "6303" "334"  "1846" "1061" "4045" "6207" "8419" "5570" "7753"</span></span>
-<span><span class="co">#&gt; [11] "8688" "1519" "4483" "838"  "8425" "2210" "1465"</span></span>
+<span><span class="co">#&gt;  [1] "6129" "396"  "4006" "3685" "4714" "6924" "8679" "282"  "5631" "8873"</span></span>
+<span><span class="co">#&gt; [11] "3340" "2291" "841"  "8347" "1106"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`9`</span></span>
-<span><span class="co">#&gt;  [1] "5995" "5318" "1876" "2304" "6052" "8659" "7024" "1795" "1390" "6421"</span></span>
-<span><span class="co">#&gt; [11] "7869" "7343" "7624" "8393" "2012" "2768" "3352" "6653" "7708" "2209"</span></span>
-<span><span class="co">#&gt; [21] "8364"</span></span>
+<span><span class="co">#&gt;  [1] "3355" "6953" "8849" "1327" "7726" "6638" "5732" "707"  "6788" "7886"</span></span>
+<span><span class="co">#&gt; [11] "5424" "2101" "200"  "5231" "4497" "210"  "8978"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`10`</span></span>
-<span><span class="co">#&gt;  [1] "7711" "2424" "2088" "1531" "4088" "4249" "1106" "2287" "1187" "5194"</span></span>
-<span><span class="co">#&gt; [11] "5915" "7370" "8182"</span></span>
+<span><span class="co">#&gt;  [1] "6641" "4619" "6839" "3463" "5873" "2380" "2522" "6429" "3972" "4008"</span></span>
+<span><span class="co">#&gt; [11] "5866" "3443" "931"  "5375" "5281" "4088" "6553" "1017" "7738" "4852"</span></span>
+<span><span class="co">#&gt; [21] "4979" "3963" "8358" "6385" "3099" "3269" "1026" "3831" "1590" "632" </span></span>
+<span><span class="co">#&gt; [31] "8538"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`11`</span></span>
-<span><span class="co">#&gt;  [1] "4532" "3744" "3317" "1627" "6074" "1112" "5886" "2621" "3644" "5578"</span></span>
-<span><span class="co">#&gt; [11] "4006" "478"  "7736"</span></span>
+<span><span class="co">#&gt;  [1] "5251" "2867" "2528" "3628" "346"  "5097" "1157" "1375" "5762" "6453"</span></span>
+<span><span class="co">#&gt; [11] "3165" "8216" "503"  "1273" "8269" "6609"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">crossPlan1</span>, <span class="va">length</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  7  8  9 10 11 </span></span>
-<span><span class="co">#&gt; 13 17 21 13 13</span></span></code></pre></div>
+<span><span class="co">#&gt; 21 15 17 31 16</span></span></code></pre></div>
 <p>We see that the cross plan is a list, with names being colony IDs and
 elements of the list being the ID of drones that each virgin colony will
 mate with. Now, we can cross the colonies of each beekeeper by providing
@@ -434,7 +436,7 @@ created DCA through the <code>drones</code> argument.</p>
 <span><span class="va">beekeeper2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beekeeper2</span>, drones <span class="op">=</span> <span class="va">DCA</span>, crossPlan <span class="op">=</span> <span class="va">crossPlan1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper2</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  7  8  9 10 11 </span></span>
-<span><span class="co">#&gt; 13 17 21 13 13</span></span></code></pre></div>
+<span><span class="co">#&gt; 21 15 17 31 16</span></span></code></pre></div>
 <p>Now, let us now create a spatial cross plan, this time by sampling
 drone producing colonies that will provide drones to mate with another
 one of our virgin apiaries. We will mate colonies of beekeeper 3. In
@@ -480,22 +482,22 @@ believe that drones aggregate in a DCA.</p>
 <span><span class="co"># Inspect the cross plan</span></span>
 <span><span class="va">crossPlan2</span></span>
 <span><span class="co">#&gt; $`12`</span></span>
-<span><span class="co">#&gt; [1] "11" "4"  "9"  "6"  "1" </span></span>
+<span><span class="co">#&gt; [1] "3" "5" "6"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`13`</span></span>
-<span><span class="co">#&gt; [1] "5" "3" "2"</span></span>
+<span><span class="co">#&gt; [1] "9"  "11" "2"  "6"  "5" </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`14`</span></span>
-<span><span class="co">#&gt; [1] "11" "4"  "9"  "6"  "1" </span></span>
+<span><span class="co">#&gt; [1] "4"  "8"  "7"  "5"  "10" "6" </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`15`</span></span>
-<span><span class="co">#&gt; [1] "1" "7" "9" "8"</span></span>
+<span><span class="co">#&gt; [1] "6"  "5"  "9"  "11" "2" </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`16`</span></span>
-<span><span class="co">#&gt; [1] "7"  "8"  "9"  "6"  "10" "1"</span></span>
+<span><span class="co">#&gt; [1] "9"  "11" "6"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">crossPlan2</span>, <span class="va">length</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 12 13 14 15 16 </span></span>
-<span><span class="co">#&gt;  5  3  5  4  6</span></span></code></pre></div>
+<span><span class="co">#&gt;  3  5  6  5  3</span></span></code></pre></div>
 <p>We see that there is a different number of drone producing queen for
 each virgin queen in the specified radius . It could also happen, there
 are no drone producing colonies in that radius. In that case, you can
@@ -647,7 +649,7 @@ multicolony of beekeeper 4 in such a manner.</p>
 <span>                    drones <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">singleDrone</span>, <span class="va">DCA</span>, <span class="va">matingStationDCA</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">beekeeper7</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 46 47 48 49 50 51 52 53 54 55 </span></span>
-<span><span class="co">#&gt;  1 17  9 13 10 14 12 15 13 21</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 18 10 14 16 18 15 12 12 11</span></span></code></pre></div>
 </div>
 </div>
   </div>

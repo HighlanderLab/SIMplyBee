@@ -113,7 +113,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sampling functions</h1>
             
-            <h4 data-toc-skip class="date">2023-12-21</h4>
+            <h4 data-toc-skip class="date">2023-12-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/HighlanderLab/SIMplyBee/blob/HEAD/vignettes/G_Sampling_functions.Rmd" class="external-link"><code>vignettes/G_Sampling_functions.Rmd</code></a></small>
       <div class="hidden name"><code>G_Sampling_functions.Rmd</code></div>
@@ -179,15 +179,15 @@ values and inspect the distribution and the mean.</p>
 drones from the DCA to mate with each of the 10 virgin queens.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">droneGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA</a></span><span class="op">(</span>DCA <span class="op">=</span> <span class="va">DCA</span>, n <span class="op">=</span> <span class="fl">10</span>, nDrones <span class="op">=</span> <span class="va">nFathersPoisson</span><span class="op">)</span></span>
-<span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">droneGroups</span>, checkCross <span class="op">=</span> <span class="st">"warning"</span><span class="op">)</span></span></code></pre></div>
 <p>And inspect the number of fathers in each of the colony and their
 mean.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  1  2  3  4  5  6  7  8  9 10 </span></span>
-<span><span class="co">#&gt; 10 18 17 12 14 24 14 19 22 22</span></span>
+<span><span class="co">#&gt; 12 16 22 11 18 16 16 19 10 13</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 17.2</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 15.3</span></span></code></pre></div>
 <p>Second, we have a group of functions that will sample the number of
 individuals according to the colony phenotype, whatever that might be.
 These functions are named <code>n*ColonyPhenotype()</code>, where
@@ -227,7 +227,7 @@ percentage of workers that leave.</p>
 <span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/swarm.html">swarm</a></span><span class="op">(</span><span class="va">apiary</span>, p <span class="op">=</span> <span class="fu"><a href="../reference/swarmPFun.html">swarmPUnif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, min <span class="op">=</span> <span class="fl">0.5</span>, max <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/nCaste.html">nWorkers</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">swarm</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  11  13  15  17  19  21  23  25  27  29 </span></span>
-<span><span class="co">#&gt; 578 674 537 536 648 692 551 655 626 510</span></span></code></pre></div>
+<span><span class="co">#&gt; 690 546 549 644 686 588 502 611 594 662</span></span></code></pre></div>
 <p>We see that each colony swarmed with a different percentage between
 0.5 and 0.7.</p>
 </div>

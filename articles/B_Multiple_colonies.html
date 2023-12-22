@@ -113,7 +113,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Multiple colonies</h1>
             
-            <h4 data-toc-skip class="date">2023-12-21</h4>
+            <h4 data-toc-skip class="date">2023-12-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/HighlanderLab/SIMplyBee/blob/HEAD/vignettes/B_Multiple_colonies.Rmd" class="external-link"><code>vignettes/B_Multiple_colonies.Rmd</code></a></small>
       <div class="hidden name"><code>B_Multiple_colonies.Rmd</code></div>
@@ -332,7 +332,7 @@ to collect at least as many groups of drones as we have colonies in our
 <code class="sourceCode R"><span><span class="co"># Pull 10 groups of drones from the DCA</span></span>
 <span><span class="va">droneGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA</a></span><span class="op">(</span><span class="va">DCA</span>, n <span class="op">=</span> <span class="fl">10</span>, nDrones <span class="op">=</span> <span class="va">nFathersPoisson</span><span class="op">)</span></span>
 <span><span class="co"># Cross all virgin queens in the apiary to the selected drones</span></span>
-<span><span class="va">apiary1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">)</span></span>
+<span><span class="va">apiary1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary1</span>, drones <span class="op">=</span> <span class="va">droneGroups</span>, checkCross <span class="op">=</span> <span class="st">"warning"</span><span class="op">)</span></span>
 <span><span class="co"># Check whether the queens are present (and hence mated)</span></span>
 <span><span class="fu"><a href="../reference/isQueenPresent.html">isQueenPresent</a></span><span class="op">(</span><span class="va">apiary1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    1    2    3    4    5    6    7    8    9   10 </span></span>
@@ -399,7 +399,7 @@ the DCA.</p>
 <span>                                      n <span class="op">=</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary2</span><span class="op">)</span>, </span>
 <span>                                      nDrones <span class="op">=</span> <span class="va">nFathersPoisson</span><span class="op">)</span></span>
 <span><span class="co"># Cross virgin queens in apiary2 to selected drones</span></span>
-<span><span class="va">apiary2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary2</span>, drones <span class="op">=</span> <span class="va">droneGroups</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">apiary2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary2</span>, drones <span class="op">=</span> <span class="va">droneGroups</span>, checkCross <span class="op">=</span> <span class="st">"warning"</span><span class="op">)</span></span></code></pre></div>
 <p>To learn more about the <code><a href="../reference/nFathersFun.html">nFathersPoisson()</a></code> function and
 other similar functions, read the Sampliong functions vignette.</p>
 </div>

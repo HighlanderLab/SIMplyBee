@@ -113,7 +113,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Colony events</h1>
             
-            <h4 data-toc-skip class="date">2023-12-21</h4>
+            <h4 data-toc-skip class="date">2023-12-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/HighlanderLab/SIMplyBee/blob/HEAD/vignettes/C_Colony_events.Rmd" class="external-link"><code>vignettes/C_Colony_events.Rmd</code></a></small>
       <div class="hidden name"><code>C_Colony_events.Rmd</code></div>
@@ -151,11 +151,11 @@ colony events.</p>
 <span></span>
 <span><span class="co"># Create Colony and MultiColony class, cross them and build them up</span></span>
 <span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">11</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony</span>, drones <span class="op">=</span> <span class="va">fatherGroups</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">colony</span>, drones <span class="op">=</span> <span class="va">fatherGroups</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, checkCross <span class="op">=</span> <span class="st">"warning"</span><span class="op">)</span></span>
 <span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">colony</span>, nWorkers <span class="op">=</span> <span class="fl">100</span>, nDrones <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">12</span><span class="op">:</span><span class="fl">17</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">fatherGroups</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span><span class="va">apiary</span>, drones <span class="op">=</span> <span class="va">fatherGroups</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, checkCross <span class="op">=</span> <span class="st">"warning"</span><span class="op">)</span></span>
 <span><span class="va">apiary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">apiary</span>, nWorkers <span class="op">=</span> <span class="fl">100</span>, nDrones <span class="op">=</span> <span class="fl">20</span>, exact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -188,8 +188,8 @@ left the hive. The <code>remnant</code> contains the rest of workers
 <code>(1-p)</code>, all the drones, and virgin queens that are daughters
 of the old queen that swarmed.</p>
 <div class="figure">
-<img src="../articles/swarm.png" alt="Swarm function." width="100%"><p class="caption">
-Swarm function.
+<img src="swarm.png" alt="Swarm function" width="100%"><p class="caption">
+Swarm function
 </p>
 </div>
 <ul>
@@ -423,7 +423,7 @@ queen, but contains virgin queens and <code>p</code> workers. The
 <code><a href="../reference/split.html">split()</a></code> function follows the same principles as the
 <code><a href="../reference/swarm.html">swarm()</a></code>, hence we will limit explaining the outputs.</p>
 <div class="figure">
-<img src="../articles/split.png" alt="Split function" width="80%"><p class="caption">
+<img src="split.png" alt="Split function" width="80%"><p class="caption">
 Split function
 </p>
 </div>
@@ -510,7 +510,7 @@ function - see <code>SimParamBee$splitP</code>.</p>
 <span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: 12 </span></span>
 <span><span class="co">#&gt; Number of fathers: 10 </span></span>
-<span><span class="co">#&gt; Number of workers: 65 </span></span>
+<span><span class="co">#&gt; Number of workers: 70 </span></span>
 <span><span class="co">#&gt; Number of drones: 100 </span></span>
 <span><span class="co">#&gt; Number of virgin queens: 0 </span></span>
 <span><span class="co">#&gt; Has split: TRUE </span></span>
@@ -526,7 +526,7 @@ function - see <code>SimParamBee$splitP</code>.</p>
 <span><span class="co">#&gt; Location: 0 0 </span></span>
 <span><span class="co">#&gt; Queen: NA </span></span>
 <span><span class="co">#&gt; Number of fathers: 0 </span></span>
-<span><span class="co">#&gt; Number of workers: 28 </span></span>
+<span><span class="co">#&gt; Number of workers: 30 </span></span>
 <span><span class="co">#&gt; Number of drones: 0 </span></span>
 <span><span class="co">#&gt; Number of virgin queens: 1 </span></span>
 <span><span class="co">#&gt; Has split: TRUE </span></span>
@@ -557,7 +557,7 @@ the creation of new virgin queens from the brood (Figure 3). The
 function returns a single <code>Colony</code> or
 <code>MultiColony</code> object (not a list of two).</p>
 <div class="figure">
-<img src="../articles/supersede.png" alt="Supersede function" width="50%"><p class="caption">
+<img src="supersede.png" alt="Supersede function" width="50%"><p class="caption">
 Supersede function
 </p>
 </div>
@@ -626,7 +626,7 @@ genetic causes related to the collapse. Future operations in terms of
 reproduction or simulation of events are not allowed with a collapsed
 colony.</p>
 <div class="figure">
-<img src="../articles/collapse.png" alt="Collapse function" width="50%"><p class="caption">
+<img src="collapse.png" alt="Collapse function" width="50%"><p class="caption">
 Collapse function
 </p>
 </div>

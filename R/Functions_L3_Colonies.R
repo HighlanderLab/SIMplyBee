@@ -46,9 +46,15 @@
 #' apiary
 #' apiary[[1]]
 #' apiary[[2]]
-#'
 #' @export
-createMultiColony <- function(x = NULL, n = NULL, simParamBee = NULL) {
+setGeneric("createMultiColony", function(multicolony, x = NULL, n = NULL, simParamBee = NULL) {
+  standardGeneric("createMultiColony")
+})
+
+#' @describeIn createMultiColony
+#' @export
+setMethod("createMultiColony", signature(multicolony = "MultiColony"),
+function(x = NULL, n = NULL, simParamBee = NULL) {
   if (is.null(simParamBee)) {
     simParamBee <- get(x = "SP", envir = .GlobalEnv)
   }
@@ -78,8 +84,7 @@ createMultiColony <- function(x = NULL, n = NULL, simParamBee = NULL) {
   }
   validObject(ret)
   return(ret)
-}
-
+})
 #' @rdname selectColonies
 #' @title Select colonies from MultiColony object
 #'
@@ -163,8 +168,16 @@ createMultiColony <- function(x = NULL, n = NULL, simParamBee = NULL) {
 #' selectColonies(apiary, n = 1, by = queenGv)
 #'
 #' @export
-selectColonies <- function(multicolony, ID = NULL, n = NULL, p = NULL,
-                           by = NULL, selectTop = TRUE, simParamBee = NULL) {
+setGeneric("selectColonies", function(multicolony, ID = NULL, n = NULL, p = NULL,
+                                       by = NULL, selectTop = TRUE, simParamBee = NULL) {
+  standardGeneric("selectColonies")
+})
+
+#' @describeIn selectColonies
+#' @export
+setMethod("selectColonies", signature(multicolony = "MultiColony"),
+function(multicolony, ID = NULL, n = NULL, p = NULL,
+         by = NULL, selectTop = TRUE, simParamBee = NULL) {
   if (!isMultiColony(multicolony)) {
     stop("Argument multicolony must be a MultiColony class object!")
   }
@@ -219,7 +232,7 @@ selectColonies <- function(multicolony, ID = NULL, n = NULL, p = NULL,
   }
   validObject(ret)
   return(ret)
-}
+})
 
 #' @rdname pullColonies
 #' @title Pull out some colonies from the MultiColony object
@@ -293,8 +306,16 @@ selectColonies <- function(multicolony, ID = NULL, n = NULL, p = NULL,
 #' colonyGv <- calcColonyGv(apiary)
 #' pullColonies(apiary, n = 1, by = colonyGv)
 #' @export
-pullColonies <- function(multicolony, ID = NULL, n = NULL, p = NULL,
-                         by = NULL, pullTop = TRUE, simParamBee = NULL) {
+setGeneric("pullColonies", function(multicolony, ID = NULL, n = NULL, p = NULL,
+                                    by = NULL, pullTop = TRUE, simParamBee = NULL) {
+  standardGeneric("pullColonies")
+})
+
+#' @describeIn pullColonies
+#' @export
+setMethod("pullColonies", signature(multicolony = "MultiColony"),
+function(multicolony, ID = NULL, n = NULL, p = NULL,
+         by = NULL, pullTop = TRUE, simParamBee = NULL) {
   if (!isMultiColony(multicolony)) {
     stop("Argument multicolony must be a MultiColony class object!")
   }
@@ -339,7 +360,7 @@ pullColonies <- function(multicolony, ID = NULL, n = NULL, p = NULL,
   validObject(ret$pulled)
   validObject(ret$remnant)
   return(ret)
-}
+})
 
 #' @rdname removeColonies
 #' @title Remove some colonies from the MultiColony object
@@ -406,42 +427,50 @@ pullColonies <- function(multicolony, ID = NULL, n = NULL, p = NULL,
 #' removeColonies(apiary, n = 1, by = colonyPheno)
 #'
 #' @export
-removeColonies <- function(multicolony,  ID = NULL, n = NULL, p = NULL,
-                           by = NULL, removeTop = FALSE, simParamBee = NULL) {
-  if (!isMultiColony(multicolony)) {
-    stop("Argument multicolony must be a MultiColony class object!")
-  }
-  if (is.null(simParamBee)) {
-    simParamBee <- get(x = "SP", envir = .GlobalEnv)
-  }
-  if (!is.null(ID)) {
-    trueID <- ID %in% getId(multicolony)
-    if (!all(trueID)) {
-      ID <- ID[trueID]
-      warning("ID parameter contains come invalid IDs!")
-    }
-    ret <- selectColonies(multicolony,
-                          ID = getId(multicolony)[!getId(multicolony) %in% ID],
-                          simParamBee = simParamBee)
-  } else if (!is.null(n) | !is.null(p)) {
-    nCol <- nColonies(multicolony)
-    if (!is.null(p)) {
-      n <- round(nCol * p)
-    }
-    if (is.null(by)) {
-      lSel <- sample.int(n = nCol, size = (nCol - n))
-      message(paste0("Randomly removing colonies: ", n))
-    } else {
-      lSel <- rownames(by)[order(by, decreasing = !removeTop)[1:(nCol - n)]]
-    }
-    if (length(lSel) > 0) {
-      ret <- multicolony[lSel]
-    } else {
-      ret <- multicolony
-    }
-  } else {
-    stop("You must provide either ID, n, or p!")
-  }
-  validObject(ret)
-  return(ret)
-}
+setGeneric("removeColonies", function(multicolony,  ID = NULL, n = NULL, p = NULL,
+                                      by = NULL, removeTop = FALSE, simParamBee = NULL) {
+  standardGeneric("removeColonies")
+})
+
+#' @describeIn removeColonies
+#' @export
+setMethod("removeColonies", signature(multicolony = "MultiColony"),
+          function(multicolony,  ID = NULL, n = NULL, p = NULL,
+                   by = NULL, removeTop = FALSE, simParamBee = NULL) {
+            if (!isMultiColony(multicolony)) {
+              stop("Argument multicolony must be a MultiColony class object!")
+            }
+            if (is.null(simParamBee)) {
+              simParamBee <- get(x = "SP", envir = .GlobalEnv)
+            }
+            if (!is.null(ID)) {
+              trueID <- ID %in% getId(multicolony)
+              if (!all(trueID)) {
+                ID <- ID[trueID]
+                warning("ID parameter contains come invalid IDs!")
+              }
+              ret <- selectColonies(multicolony,
+                                    ID = getId(multicolony)[!getId(multicolony) %in% ID],
+                                    simParamBee = simParamBee)
+            } else if (!is.null(n) | !is.null(p)) {
+              nCol <- nColonies(multicolony)
+              if (!is.null(p)) {
+                n <- round(nCol * p)
+              }
+              if (is.null(by)) {
+                lSel <- sample.int(n = nCol, size = (nCol - n))
+                message(paste0("Randomly removing colonies: ", n))
+              } else {
+                lSel <- rownames(by)[order(by, decreasing = !removeTop)[1:(nCol - n)]]
+              }
+              if (length(lSel) > 0) {
+                ret <- multicolony[lSel]
+              } else {
+                ret <- multicolony
+              }
+            } else {
+              stop("You must provide either ID, n, or p!")
+            }
+            validObject(ret)
+            return(ret)
+          })

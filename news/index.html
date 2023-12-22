@@ -95,7 +95,8 @@
 <ul><li>2023-MM-DD TODO</li>
 </ul><div class="section level3">
 <h3 id="major-changes-0-4-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-4-0"></a></h3>
-<ul><li>createColony() and createMultiColony() do not have the location argument anymore; use setLocation() instead; by default, location is now c(0, 0) PR#500</li>
+<ul><li><p>createColony() and createMultiColony() do not have the location argument anymore; use setLocation() instead; by default, location is now c(0, 0) PR#500</p></li>
+<li><p>Our website: www.simplybee.info now is fully updated and autoupdates with every Github change</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-4-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-4-0"></a></h3>
@@ -105,12 +106,13 @@
 <li><p>New function rcircle() to sample a random point within a circle with a given radius PR#502</p></li>
 <li><p>Removed the function createRandomCrossPlan() - that option is now included in the newly added createCrossPlan() fuction</p></li>
 <li><p>Added the funcionality for spatially-aware mating of honeybee colonies. The new funcionality is included in the createCrossPlan(), that allows to create the cross plan according to the colonies’ locations, and in the cross() function, that crosses bees according to their location</p></li>
+<li><p>Through blood, sweat and tears behind the scenes, we now consistently pass SimParamBee in all functions and test.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-4-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a></h3>
-<ul><li><p>Bug fix - get*Haplo() functions were returning diploid drones when input was a Pop-class</p></li>
-<li>
-</li></ul></div>
+<ul><li>Bug fix - get*Haplo() functions were returning diploid drones when input was a Pop-class</li>
+<li>Bug fix - Honeybee Biology vignette was not recognising founderpop.png during devel::check</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="simplybee-version-030">SIMplyBee version 0.3.0<small>2022-12-15</small><a class="anchor" aria-label="anchor" href="#simplybee-version-030"></a></h2>

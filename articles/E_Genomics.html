@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Genomics • SIMplyBee</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -113,7 +113,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Genomics</h1>
             
-            <h4 data-toc-skip class="date">2023-12-22</h4>
+            <h4 data-toc-skip class="date">2024-06-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/HighlanderLab/SIMplyBee/blob/HEAD/vignettes/E_Genomics.Rmd" class="external-link"><code>vignettes/E_Genomics.Rmd</code></a></small>
       <div class="hidden name"><code>E_Genomics.Rmd</code></div>
@@ -141,8 +141,9 @@ honey bee’s genomic information. Specifically, it describes:</p>
 <span><span class="co">#&gt; Attaching package: 'SIMplyBee'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     split</span></span>
-<span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/quickHaplo.html" class="external-link">quickHaplo</a></span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">2</span>, nChr <span class="op">=</span> <span class="fl">3</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     split</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/quickHaplo.html" class="external-link">quickHaplo</a></span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">2</span>, nChr <span class="op">=</span> <span class="fl">3</span>, segSites <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
 <span><span class="va">SP</span><span class="op">$</span><span class="fu">setTrackRec</span><span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span> <span class="co"># request recombination tracking</span></span>
 <span></span>
@@ -189,155 +190,155 @@ and the first column shows haplotype identifications
 (individual_haplotype). The alleles are represented with a sequence of
 0’s and 1’s. Let’s first obtain the information at the segregating sites
 for the queen (we limit the output to the first 10 sites):</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteHaplo.html">getSegSiteHaplo</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"queen"</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;     1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 2_1   1   1   0   1   1   1   1   0   0    1</span></span>
-<span><span class="co">#&gt; 2_2   0   1   1   1   0   1   0   0   0    1</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; 2_1   1   1   0   1   0   1   0   0   0    0</span></span>
+<span><span class="co">#&gt; 2_2   0   1   1   0   0   0   0   1   1    1</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"queen"</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;  1_1  1_2  1_3  1_4  1_5  1_6  1_7  1_8  1_9 1_10 </span></span>
-<span><span class="co">#&gt;    1    2    1    2    1    2    1    0    0    2</span></span></code></pre></div>
+<span><span class="co">#&gt;    1    2    1    1    0    1    0    1    1    1</span></span></code></pre></div>
 <p>Now for the fathers:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteHaplo.html">getSegSiteHaplo</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"fathers"</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 6_1    1   0   0   1   1   1   0   0   0    0</span></span>
-<span><span class="co">#&gt; 3_1    1   0   0   1   1   1   0   0   0    0</span></span>
-<span><span class="co">#&gt; 14_1   1   0   0   1   1   1   0   0   0    0</span></span>
-<span><span class="co">#&gt; 5_1    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 17_1   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 15_1   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 8_1    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 13_1   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 4_1    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 16_1   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 9_1    1   0   0   1   1   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 11_1   0   0   0   1   0   0   1   0   0    0</span></span>
-<span><span class="co">#&gt; 7_1    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 10_1   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 12_1   0   0   0   1   0   0   1   0   1    0</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; 12_1   0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 16_1   0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 15_1   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 17_1   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 9_1    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 7_1    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 10_1   0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 11_1   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 14_1   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 8_1    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 3_1    0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 13_1   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 4_1    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 6_1    0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 5_1    0   0   1   0   0   0   0   0   0    1</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"fathers"</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;    1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 7    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 6    1   0   0   1   1   1   0   0   0    0</span></span>
-<span><span class="co">#&gt; 17   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 12   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 14   1   0   0   1   1   1   0   0   0    0</span></span>
-<span><span class="co">#&gt; 3    1   0   0   1   1   1   0   0   0    0</span></span>
-<span><span class="co">#&gt; 15   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 10   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 16   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 5    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 8    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 13   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 4    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 11   0   0   0   1   0   0   1   0   0    0</span></span>
-<span><span class="co">#&gt; 9    1   0   0   1   1   0   1   0   1    0</span></span></code></pre></div>
+<span><span class="co">#&gt; 15   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 11   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 16   0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 4    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 6    0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 8    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 9    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 12   0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 5    0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 13   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 14   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 7    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 10   0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 17   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 3    0   0   1   0   0   0   0   0   0    1</span></span></code></pre></div>
 <p>Since father are drones, and these are haploid, we get one row per
 father. We can retrieve the doublet-haploid (diploid implementation)
 state, if this is desired (showing just one father to show this
 clearly):</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteHaplo.html">getSegSiteHaplo</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"fathers"</span>, </span>
 <span>                nInd <span class="op">=</span> <span class="fl">1</span>, dronesHaploid <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;  1_1  1_2  1_3  1_4  1_5  1_6  1_7  1_8  1_9 1_10 </span></span>
-<span><span class="co">#&gt;    0    0    0    1    0    0    1    0    1    0</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt;    0    0    1    1    0    1    0    1    0    1</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"fathers"</span>, </span>
 <span>               nInd <span class="op">=</span> <span class="fl">1</span>, dronesHaploid <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
-<span><span class="co">#&gt;   1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 8   0   0   0   2   0   0   2   0   2    0</span></span></code></pre></div>
+<span><span class="co">#&gt;    1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
+<span><span class="co">#&gt; 11   0   0   2   2   0   2   0   2   0    2</span></span></code></pre></div>
 <p>Now two workers:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteHaplo.html">getSegSiteHaplo</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"workers"</span>, nInd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 65_1   0   1   1   1   0   1   0   0   0    1</span></span>
-<span><span class="co">#&gt; 65_2   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 69_1   1   1   0   1   1   1   1   0   0    1</span></span>
-<span><span class="co">#&gt; 69_2   0   0   0   1   0   0   1   0   1    0</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"workers"</span>, nInd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
-<span><span class="co">#&gt;    1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 71   0   1   1   2   0   1   1   0   1    1</span></span>
-<span><span class="co">#&gt; 43   0   1   1   2   0   1   1   0   1    1</span></span></code></pre></div>
-<p>And finally four drones:</p>
+<span><span class="co">#&gt; 63_1   0   1   1   0   0   0   0   1   1    1</span></span>
+<span><span class="co">#&gt; 63_2   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 52_1   1   1   0   1   0   1   0   0   0    0</span></span>
+<span><span class="co">#&gt; 52_2   0   0   1   1   0   1   0   1   0    1</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"workers"</span>, nInd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span><span class="co">#&gt;     1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
+<span><span class="co">#&gt; 25    0   1   2   1   0   1   0   2   1    2</span></span>
+<span><span class="co">#&gt; 102   1   1   1   2   0   2   0   1   0    1</span></span></code></pre></div>
+<p>And finally four drones:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteHaplo.html">getSegSiteHaplo</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"drones"</span>, nInd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;       1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 184_1   0   1   1   1   0   1   0   0   0    1</span></span>
-<span><span class="co">#&gt; 212_1   1   1   0   1   1   1   1   0   0    1</span></span>
-<span><span class="co">#&gt; 132_1   1   1   0   1   1   1   1   0   0    1</span></span>
-<span><span class="co">#&gt; 164_1   0   1   1   1   0   1   0   0   0    1</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; 129_1   0   1   1   0   0   0   0   1   1    1</span></span>
+<span><span class="co">#&gt; 163_1   0   1   1   0   0   0   0   1   1    1</span></span>
+<span><span class="co">#&gt; 146_1   1   1   0   1   0   1   0   0   0    0</span></span>
+<span><span class="co">#&gt; 149_1   0   1   1   0   0   0   0   1   1    0</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"drones"</span>, nInd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;     1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 121   0   1   1   1   0   1   0   0   0    1</span></span>
-<span><span class="co">#&gt; 131   1   1   0   1   1   1   1   0   0    1</span></span>
-<span><span class="co">#&gt; 167   1   1   0   1   1   1   1   0   0    1</span></span>
-<span><span class="co">#&gt; 194   1   1   0   1   1   1   1   0   0    1</span></span></code></pre></div>
+<span><span class="co">#&gt; 197   1   1   0   1   0   1   0   0   0    0</span></span>
+<span><span class="co">#&gt; 118   0   1   1   0   0   0   0   1   1    1</span></span>
+<span><span class="co">#&gt; 168   0   1   1   0   0   0   0   1   1    1</span></span>
+<span><span class="co">#&gt; 128   0   1   1   0   0   0   0   1   1    1</span></span></code></pre></div>
 <p>You can also use <code>caste = "all"</code> to get the haplotypes and
 phenotypes from every individual in the colony. If the argument
 <code>collapse</code> is set to <code>FALSE</code>, then the function
 returns a list with haplotypes for each caste. Let’s explore the
 structure of the output:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/getSegSiteHaplo.html">getSegSiteHaplo</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"all"</span>, collapse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 5</span></span>
-<span><span class="co">#&gt;  $ queen       : int [1:2, 1:300] 1 0 1 1 0 1 1 1 1 0 ...</span></span>
+<span><span class="co">#&gt;  $ queen       : int [1:2, 1:300] 1 0 1 1 0 1 1 0 0 0 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "2_1" "2_2"</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:300] "1_1" "1_2" "1_3" "1_4" ...</span></span>
-<span><span class="co">#&gt;  $ fathers     : int [1:15, 1:300] 1 0 1 0 1 1 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ fathers     : int [1:15, 1:300] 0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. ..$ : chr [1:15] "3_1" "7_1" "9_1" "8_1" ...</span></span>
+<span><span class="co">#&gt;   .. ..$ : chr [1:15] "11_1" "13_1" "4_1" "7_1" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:300] "1_1" "1_2" "1_3" "1_4" ...</span></span>
-<span><span class="co">#&gt;  $ workers     : int [1:200, 1:300] 0 1 0 0 1 1 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ workers     : int [1:200, 1:300] 1 0 1 0 1 0 1 0 0 0 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. ..$ : chr [1:200] "40_1" "40_2" "54_1" "54_2" ...</span></span>
+<span><span class="co">#&gt;   .. ..$ : chr [1:200] "109_1" "109_2" "84_1" "84_2" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:300] "1_1" "1_2" "1_3" "1_4" ...</span></span>
-<span><span class="co">#&gt;  $ drones      : int [1:100, 1:300] 0 0 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">#&gt;  $ drones      : int [1:100, 1:300] 0 1 1 0 0 0 0 0 1 1 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. ..$ : chr [1:100] "137_1" "204_1" "147_1" "124_1" ...</span></span>
+<span><span class="co">#&gt;   .. ..$ : chr [1:100] "168_1" "170_1" "195_1" "133_1" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:300] "1_1" "1_2" "1_3" "1_4" ...</span></span>
 <span><span class="co">#&gt;  $ virginQueens: NULL</span></span></code></pre></div>
 <p>If the argument <code>collapse</code> is set to <code>TRUE</code>,
 the function returns a single matrix with haplotypes of all the
 individuals. The same behaviour is implemented for all the functions
 that extract genomic information</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/getSegSiteHaplo.html">getSegSiteHaplo</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"all"</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  int [1:317, 1:300] 1 0 0 0 0 1 0 0 1 0 ...</span></span>
-<span><span class="co">#&gt;  - attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   ..$ : chr [1:317] "2_1" "2_2" "8_1" "17_1" ...</span></span>
-<span><span class="co">#&gt;   ..$ : chr [1:300] "1_1" "1_2" "1_3" "1_4" ...</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/getSegSiteHaplo.html">getSegSiteHaplo</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"all"</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  int [1:317, 1:300] 1 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  - attr(*, "dimnames")=List of 2</span></span>
+<span><span class="co">#&gt;   ..$ : chr [1:317] "2_1" "2_2" "6_1" "14_1" ...</span></span>
+<span><span class="co">#&gt;   ..$ : chr [1:300] "1_1" "1_2" "1_3" "1_4" ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteHaplo.html">getSegSiteHaplo</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"all"</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 2_1    1   1   0   1   1   1   1   0   0    1</span></span>
-<span><span class="co">#&gt; 2_2    0   1   1   1   0   1   0   0   0    1</span></span>
-<span><span class="co">#&gt; 7_1    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 17_1   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 15_1   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 16_1   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 12_1   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 11_1   0   0   0   1   0   0   1   0   0    0</span></span>
-<span><span class="co">#&gt; 3_1    1   0   0   1   1   1   0   0   0    0</span></span>
-<span><span class="co">#&gt; 8_1    0   0   0   1   0   0   1   0   1    0</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; 2_1    1   1   0   1   0   1   0   0   0    0</span></span>
+<span><span class="co">#&gt; 2_2    0   1   1   0   0   0   0   1   1    1</span></span>
+<span><span class="co">#&gt; 15_1   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 17_1   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 7_1    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 9_1    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 8_1    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 16_1   0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 14_1   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 13_1   0   0   1   1   0   1   0   1   0    1</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"all"</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;    1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 2    1   2   1   2   1   2   1   0   0    2</span></span>
-<span><span class="co">#&gt; 17   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 12   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 14   1   0   0   1   1   1   0   0   0    0</span></span>
-<span><span class="co">#&gt; 11   0   0   0   1   0   0   1   0   0    0</span></span>
-<span><span class="co">#&gt; 9    1   0   0   1   1   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 13   0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 5    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 7    0   0   0   1   0   0   1   0   1    0</span></span>
-<span><span class="co">#&gt; 16   0   0   0   1   0   0   1   0   1    0</span></span></code></pre></div>
+<span><span class="co">#&gt; 2    1   2   1   1   0   1   0   1   1    1</span></span>
+<span><span class="co">#&gt; 3    0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 15   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 4    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 11   0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 16   0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 5    0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 8    0   0   1   1   0   1   0   1   0    1</span></span>
+<span><span class="co">#&gt; 10   0   0   1   0   0   0   0   0   0    1</span></span>
+<span><span class="co">#&gt; 7    0   0   1   1   0   1   0   1   0    1</span></span></code></pre></div>
 <p>SIMplyBee also has shortcuts for these haplotype and genotype
 functions to make life a bit easier for the user:</p>
 <ul>
@@ -368,32 +369,32 @@ comparison of pooled and individual genotypes also allows the user to
 compare the two and see the impact of pooled samples on results.</p>
 <p>Firstly let’s obtain the genotypes of the workers and of the queen so
 that they’re easier to work with:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">genoQ</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"queen"</span><span class="op">)</span></span>
 <span><span class="va">genoW</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"workers"</span><span class="op">)</span></span></code></pre></div>
 <p>The function <code><a href="../reference/getPooledGeno.html">getPooledGeno()</a></code> required also the sex of
 individuals whose genotype are getting pooled (<code>F</code> for
 females and <code>M</code> for males).</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sexW</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCasteSex.html">getCasteSex</a></span><span class="op">(</span><span class="va">colony</span>, caste <span class="op">=</span> <span class="st">"workers"</span><span class="op">)</span></span></code></pre></div>
 <p>You have two options when choosing what kind of pooled genotypes you
 would like, using the <code>type =</code> argument. You can use
 <code>type = "mean"</code> for the average genotypes and
 <code>type = "count"</code> for the counts of reference and alternative
 alleles.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getPooledGeno.html">getPooledGeno</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">genoW</span>, type <span class="op">=</span> <span class="st">"count"</span>, sex <span class="op">=</span> <span class="va">sexW</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;   1_1 1_2 1_3 1_4 1_5 1_6 1_7 1_8 1_9 1_10</span></span>
-<span><span class="co">#&gt; 0 130 100 144   0 132  81  79 200 125  100</span></span>
-<span><span class="co">#&gt; 1  70 100  56 200  68 119 121   0  75  100</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; 0 156 100  43  97 200  97 200  84 145   45</span></span>
+<span><span class="co">#&gt; 1  44 100 157 103   0 103   0 116  55  155</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">poolW</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getPooledGeno.html">getPooledGeno</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">genoW</span>, type <span class="op">=</span> <span class="st">"mean"</span>, sex <span class="op">=</span> <span class="va">sexW</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
 <span><span class="co">#&gt;  1_1  1_2  1_3  1_4  1_5  1_6  1_7  1_8  1_9 1_10 </span></span>
-<span><span class="co">#&gt; 0.70 1.00 0.56 2.00 0.68 1.19 1.21 0.00 0.75 1.00</span></span></code></pre></div>
+<span><span class="co">#&gt; 0.44 1.00 1.57 1.03 0.00 1.03 0.00 1.16 0.55 1.55</span></span></code></pre></div>
 <p>Now lets plot and compare the pooled workers to the queen’s genotype
 (note the use of jitter for queen’s genotype on the x-axis so we can
 spread out the dots in the plot!).</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">poolW</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/jitter.html" class="external-link">jitter</a></span><span class="op">(</span><span class="va">genoQ</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>     ylab <span class="op">=</span> <span class="st">"Average allele dosage in workers"</span>,</span>
 <span>     xlab <span class="op">=</span> <span class="st">"Allele dosage in the queen"</span> <span class="op">)</span></span></code></pre></div>
@@ -418,38 +419,38 @@ genomic data (bi-allelic SNP represented as allele dosages) following
 the method for the sex X chromosome (Druet and Legarra, 2020).</p>
 <p>To see this, let’s obtain the genotypes and sex information of all
 individuals in the colony.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">geno</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getSegSiteGeno.html">getSegSiteGeno</a></span><span class="op">(</span><span class="va">colony</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">sex</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCasteSex.html">getCasteSex</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">colony</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Now let’s calculate the IBS GRM, we will use the genotypes to
 calculate this:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GRM</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcBeeGRMIbs.html">calcBeeGRMIbs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">geno</span>, sex <span class="op">=</span> <span class="va">sex</span><span class="op">)</span></span></code></pre></div>
 <p>This produces a matrix that we can plot and summarise - its useful to
 summarise diagonal and off-diagonal values separately.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://Matrix.R-forge.R-project.org" class="external-link">"Matrix"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/methods/as.html" class="external-link">as</a></span><span class="op">(</span><span class="va">GRM</span>, <span class="st">"Matrix"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/view%20diagonal-1.png" width="700"></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">GRM</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/view%20diagonal-2.png" width="700"></p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;  0.3515  0.4505  0.5829  0.5878  0.7251  0.8387</span></span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt;  0.3945  0.4544  0.5775  0.5713  0.6801  0.8245</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">GRM</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html" class="external-link">lower.tri</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GRM</span>, diag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/view%20non-diagonal-1.png" width="700"></p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. </span></span>
-<span><span class="co">#&gt; -0.480292 -0.122149 -0.011744 -0.002734  0.098225  0.725112</span></span></code></pre></div>
+<span><span class="co">#&gt; -0.444214 -0.125660 -0.008723 -0.002657  0.106611  0.645631</span></span></code></pre></div>
 <p>We can also inspect GRM elements between specific caste members:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCasteId.html">getCasteId</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span> </span>
 <span><span class="va">idQueen</span> <span class="op">&lt;-</span> <span class="va">ids</span><span class="op">$</span><span class="va">queen</span></span>
 <span><span class="va">idFathers</span> <span class="op">&lt;-</span> <span class="va">ids</span><span class="op">$</span><span class="va">fathers</span></span>
@@ -458,21 +459,21 @@ summarise diagonal and off-diagonal values separately.</p>
 <span><span class="va">idVirginQueens</span> <span class="op">&lt;-</span> <span class="va">ids</span><span class="op">$</span><span class="va">virginQueens</span></span>
 <span><span class="va">mw</span> <span class="op">&lt;-</span> <span class="st">"mw"</span></span>
 <span><span class="va">md</span> <span class="op">&lt;-</span> <span class="st">"md"</span></span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">GRM</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">GRM</span><span class="op">[</span><span class="va">idQueen</span>, <span class="va">idFathers</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="va">r</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/Queen%20vs%20fathers%201-1.png" width="700"></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">GRM</span><span class="op">[</span><span class="va">idQueen</span>, <span class="va">idWorkers</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="va">r</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/Queen%20vs%20workers%201-1.png" width="700"></p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">GRM</span><span class="op">[</span><span class="va">idQueen</span>, <span class="va">idDrones</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="va">r</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/Queen%20vs%20drones%201-1.png" width="700"></p>
 <p><code><a href="../reference/calcBeeGRMIbs.html">calcBeeGRMIbs()</a></code> uses the
 <code><a href="../reference/calcBeeGRMIbs.html">calcBeeAlleleFreq()</a></code> function to calculate allele
 frequencies for centering the honeybee genotypes. You can also use it in
 some other cases:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">alleleFreq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcBeeGRMIbs.html">calcBeeAlleleFreq</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">geno</span>, sex <span class="op">=</span> <span class="va">sex</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/alleleFreq-1.png" width="700"></p>
 <p>Now lets look at <code><a href="../reference/calcBeeGRMIbd.html">calcBeeGRMIbd()</a></code>. This function creates
@@ -484,7 +485,7 @@ to Grossman and Eisen (1989), Fernando and Grossman (1989), Fernando and
 Grossman (1990), Van Arendonk, Tier, and Kinghorn (1994), and Hill and
 Weir (2011) for the background on this function.</p>
 <p>Now obtain the IBD haplotypes and compute IBD GRM.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">haploQ</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getIbdHaplo.html">getQueenIbdHaplo</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span><span class="va">haploF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getIbdHaplo.html">getFathersIbdHaplo</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span><span class="va">haploW</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getIbdHaplo.html">getWorkersIbdHaplo</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
@@ -492,49 +493,51 @@ Weir (2011) for the background on this function.</p>
 <span><span class="va">haploV</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getIbdHaplo.html">getVirginQueensIbdHaplo</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span></span>
 <span> </span>
 <span><span class="va">haplo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">haploQ</span>, <span class="va">haploF</span>, <span class="va">haploW</span>, <span class="va">haploD</span>, <span class="va">haploV</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GRMs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcBeeGRMIbd.html">calcBeeGRMIbd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">haplo</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s view this matrix:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/methods/as.html" class="external-link">as</a></span><span class="op">(</span><span class="va">GRMs</span><span class="op">$</span><span class="va">genome</span>, <span class="st">"Matrix"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/view%20calcGRMIbd-1.png" width="700"></p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/methods/as.html" class="external-link">as</a></span><span class="op">(</span><span class="va">GRMs</span><span class="op">$</span><span class="va">indiv</span>, <span class="st">"Matrix"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/view%20calcGRMIbd-2.png" width="700"></p>
 <p>Now we can look at the diagonal of the obtained matrices that
 represent 1 for a genomes and 1 + inbreeding coefficient
 individuals.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">GRMs</span><span class="op">$</span><span class="va">genome</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. </span></span>
-<span><span class="co">#&gt; -0.480292 -0.122149 -0.011744 -0.002734  0.098225  0.725112</span></span>
-<span> </span>
+<span><span class="co">#&gt; -0.444214 -0.125660 -0.008723 -0.002657  0.106611  0.645631</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span> </span>
 <span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">GRMs</span><span class="op">$</span><span class="va">indiv</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
 <span><span class="co">#&gt;  0.5000  0.5000  0.5000  0.7338  1.0000  1.0000</span></span></code></pre></div>
 <p>And now the non-diagonals that represent the coefficients of
 relationship between genomes or between individuals.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">GRMs</span><span class="op">$</span><span class="va">genome</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html" class="external-link">lower.tri</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GRMs</span><span class="op">$</span><span class="va">genome</span>, diag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/view%20non-diagonal1-1.png" width="700"></p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;  0.0000  0.0000  0.2600  0.2705  0.5133  1.0000</span></span>
-<span>  </span>
+<span><span class="co">#&gt;  0.0000  0.0000  0.2600  0.2753  0.5233  1.0000</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>  </span>
 <span><span class="va">i</span> <span class="op">&lt;-</span> <span class="va">GRMs</span><span class="op">$</span><span class="va">indiv</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html" class="external-link">lower.tri</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GRMs</span><span class="op">$</span><span class="va">indiv</span>, diag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/view%20non-diagonal1-2.png" width="700"></p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;  0.0000  0.1967  0.2717  0.2917  0.3700  0.9783</span></span></code></pre></div>
+<span><span class="co">#&gt;  0.0000  0.1983  0.2733  0.2970  0.3733  0.9400</span></span></code></pre></div>
 <p>Let’s now compare compare relationships between caste members within
 a colony.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Obtains caste member IDs</span></span>
 <span><span class="va">qI</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCastePop.html">getQueen</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">@</span><span class="va">id</span></span>
 <span><span class="va">fI</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCastePop.html">getFathers</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">@</span><span class="va">id</span><span class="op">)</span></span>
@@ -542,15 +545,15 @@ a colony.</p>
 <span><span class="va">dI</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="../reference/getCastePop.html">getDrones</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">@</span><span class="va">id</span><span class="op">)</span></span>
 <span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">GRMs</span><span class="op">$</span><span class="va">indiv</span><span class="op">)</span></span></code></pre></div>
 <p>Compare queen and fathers:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">GRMs</span><span class="op">$</span><span class="va">indiv</span><span class="op">[</span><span class="va">fI</span>, <span class="va">qI</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="va">r</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/Queen%20vs%20fathers-1.png" width="700"></p>
 <p>Queen and workers:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">GRMs</span><span class="op">$</span><span class="va">indiv</span><span class="op">[</span><span class="va">wI</span>, <span class="va">qI</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="va">r</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/Queen%20vs%20workers-1.png" width="700"></p>
 <p>Queen and drones:</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">GRMs</span><span class="op">$</span><span class="va">indiv</span><span class="op">[</span><span class="va">dI</span>, <span class="va">qI</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="va">r</span><span class="op">)</span></span></code></pre></div>
 <p><img src="E_Genomics_files/figure-html/Queen%20vs%20drones-1.png" width="700"></p>
 </div>
@@ -594,7 +597,7 @@ consequence of Mendelian sampling and linkage. Genetics Research,
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

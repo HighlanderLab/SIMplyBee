@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Variance calculations between individual and colony level values • SIMplyBee</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -114,7 +114,7 @@
       <h1 data-toc-skip>Variance calculations between individual and
 colony level values</h1>
             
-            <h4 data-toc-skip class="date">2023-12-22</h4>
+            <h4 data-toc-skip class="date">2024-06-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/HighlanderLab/SIMplyBee/blob/HEAD/vignettes/F2_Variance_calculations.Rmd" class="external-link"><code>vignettes/F2_Variance_calculations.Rmd</code></a></small>
       <div class="hidden name"><code>F2_Variance_calculations.Rmd</code></div>
@@ -131,8 +131,9 @@ colony level values</h1>
 <span><span class="co">#&gt; Attaching package: 'SIMplyBee'</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     split</span></span>
-<span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/quickHaplo.html" class="external-link">quickHaplo</a></span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">20</span>, nChr <span class="op">=</span> <span class="fl">16</span>, segSites <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     split</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">founderGenomes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gaynorr.github.io/AlphaSimR/reference/quickHaplo.html" class="external-link">quickHaplo</a></span><span class="op">(</span>nInd <span class="op">=</span> <span class="fl">20</span>, nChr <span class="op">=</span> <span class="fl">16</span>, segSites <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="va">SP</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SimParamBee.html">SimParamBee</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">founderGenomes</span><span class="op">)</span></span>
 <span><span class="va">nQtlPerChr</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span> <span class="op">/</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span><span class="op">)</span></span>
@@ -148,21 +149,23 @@ colony level values</h1>
 <span><span class="va">basePop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createVirginQueens</a></span><span class="op">(</span><span class="va">founderGenomes</span>, n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">@</span><span class="va">gv</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      queenTrait workersTrait</span></span>
-<span><span class="co">#&gt; [1,]   8.450127   0.06326828</span></span>
-<span><span class="co">#&gt; [2,]   9.200142   0.25265152</span></span>
-<span><span class="co">#&gt; [3,]   9.151586   0.20003005</span></span>
-<span><span class="co">#&gt; [4,]   9.732408   0.07737997</span></span>
-<span><span class="co">#&gt; [5,]   9.387734   0.10586245</span></span>
-<span><span class="co">#&gt; [6,]  11.289627   0.10154272</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">@</span><span class="va">pheno</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1,]   9.308097  0.175604495</span></span>
+<span><span class="co">#&gt; [2,]   9.229212  0.177669761</span></span>
+<span><span class="co">#&gt; [3,]   7.838815  0.145594578</span></span>
+<span><span class="co">#&gt; [4,]   9.031639  0.248186228</span></span>
+<span><span class="co">#&gt; [5,]   9.868613  0.009881919</span></span>
+<span><span class="co">#&gt; [6,]   9.378971  0.152665945</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">@</span><span class="va">pheno</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      queenTrait workersTrait</span></span>
-<span><span class="co">#&gt; [1,]  12.047972  0.312398984</span></span>
-<span><span class="co">#&gt; [2,]   9.223691  0.256551369</span></span>
-<span><span class="co">#&gt; [3,]   9.006841  0.343174553</span></span>
-<span><span class="co">#&gt; [4,]  10.497872 -0.004979211</span></span>
-<span><span class="co">#&gt; [5,]  11.140862  0.098387101</span></span>
-<span><span class="co">#&gt; [6,]   9.743822  0.205828390</span></span>
-<span><span class="va">drones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1,]   8.891549   0.09371756</span></span>
+<span><span class="co">#&gt; [2,]  10.186057   0.32952109</span></span>
+<span><span class="co">#&gt; [3,]   5.871084   0.28238299</span></span>
+<span><span class="co">#&gt; [4,]   7.980709   0.07262322</span></span>
+<span><span class="co">#&gt; [5,]  10.666579   0.11525851</span></span>
+<span><span class="co">#&gt; [6,]  10.698284   0.06826125</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">drones</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createCastePop.html">createDrones</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, nInd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createColony.html">createColony</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">basePop</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cross.html">cross</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">colony</span>, drones <span class="op">=</span> <span class="va">drones</span>, checkCross <span class="op">=</span> <span class="st">"warning"</span><span class="op">)</span></span>
 <span><span class="va">colony</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/addCastePop.html">addWorkers</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">colony</span>, nInd <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
@@ -253,47 +256,57 @@ a tool and demonstrate it clearly. Also, they work with average, while
 we work with the sum?</p>
 <p>TODO: show sensitivity to the number of workers - the larger the
 number of workers, the smaller the variance between workers</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Trait means</span></span>
 <span><span class="va">mean</span></span>
-<span><span class="co">#&gt; [1] 10.0  0.1</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 10.0  0.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Trait genetic variation - on a per honeybee level</span></span>
 <span><span class="va">varA</span></span>
-<span><span class="co">#&gt; [1] 1.00 0.01</span></span>
-<span><span class="va">corA</span></span>
+<span><span class="co">#&gt; [1] 1.00 0.01</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">corA</span></span>
 <span><span class="co">#&gt;      [,1] [,2]</span></span>
 <span><span class="co">#&gt; [1,]  1.0 -0.5</span></span>
-<span><span class="co">#&gt; [2,] -0.5  1.0</span></span>
-<span><span class="op">(</span><span class="va">covA</span> <span class="op">&lt;-</span> <span class="va">corA</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">varA</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">varA</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="st">"*"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [2,] -0.5  1.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">covA</span> <span class="op">&lt;-</span> <span class="va">corA</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">varA</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">varA</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="st">"*"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       [,1]  [,2]</span></span>
 <span><span class="co">#&gt; [1,]  1.00 -0.05</span></span>
-<span><span class="co">#&gt; [2,] -0.05  0.01</span></span>
-<span></span>
+<span><span class="co">#&gt; [2,] -0.05  0.01</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Trait environmental variation - on a per honeybee level</span></span>
 <span><span class="va">varE</span></span>
-<span><span class="co">#&gt; [1] 3.00 0.03</span></span>
-<span><span class="va">corE</span></span>
+<span><span class="co">#&gt; [1] 3.00 0.03</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">corE</span></span>
 <span><span class="co">#&gt;      [,1] [,2]</span></span>
 <span><span class="co">#&gt; [1,]  1.0  0.3</span></span>
-<span><span class="co">#&gt; [2,]  0.3  1.0</span></span>
-<span><span class="op">(</span><span class="va">covE</span> <span class="op">&lt;-</span> <span class="va">corE</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">varE</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">varE</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="st">"*"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [2,]  0.3  1.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">covE</span> <span class="op">&lt;-</span> <span class="va">corE</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">varE</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">varE</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="st">"*"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      [,1] [,2]</span></span>
 <span><span class="co">#&gt; [1,] 3.00 0.09</span></span>
-<span><span class="co">#&gt; [2,] 0.09 0.03</span></span>
-<span></span>
+<span><span class="co">#&gt; [2,] 0.09 0.03</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Trait phenotypic variation - on a per honeybee level</span></span>
 <span><span class="op">(</span><span class="va">covP</span> <span class="op">&lt;-</span> <span class="va">covA</span> <span class="op">+</span> <span class="va">covE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      [,1] [,2]</span></span>
 <span><span class="co">#&gt; [1,] 4.00 0.04</span></span>
-<span><span class="co">#&gt; [2,] 0.04 0.04</span></span>
-<span><span class="op">(</span><span class="va">corP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">covP</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [2,] 0.04 0.04</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">corP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">covP</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      [,1] [,2]</span></span>
 <span><span class="co">#&gt; [1,]  1.0  0.1</span></span>
-<span><span class="co">#&gt; [2,]  0.1  1.0</span></span>
-<span><span class="op">(</span><span class="va">varP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">covP</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 4.00 0.04</span></span>
-<span></span>
+<span><span class="co">#&gt; [2,]  0.1  1.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">varP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">covP</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 4.00 0.04</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Expected phenotypic variation - on a per colony level</span></span>
 <span><span class="co"># TODO: there is in fact more stuff happening here - see below! </span></span>
 <span><span class="va">nW</span> <span class="op">&lt;-</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span> <span class="co"># TODO: this is not correct - we have queen-workers pairs and workers-workers (see below!)</span></span>
@@ -303,20 +316,24 @@ number of workers, the smaller the variance between workers</p>
 <span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="co"># just adding this so vignette can run, but I don't know what this k should be</span></span>
 <span></span>
 <span><span class="va">covA</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">covA</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">k</span> <span class="op">*</span> <span class="va">covA</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span> <span class="co"># variance can not be negative!</span></span>
-<span><span class="co">#&gt; [1] 1.9</span></span>
-<span><span class="va">covP</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">covP</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">k</span> <span class="op">*</span> <span class="va">covP</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] 8.08</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 1.9</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">covP</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">covP</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">k</span> <span class="op">*</span> <span class="va">covP</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] 8.08</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Observed variation - on a per colony level</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">colonyGv</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          [,1]</span></span>
-<span><span class="co">#&gt; [1,] 27.93626</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">colonyPheno</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1,] 24.33646</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">colonyPheno</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          [,1]</span></span>
-<span><span class="co">#&gt; [1,] 37.19677</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">colonyGv</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">colonyPheno</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         [,1]</span></span>
-<span><span class="co">#&gt; [1,] 0.75104</span></span></code></pre></div>
+<span><span class="co">#&gt; [1,] 25.40949</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">colonyGv</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">colonyPheno</span><span class="op">)</span></span>
+<span><span class="co">#&gt;           [,1]</span></span>
+<span><span class="co">#&gt; [1,] 0.9577707</span></span></code></pre></div>
 <p>Hmm, we have much higher genetic and phenotypic variances in
 simulation than based simply looking at queen and n*workers variances,
 as well as much higher ratio between the two than the initial value of
@@ -343,14 +360,16 @@ E(g_{w,w})\)</span> using <a href="https://en.wikipedia.org/wiki/Distribution_of
 <p>where <span class="math inline">\(\lambda_{n_w}\)</span> is average
 number of workers. So, in our case this turns out the same as above. So
 in our case we have:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nW</span> <span class="op">&lt;-</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span></span>
 <span><span class="va">mean</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">mean</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] 20</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">colonyGv</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 20.2483</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">colonyPheno</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 21.40088</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 20</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">colonyGv</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 21.65203</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">colonyPheno</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 20.3505</span></span></code></pre></div>
 <p>Variance of colony genetic value is then:</p>
 <p><span class="math inline">\(Var(g_c) = Var(g_{q,q} +
 \Sigma_{i=1}^{n_w}(g_{i,w}))\)</span></p>
@@ -373,14 +392,16 @@ and</p></li>
 <h2 id="a-variance-of-the-queen-effect-in-queens-sigma2_g_q---in-our-case-this-is">A) Variance of the queen effect in queens <span class="math inline">\(\sigma^2_{g_{q}}\)</span> - in our case this
 is:<a class="anchor" aria-label="anchor" href="#a-variance-of-the-queen-effect-in-queens-sigma2_g_q---in-our-case-this-is"></a>
 </h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">varA</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fu"><a href="../reference/getGv.html">getQueenGv</a></span><span class="op">(</span><span class="va">apiary</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span>, <span class="st">"queenTrait"</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.044103</span></span>
-<span><span class="co"># ... note that R's var() divides by n-1, which matters with small n</span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fu"><a href="../reference/getGv.html">getQueenGv</a></span><span class="op">(</span><span class="va">apiary</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span>, <span class="st">"queenTrait"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.8365685</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ... note that R's var() divides by n-1, which matters with small n</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="../reference/getGv.html">getQueenGv</a></span><span class="op">(</span><span class="va">apiary</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span>, <span class="st">"queenTrait"</span><span class="op">]</span> <span class="op">-</span> <span class="va">mean</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.009193</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.9225551</span></span></code></pre></div>
 <p>Anyway, quite close!</p>
 </div>
 <div class="section level2">
@@ -405,16 +426,18 @@ r_{2,w}\)</span></p>
 <p>As stated initially, we have <span class="math inline">\(Var(g_{i,w})
 = \sigma^2_{g_{w}}\)</span> and we have <span class="math inline">\(n_w\)</span> such terms, <span class="math inline">\(n_w \sigma^2_{g_{w}}\)</span>. In our case this
 would be:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nW</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcColonyValue.html">calcColonyGv</a></span><span class="op">(</span><span class="va">apiary</span>, <span class="va">mapCasteToColonyGv</span>, queenTrait <span class="op">=</span> <span class="cn">NULL</span>, workersTrait <span class="op">=</span> <span class="st">"workersTrait"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcColonyValue.html">calcColonyGv</a></span><span class="op">(</span><span class="va">apiary</span>, <span class="va">mapCasteToColonyGv</span>, queenTrait <span class="op">=</span> <span class="cn">NULL</span>, workersTrait <span class="op">=</span> <span class="st">"workersTrait"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span>
 <span><span class="co">#&gt;              workersTrait</span></span>
-<span><span class="co">#&gt; workersTrait     32.53376</span></span>
-<span><span class="co"># ... note that R's var() divides by n-1, which matters with small n</span></span>
+<span><span class="co">#&gt; workersTrait     32.15264</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ... note that R's var() divides by n-1, which matters with small n</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">g</span> <span class="op">-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">mean</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 30.21234</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 31.46962</span></span></code></pre></div>
 <p>So, a huge discrepancy between the variance of a sum of genetic
 values for the workers effect <code>nW * varA[2]</code> (assuming
 independence) and a realised sum of genetic values for the workers
@@ -447,21 +470,25 @@ workers we get <span class="math inline">\(n_w n_w\)</span> pairs
 n_w\)</span> pairs between different workers. The total covariance
 contribution is then <span class="math inline">\((n_w n_w -
 n_w)\frac{1}{2}\sigma^2_{g_w}\)</span>). In our case this would be:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">varSumWorkers</span> <span class="op">&lt;-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B1</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="op">(</span><span class="va">covSumWorkers</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">-</span> <span class="va">nW</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2</span></span>
-<span><span class="co">#&gt; [1] 49.5</span></span>
-<span><span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covSumWorkers</span> <span class="co"># B</span></span>
-<span><span class="co">#&gt; [1] 50.5</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">covSumWorkers</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">-</span> <span class="va">nW</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2</span></span>
+<span><span class="co">#&gt; [1] 49.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covSumWorkers</span> <span class="co"># B</span></span>
+<span><span class="co">#&gt; [1] 50.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcColonyValue.html">calcColonyGv</a></span><span class="op">(</span><span class="va">apiary</span>, <span class="va">mapCasteToColonyGv</span>, queenTrait <span class="op">=</span> <span class="cn">NULL</span>, workersTrait <span class="op">=</span> <span class="st">"workersTrait"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="co"># B</span></span>
 <span><span class="co">#&gt;              workersTrait</span></span>
-<span><span class="co">#&gt; workersTrait     32.53376</span></span>
-<span><span class="co"># ... note that R's var() divides by n-1, which matters with small n</span></span>
+<span><span class="co">#&gt; workersTrait     32.15264</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ... note that R's var() divides by n-1, which matters with small n</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">g</span> <span class="op">-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">mean</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span> <span class="co"># B</span></span>
-<span><span class="co">#&gt; [1] 30.21234</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 31.46962</span></span></code></pre></div>
 <p>If we would only have super-sisters we would have ~1 for B1, ~49.5
 for B2, and ~50.5 for B, but with a mix of half-sisters and
 super-sisters we would have a lower value, which is what we see above,
@@ -505,38 +532,47 @@ of super-sisters and <span class="math inline">\((n_f n_f - n_f)
 \frac{n_w}{n_f} \frac{n_w}{n_f}\)</span> - this is <span class="math inline">\(n_f (n_f - 1) \frac{n_w}{n_f} \frac{n_w}{n_f} =
 (n_f - 1) n_w \frac{n_w}{n_f} = \frac{ (n_f - 1) n^2_w}{n_f}\)</span>.
 Is this correct?</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">nF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nCaste.html">nFathers</a></span><span class="op">(</span><span class="va">colony</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 15</span></span>
-<span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span></span>
-<span><span class="co">#&gt; [1] 10000</span></span>
-<span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 666.6667</span></span>
-<span><span class="op">(</span><span class="va">b</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nF</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 9333.333</span></span>
-<span><span class="va">a</span><span class="op">+</span><span class="va">b</span> </span>
+<span><span class="co">#&gt; [1] 15</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span></span>
+<span><span class="co">#&gt; [1] 10000</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">a</span> <span class="op">&lt;-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 666.6667</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">b</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nF</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 9333.333</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a</span><span class="op">+</span><span class="va">b</span> </span>
 <span><span class="co">#&gt; [1] 10000</span></span></code></pre></div>
 <p>Looks like!</p>
 <p>So, super-sister pairs add <span class="math inline">\(\frac{n^2_w}{n_f}
 \frac{1}{2}\sigma^2_{g_w}\)</span> and half-sister pairs add <span class="math inline">\(\frac{ (n_f - 1) n^2_w}{n_f}
 \frac{1}{4}\sigma^2_{g_w}\)</span>. Let’s test this:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">varSumWorkers</span> <span class="op">&lt;-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B1</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="op">(</span><span class="va">covSumWorkersSuperSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in super-sisters</span></span>
-<span><span class="co">#&gt; [1] 3.333333</span></span>
-<span><span class="op">(</span><span class="va">covSumWorkersHalfSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="op">(</span><span class="va">nF</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.25</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in half-sisters</span></span>
-<span><span class="co">#&gt; [1] 23.33333</span></span>
-<span><span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covSumWorkersSuperSisters</span> <span class="op">+</span> <span class="va">covSumWorkersHalfSisters</span> <span class="co"># B</span></span>
-<span><span class="co">#&gt; [1] 27.66667</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">covSumWorkersSuperSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in super-sisters</span></span>
+<span><span class="co">#&gt; [1] 3.333333</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">covSumWorkersHalfSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="op">(</span><span class="va">nF</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.25</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in half-sisters</span></span>
+<span><span class="co">#&gt; [1] 23.33333</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covSumWorkersSuperSisters</span> <span class="op">+</span> <span class="va">covSumWorkersHalfSisters</span> <span class="co"># B</span></span>
+<span><span class="co">#&gt; [1] 27.66667</span></span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcColonyValue.html">calcColonyGv</a></span><span class="op">(</span><span class="va">apiary</span>, <span class="va">mapCasteToColonyGv</span>, queenTrait <span class="op">=</span> <span class="cn">NULL</span>, workersTrait <span class="op">=</span> <span class="st">"workersTrait"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="co"># B</span></span>
 <span><span class="co">#&gt;              workersTrait</span></span>
-<span><span class="co">#&gt; workersTrait     32.53376</span></span>
-<span><span class="co"># ... note that R's var() divides by n-1, which matters with small n</span></span>
+<span><span class="co">#&gt; workersTrait     32.15264</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ... note that R's var() divides by n-1, which matters with small n</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">g</span> <span class="op">-</span> <span class="va">SP</span><span class="op">$</span><span class="va">nWorkers</span> <span class="op">*</span> <span class="va">mean</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span> <span class="co"># B</span></span>
-<span><span class="co">#&gt; [1] 30.21234</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 31.46962</span></span></code></pre></div>
 <p>Cool - very close!!! There can be some difference because the
 formulae above assume that we have fixed sizes of half-sister and
 super-sister groups. Also, there can be full-sisters in there as
@@ -583,57 +619,74 @@ g_{q,w})\)</span></p>
 g_{q,w})\)</span></p>
 <p><span class="math inline">\(2Cov(g_{q,q},
 \Sigma_{i=1}^{n_w}(g_{i,w})) = n_w \sigma_{g_{q},g_{w}}\)</span></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">varQueen</span> <span class="op">&lt;-</span> <span class="va">varA</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="co"># A</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="op">(</span><span class="va">varSumWorkers</span> <span class="op">&lt;-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B1</span></span>
-<span><span class="co">#&gt; [1] 1</span></span>
-<span><span class="op">(</span><span class="va">covSumWorkersSuperSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in super-sisters</span></span>
-<span><span class="co">#&gt; [1] 3.333333</span></span>
-<span><span class="op">(</span><span class="va">covSumWorkersHalfSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="op">(</span><span class="va">nF</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.25</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in half-sisters</span></span>
-<span><span class="co">#&gt; [1] 23.33333</span></span>
-<span><span class="op">(</span><span class="va">varSumWorkers</span> <span class="op">&lt;-</span> <span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covSumWorkersSuperSisters</span> <span class="op">+</span> <span class="va">covSumWorkersHalfSisters</span><span class="op">)</span> <span class="co"># B</span></span>
-<span><span class="co">#&gt; [1] 27.66667</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">covSumWorkersSuperSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in super-sisters</span></span>
+<span><span class="co">#&gt; [1] 3.333333</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">covSumWorkersHalfSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="op">(</span><span class="va">nF</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.25</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in half-sisters</span></span>
+<span><span class="co">#&gt; [1] 23.33333</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">varSumWorkers</span> <span class="op">&lt;-</span> <span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covSumWorkersSuperSisters</span> <span class="op">+</span> <span class="va">covSumWorkersHalfSisters</span><span class="op">)</span> <span class="co"># B</span></span>
+<span><span class="co">#&gt; [1] 27.66667</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="op">(</span><span class="va">covQueenSumWorkers</span> <span class="op">&lt;-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">covA</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># C</span></span>
-<span><span class="co">#&gt; [1] -5</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] -5</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">varQueen</span> <span class="op">+</span> <span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covQueenSumWorkers</span></span>
-<span><span class="co">#&gt; [1] 23.66667</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 23.66667</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">colonyGv</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          [,1]</span></span>
-<span><span class="co">#&gt; [1,] 27.93626</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">g</span> <span class="op">-</span> <span class="fl">20</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 26.00247</span></span>
-<span></span>
+<span><span class="co">#&gt; [1,] 24.33646</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">g</span> <span class="op">-</span> <span class="fl">20</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 25.32736</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">varQueen</span> <span class="op">&lt;-</span> <span class="va">varP</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="co"># A</span></span>
-<span><span class="co">#&gt; [1] 4</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="op">(</span><span class="va">varSumWorkers</span> <span class="op">&lt;-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">varP</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B1</span></span>
-<span><span class="co">#&gt; [1] 4</span></span>
-<span><span class="op">(</span><span class="va">covSumWorkersSuperSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in super-sisters - only genetic cov here, I think TODO!?</span></span>
-<span><span class="co">#&gt; [1] 3.333333</span></span>
-<span><span class="op">(</span><span class="va">covSumWorkersSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="op">(</span><span class="va">nF</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.25</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in sisters - only genetic cov here, I think TODO!?</span></span>
-<span><span class="co">#&gt; [1] 23.33333</span></span>
-<span><span class="op">(</span><span class="va">varSumWorkers</span> <span class="op">&lt;-</span> <span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covSumWorkersSuperSisters</span> <span class="op">+</span> <span class="va">covSumWorkersSisters</span><span class="op">)</span> <span class="co"># B</span></span>
-<span><span class="co">#&gt; [1] 30.66667</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">covSumWorkersSuperSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.50</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in super-sisters - only genetic cov here, I think TODO!?</span></span>
+<span><span class="co">#&gt; [1] 3.333333</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">covSumWorkersSisters</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="op">(</span><span class="va">nF</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">nW</span> <span class="op">/</span> <span class="va">nF</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.25</span> <span class="op">*</span> <span class="va">varA</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># B2 in sisters - only genetic cov here, I think TODO!?</span></span>
+<span><span class="co">#&gt; [1] 23.33333</span></span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">varSumWorkers</span> <span class="op">&lt;-</span> <span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covSumWorkersSuperSisters</span> <span class="op">+</span> <span class="va">covSumWorkersSisters</span><span class="op">)</span> <span class="co"># B</span></span>
+<span><span class="co">#&gt; [1] 30.66667</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="op">(</span><span class="va">covQueenSumWorkers</span> <span class="op">&lt;-</span> <span class="va">nW</span> <span class="op">*</span> <span class="va">covP</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># C - pheno or genetic only here - TODO!?</span></span>
-<span><span class="co">#&gt; [1] 4</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 4</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">varQueen</span> <span class="op">+</span> <span class="va">varSumWorkers</span> <span class="op">+</span> <span class="va">covQueenSumWorkers</span></span>
-<span><span class="co">#&gt; [1] 38.66667</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 38.66667</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">colonyPheno</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          [,1]</span></span>
-<span><span class="co">#&gt; [1,] 37.19677</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">p</span> <span class="op">-</span> <span class="fl">20</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 36.50233</span></span></code></pre></div>
+<span><span class="co">#&gt; [1,] 25.40949</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">p</span> <span class="op">-</span> <span class="fl">20</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 23.71738</span></span></code></pre></div>
 <p>Bingo for genetic variance and very close for phenotypic too, but we
 need to check some part above!</p>
 </div>
@@ -720,7 +773,7 @@ Can we?</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

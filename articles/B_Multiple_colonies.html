@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multiple colonies • SIMplyBee</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -113,7 +113,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Multiple colonies</h1>
             
-            <h4 data-toc-skip class="date">2023-12-22</h4>
+            <h4 data-toc-skip class="date">2024-06-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/HighlanderLab/SIMplyBee/blob/HEAD/vignettes/B_Multiple_colonies.Rmd" class="external-link"><code>vignettes/B_Multiple_colonies.Rmd</code></a></small>
       <div class="hidden name"><code>B_Multiple_colonies.Rmd</code></div>
@@ -232,8 +232,9 @@ virgin.</p>
 <code class="sourceCode R"><span><span class="co"># Check whether all the colonies are virgin</span></span>
 <span><span class="fu"><a href="../reference/isQueenPresent.html">isQueenPresent</a></span><span class="op">(</span><span class="va">apiary1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     1     2     3     4     5     6     7     8     9    10 </span></span>
-<span><span class="co">#&gt; FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></span>
-<span><span class="fu"><a href="../reference/isVirginQueensPresent.html">isVirginQueensPresent</a></span><span class="op">(</span><span class="va">apiary1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/isVirginQueensPresent.html">isVirginQueensPresent</a></span><span class="op">(</span><span class="va">apiary1</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    1    2    3    4    5    6    7    8    9   10 </span></span>
 <span><span class="co">#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span></code></pre></div>
 </div>
@@ -244,11 +245,12 @@ virgin.</p>
 basic operations on it. First, we can select some colonies by either
 specifying their IDs, desired number or percentage of randomly selected
 colonies.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the IDs of the colonies</span></span>
 <span><span class="fu"><a href="../reference/getId.html">getId</a></span><span class="op">(</span><span class="va">apiary1</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span>
-<span><span class="co"># Select colonies according to IDs</span></span>
+<span><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Select colonies according to IDs</span></span>
 <span><span class="fu"><a href="../reference/selectColonies.html">selectColonies</a></span><span class="op">(</span><span class="va">apiary1</span>, ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class "MultiColony" </span></span>
 <span><span class="co">#&gt; Number of colonies: 2 </span></span>
@@ -258,8 +260,9 @@ colonies.</p>
 <span><span class="co">#&gt; Have swarmed: 0 </span></span>
 <span><span class="co">#&gt; Have superseded: 0 </span></span>
 <span><span class="co">#&gt; Have collapsed: 0 </span></span>
-<span><span class="co">#&gt; Are productive: 0</span></span>
-<span><span class="co"># Randomly select a given percentage of colonies</span></span>
+<span><span class="co">#&gt; Are productive: 0</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Randomly select a given percentage of colonies</span></span>
 <span><span class="fu"><a href="../reference/selectColonies.html">selectColonies</a></span><span class="op">(</span><span class="va">apiary1</span>, p <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Randomly selecting colonies: 1</span></span>
 <span><span class="co">#&gt; An object of class "MultiColony" </span></span>
@@ -275,7 +278,7 @@ colonies.</p>
 object. This means, that the pulled colonies are removed from the
 original object. The function <code><a href="../reference/pullColonies.html">pullColonies()</a></code> therefore
 returns two object - the pulled colonies and the remnant colonies.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pull one colony - returns a list with $remnant and $pulled nodes</span></span>
 <span><span class="fu"><a href="../reference/pullColonies.html">pullColonies</a></span><span class="op">(</span><span class="va">apiary1</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Randomly pulling colonies: 1</span></span>
@@ -303,7 +306,7 @@ returns two object - the pulled colonies and the remnant colonies.</p>
 <p>Third, we can also remove some colonies from the
 <code>MultiColony</code> object with <code><a href="../reference/removeColonies.html">removeColonies()</a></code>
 function.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/removeColonies.html">removeColonies</a></span><span class="op">(</span><span class="va">apiary1</span>, ID <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in removeColonies(apiary1, ID = 13): ID parameter contains come invalid</span></span>
 <span><span class="co">#&gt; IDs!</span></span>
@@ -328,7 +331,7 @@ about that in the Quantitative genetics vignette.</p>
 the DCA with the <code><a href="../reference/pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA()</a></code> function. We have
 to collect at least as many groups of drones as we have colonies in our
 <code>MultiColony</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pull 10 groups of drones from the DCA</span></span>
 <span><span class="va">droneGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA</a></span><span class="op">(</span><span class="va">DCA</span>, n <span class="op">=</span> <span class="fl">10</span>, nDrones <span class="op">=</span> <span class="va">nFathersPoisson</span><span class="op">)</span></span>
 <span><span class="co"># Cross all virgin queens in the apiary to the selected drones</span></span>
@@ -344,7 +347,7 @@ functions directly to the <code>MultiColony</code> object:
 but also all the functions that either add, replace, or remove
 individuals from the castes. Let’s say we want to build-up all the
 colonies in our apiary.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Build-up all the colonies in the apiary1</span></span>
 <span><span class="va">apiary1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/buildUp.html">buildUp</a></span><span class="op">(</span><span class="va">apiary1</span>, nWorkers <span class="op">=</span> <span class="fl">1000</span>, nDrones <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
 <p>Furthermore, we can use the <code><a href="../reference/pullColonies.html">pullColonies()</a></code> or
@@ -364,27 +367,29 @@ according to the age of the queens (such as <code>age0</code>,
 <code>age1</code>…). <code>apiary2</code> contains only virgin queens
 and we want to mate them to a DCA made of drones from
 <code>apiary1</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Initiate apiary2 at the location (2,2)</span></span>
 <span><span class="va">apiary2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createMultiColony.html">createMultiColony</a></span><span class="op">(</span><span class="va">basePop</span><span class="op">[</span><span class="fl">21</span><span class="op">:</span><span class="fl">30</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">apiary2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/setLocation.html">setLocation</a></span><span class="op">(</span><span class="va">apiary2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Since some time has passed, we want to first replace the drones in
 <code>apiary1</code> with new drones. We can do that with
 <code><a href="../reference/replaceCastePop.html">replaceDrones()</a></code> function.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">apiary1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/replaceCastePop.html">replaceDrones</a></span><span class="op">(</span><span class="va">apiary1</span><span class="op">)</span></span></code></pre></div>
 <p>Now that we have a new set of drones, we can create a DCA with the
 function <code><a href="../reference/createDCA.html">createDCA()</a></code> and mate virgin queens in apiary2 to
 the DCA.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check whether all colonies in apiary2 are virgin</span></span>
 <span><span class="fu"><a href="../reference/isQueenPresent.html">isQueenPresent</a></span><span class="op">(</span><span class="va">apiary2</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    11    12    13    14    15    16    17    18    19    20 </span></span>
-<span><span class="co">#&gt; FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></span>
-<span><span class="fu"><a href="../reference/isVirginQueensPresent.html">isVirginQueensPresent</a></span><span class="op">(</span><span class="va">apiary2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/isVirginQueensPresent.html">isVirginQueensPresent</a></span><span class="op">(</span><span class="va">apiary2</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   11   12   13   14   15   16   17   18   19   20 </span></span>
-<span><span class="co">#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span>
-<span><span class="co"># Create a DCA from all the drones in apiary</span></span>
+<span><span class="co">#&gt; TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a DCA from all the drones in apiary</span></span>
 <span><span class="va">DCA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createDCA.html">createDCA</a></span><span class="op">(</span><span class="va">apiary1</span><span class="op">)</span></span>
 <span><span class="co"># Check how big is the DCA</span></span>
 <span><span class="va">DCA</span></span>
@@ -393,8 +398,9 @@ the DCA.</p>
 <span><span class="co">#&gt; Individuals: 1000 </span></span>
 <span><span class="co">#&gt; Chromosomes: 1 </span></span>
 <span><span class="co">#&gt; Loci: 100 </span></span>
-<span><span class="co">#&gt; Traits: 0</span></span>
-<span><span class="co"># Sample drones groups from the DCA</span></span>
+<span><span class="co">#&gt; Traits: 0</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Sample drones groups from the DCA</span></span>
 <span><span class="va">droneGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pullDroneGroupsFromDCA.html">pullDroneGroupsFromDCA</a></span><span class="op">(</span><span class="va">DCA</span>, </span>
 <span>                                      n <span class="op">=</span> <span class="fu"><a href="../reference/nColonies.html">nColonies</a></span><span class="op">(</span><span class="va">apiary2</span><span class="op">)</span>, </span>
 <span>                                      nDrones <span class="op">=</span> <span class="va">nFathersPoisson</span><span class="op">)</span></span>
@@ -422,7 +428,7 @@ other similar functions, read the Sampliong functions vignette.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

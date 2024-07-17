@@ -489,16 +489,23 @@ buildUp <- function(x, nWorkers = NULL, nDrones = NULL,
   if (is.null(simParamBee)) {
     simParamBee <- get(x = "SP", envir = .GlobalEnv)
   }
+  # Workers
+  if (is.null(nWorkers)) {
+    nWorkers <- simParamBee$nWorkers
+  }
+  if (is.function(nWorkers)) {
+    nWorkers <- nWorkers(colony = x,...)
+  }
+  if (is.null(nDrones)) {
+    nDrones <- simParamBee$nDrones
+  }
+  if (is.function(nDrones)) {
+    nDrones <- nDrones(x = x, ...)
+  }
+
   if (isColony(x)) {
     if (hasCollapsed(x)) {
       stop(paste0("The colony ", getId(x), " collapsed, hence you can not build it up!"))
-    }
-    # Workers
-    if (is.null(nWorkers)) {
-      nWorkers <- simParamBee$nWorkers
-    }
-    if (is.function(nWorkers)) {
-      nWorkers <- nWorkers(colony = x,...)
     }
     if (length(nWorkers) > 1) {
       warning("More than one value in the nWorkers argument, taking only the first value!")
@@ -519,12 +526,6 @@ buildUp <- function(x, nWorkers = NULL, nDrones = NULL,
     }
 
     # Drones
-    if (is.null(nDrones)) {
-      nDrones <- simParamBee$nDrones
-    }
-    if (is.function(nDrones)) {
-      nDrones <- nDrones(x = x, ...)
-    }
     if (length(nDrones) > 1) {
       warning("More than one value in the nDrones argument, taking only the first value!")
       nDrones <- nDrones[1]
@@ -595,6 +596,131 @@ buildUp <- function(x, nWorkers = NULL, nDrones = NULL,
   validObject(x)
   return(x)
 }
+
+
+setGeneric("buildUp1", function(x, nWorkers = NULL, nDrones = NULL,
+                                       new = TRUE, exact = FALSE, resetEvents = FALSE,
+                                       simParamBee = NULL, ...) {
+  if (is.null(simParamBee)) {
+    simParamBee <- get(x = "SP", envir = .GlobalEnv)
+  }
+  # Workers
+  if (is.null(nWorkers)) {
+    nWorkers <- simParamBee$nWorkers
+  }
+  if (is.function(nWorkers)) {
+    nWorkers <- nWorkers(colony = x,...)
+  }
+  if (is.null(nDrones)) {
+    nDrones <- simParamBee$nDrones
+  }
+  if (is.function(nDrones)) {
+    nDrones <- nDrones(x = x, ...)
+  }
+  standardGeneric("buildUp1")
+})
+
+setMethod("buildUp1", signature(x = "Colony"),
+          function(x, nWorkers = NULL, nDrones = NULL,
+                   new = TRUE, exact = FALSE, resetEvents = FALSE,
+                   simParamBee = NULL, ...) {
+    if (hasCollapsed(x)) {
+      stop(paste0("The colony ", getId(x), " collapsed, hence you can not build it up!"))
+    }
+    if (length(nWorkers) > 1) {
+      warning("More than one value in the nWorkers argument, taking only the first value!")
+      nWorkers <- nWorkers[1]
+    }
+    if (new) {
+      n <- nWorkers
+    } else {
+      n <- nWorkers - nWorkers(x, simParamBee = simParamBee)
+    }
+
+    if (0 < n) {
+      x <- addWorkers(
+        x = x, nInd = n, new = new,
+        exact = exact, simParamBee = simParamBee)
+    } else if (n < 0) {
+      x@workers <- getWorkers(x, nInd = nWorkers, simParamBee = simParamBee)
+    }
+
+    # Drones
+    if (length(nDrones) > 1) {
+      warning("More than one value in the nDrones argument, taking only the first value!")
+      nDrones <- nDrones[1]
+    }
+    if (new) {
+      n <- nDrones
+    } else {
+      n <- nDrones - nDrones(x, simParamBee = simParamBee)
+    }
+
+    if (0 < n) {
+      x <- addDrones(
+        x = x, nInd = n, new = new,
+        simParamBee = simParamBee
+      )
+    } else if (n < 0) {
+      x@drones <- getDrones(x, nInd = nDrones, simParamBee = simParamBee)
+    }
+
+    # Events
+    if (resetEvents) {
+      x <- resetEvents(x)
+    }
+    x@production <- TRUE
+
+    validObject(x)
+    return(x)
+})
+
+setMethod("buildUp1", signature(x = "MultiColony"),
+          function(x, nWorkers = NULL, nDrones = NULL,
+                   new = TRUE, exact = FALSE, resetEvents = FALSE,
+                   simParamBee = NULL, ...) {
+    nCol <- nColonies(x)
+    nNWorkers <- length(nWorkers)
+    nNDrones <- length(nDrones)
+    if (nNWorkers > 1 && nNWorkers < nCol) {
+      stop("Too few values in the nWorkers argument!")
+    }
+    if (nNDrones > 1 && nNDrones < nCol) {
+      stop("Too few values in the nDrones argument!")
+    }
+    if (nNWorkers > 1 && nNWorkers > nCol) {
+      warning(paste0("Too many values in the nWorkers argument, taking only the first ", nCol, "values!"))
+      nWorkers <- nWorkers[1:nCol]
+    }
+    if (nNDrones > 1 && nNDrones > nCol) {
+      warning(paste0("Too many values in the nDrones argument, taking only the first ", nCol, "values!"))
+      nNDrones <- nNDrones[1:nCol]
+    }
+    for (colony in seq_len(nCol)) {
+      if (is.null(nWorkers)) {
+        nWorkersColony <- NULL
+      } else {
+        nWorkersColony <- ifelse(nNWorkers == 1, nWorkers, nWorkers[colony])
+      }
+      if (is.null(nDrones)) {
+        nDronesColony <- NULL
+      } else {
+        nDronesColony <- ifelse(nNDrones == 1, nDrones, nDrones[colony])
+      }
+      x[[colony]] <- buildUp1(
+        x = x[[colony]],
+        nWorkers = nWorkersColony,
+        nDrones = nDronesColony,
+        new = new,
+        exact = exact,
+        resetEvents = resetEvents,
+        simParamBee = simParamBee, ...
+      )
+    }
+    validObject(x)
+    return(x)
+})
+
 
 #' @rdname downsize
 #' @title Reduce number of workers and remove all drones and virgin queens from
@@ -1432,6 +1558,142 @@ swarm <- function(x, p = NULL, year = NULL, nVirginQueens = NULL,
   validObject(ret$remnantColony)
   return(ret)
 }
+
+
+setGeneric("swarm1", function(x, p = NULL, year = NULL, nVirginQueens = NULL,
+                              sampleLocation = TRUE, radius = NULL,
+                              simParamBee = NULL, ...) {
+  if (is.null(simParamBee)) {
+    simParamBee <- get(x = "SP", envir = .GlobalEnv)
+  }
+  if (is.null(p)) {
+    p <- simParamBee$swarmP
+  }
+  if (is.null(radius)) {
+    radius <- simParamBee$swarmRadius
+  }
+  if (is.null(nVirginQueens)) {
+    nVirginQueens <- simParamBee$nVirginQueens
+  }
+  standardGeneric("swarm1")
+})
+
+setMethod("swarm1", signature(x = "Colony"),
+          function(x, p = NULL, year = NULL, nVirginQueens = NULL,
+                   sampleLocation = TRUE, radius = NULL,
+                   simParamBee = NULL, ...) {
+            if (hasCollapsed(x)) {j}
+            if (!isQueenPresent(x, simParamBee = simParamBee)) {
+              stop("No queen present in the colony!")
+            }
+            if (!isWorkersPresent(x, simParamBee = simParamBee)) {
+              stop("No workers present in the colony!")
+            }
+            if (is.function(p)) {
+              p <- p(x, ...)
+            } else  {
+              if (p < 0 | 1 < p) {
+                stop("p must be between 0 and 1 (inclusive)!")
+              }
+              if (length(p) > 1) {
+                warning("More than one value in the p argument, taking only the first value!")
+                p <- p[1]
+              }
+            }
+            if (is.function(nVirginQueens)) {
+              nVirginQueens <- nVirginQueens(x, ...)
+            }
+            nWorkers <- nWorkers(x, simParamBee = simParamBee)
+            nWorkersSwarm <- round(nWorkers * p)
+
+            # TODO: Add use="something" to select pWorkers that swarm
+            #       https://github.com/HighlanderLab/SIMplyBee/issues/160
+            tmp <- pullWorkers(x = x, nInd = nWorkersSwarm, simParamBee = simParamBee)
+            currentLocation <- getLocation(x)
+            if (sampleLocation) {
+              newLocation <- c(currentLocation + rcircle(radius = radius))
+              # c() to convert row-matrix to a numeric vector
+            } else {
+              newLocation <- currentLocation
+            }
+
+            swarmColony <- createColony(x = x@queen, simParamBee = simParamBee)
+            # It's not re-queening, but the function also sets the colony id
+
+            swarmColony@workers <- tmp$pulled
+            swarmColony <- setLocation(x = swarmColony, location = newLocation)
+
+            tmpVirginQueen <- createVirginQueens(
+              x = x, nInd = nVirginQueens,
+              year = year,
+              simParamBee = simParamBee
+            )
+            tmpVirginQueen <- selectInd(tmpVirginQueen, nInd = 1, use = "rand", simParam = simParamBee)
+
+            remnantColony <- createColony(x = tmpVirginQueen, simParamBee = simParamBee)
+            remnantColony@workers <- getWorkers(x = tmp$remnant, simParamBee = simParamBee)
+            remnantColony@drones <- getDrones(x = x, simParamBee = simParamBee)
+            # Workers raise virgin queens from eggs laid by the queen and one random
+            #   virgin queen prevails, so we create just one
+            # Could consider that a non-random one prevails (say the more aggressive one),
+            #   by creating many virgin queens and then picking the one with highest
+            #   gv/pheno for competition or some other criteria (patri-lineage)
+
+            remnantColony <- setLocation(x = remnantColony, location = currentLocation)
+
+            remnantColony@swarm <- TRUE
+            swarmColony@swarm <- TRUE
+            remnantColony@production <- FALSE
+            swarmColony@production <- FALSE
+
+            ret <- list(swarm = swarmColony, remnant = remnantColony)
+            validObject(ret$swarmColony)
+            validObject(ret$remnantColony)
+            return(ret)
+          })
+
+
+setMethod("swarm1", signature(x = "MultiColony"), function(x, p = NULL, year = NULL, nVirginQueens = NULL,
+                                                           sampleLocation = TRUE, radius = NULL,
+                                                           simParamBee = NULL, ...) {
+  nCol <- nColonies(x)
+  nP <- length(p)
+  if (nP > 1 && nP < nCol) {
+    stop("Too few values in the p argument!")
+  } else if (nP > 1 && nP > nCol) {
+    warning(paste0("Too many values in the p argument, taking only the first ", nCol, "values!"))
+    p <- p[1:nCol]
+  }
+  if (nCol == 0) {
+    ret <- list(
+      swarm = createMultiColony(simParamBee = simParamBee),
+      remnant = createMultiColony(simParamBee = simParamBee)
+    )
+  } else {
+    ret <- list(
+      swarm = createMultiColony(n = nCol, simParamBee = simParamBee),
+      remnant = createMultiColony(n = nCol, simParamBee = simParamBee)
+    )
+    for (colony in seq_len(nCol)) {
+      if (is.null(p)) {
+        pColony <- NULL
+      } else {
+        pColony <- ifelse(nP == 1, p, p[colony])
+      }
+      tmp <- swarm(x[[colony]],
+                   p = pColony,
+                   year = year,
+                   nVirginQueens = nVirginQueens,
+                   sampleLocation = sampleLocation,
+                   radius = radius,
+                   simParamBee = simParamBee, ...
+      )
+      ret$swarm[[colony]] <- tmp$swarm
+      ret$remnant[[colony]] <- tmp$remnant
+    }
+  }
+  return(ret)
+})
 
 #' @rdname supersede
 #' @title Supersede

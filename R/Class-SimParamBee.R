@@ -448,18 +448,15 @@ SimParamBee <- R6Class(
     .csdPosStop = "integer"
   ),
 
-  # Active fileds ----
+  # Active fields ----
 
   active = list(
 
     #' @field caste character, caste information for every individual ever
-    #'   created; active only when \code{SP$setTrackPed(isTrackPed = TRUE)}
+    #'   created
     caste = function(value) {
       if (missing(value)) {
-        factor(
-          x = private$.caste, levels = c("Q", "F", "W", "D", "V"),
-          labels = list("queen", "fathers", "workers", "drones", "virginQueens")
-        )
+          x = private$.caste
       } else {
         stop("`$caste` is read only", call. = FALSE)
       }

@@ -507,6 +507,27 @@ test_that("swarm", {
   expect_true(areVirginQueensPresent(tmp$remnant[[4]], simParamBee = SP))
 })
 
+
+test_that("swarm1", {
+  founderGenomes <- quickHaplo(nInd = 10, nChr = 1, segSites = 100)
+  SP <- SimParamBee$new(founderGenomes, csdChr = NULL)
+  SP$nThreads = 1L
+  basePop <- createVirginQueens(founderGenomes, simParamBee = SP)
+  drones <- createDrones(basePop[1], n = 1000, simParamBee = SP)
+  fatherGroups <- pullDroneGroupsFromDCA(drones, n = 10, nDrones = 10, simParamBee = SP)
+  nWorkers = 100
+  # Create Colony and MultiColony class
+  colony <- createColony(x = basePop[2], simParamBee = SP)
+  colony <- cross(colony, drones = fatherGroups[[1]], simParamBee = SP)
+  colony <- buildUp(colony, nWorkers = nWorkers, simParamBee = SP)
+  apiary <- createMultiColony(basePop[3:8], n = 6, simParamBee = SP)
+  apiary <- cross(apiary, drones = fatherGroups[2:7], simParamBee = SP)
+  apiary <- buildUp(apiary, nWorkers = 100, simParamBee = SP)
+
+  # Swarm a colony
+  expect_length(swarm1(colony, p = 0.5, simParamBee = SP),2)
+})
+
 # ---- Collapse -----
 
 test_that("collapse", {

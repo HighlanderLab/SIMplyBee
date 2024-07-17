@@ -286,7 +286,7 @@ Zareba et al. (2017) Uneven distribution of complementary sex determiner
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{caste}}{character, caste information for every individual ever
-created; active only when \code{SP$setTrackPed(isTrackPed = TRUE)}}
+created}
 
 \item{\code{lastColonyId}}{integer, ID of the last Colony object
 created with \code{\link{createColony}}}

@@ -161,5 +161,7 @@ getSnpGeno(apiary, caste = "all")
 getSnpGeno(apiary, caste = "all", collapse = TRUE)
 }
 \seealso{
-\code{\link[SIMplyBee]{getSnpGeno}} and \code{\link[AlphaSimR]{pullSnpGeno}}
+\code{\link[SIMplyBee]{getSnpHaplo}},
+ \code{\link[AlphaSimR]{pullSnpGeno}}, and
+ \code{\link[SIMplyBee]{getPooledGeno}}
 }

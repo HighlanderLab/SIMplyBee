@@ -156,6 +156,8 @@ getQtlGeno(apiary, caste = "all")
 getQtlGeno(apiary, caste = "all", collapse = TRUE)
 }
 \seealso{
-\code{\link[SIMplyBee]{getQtlGeno}} and \code{\link[AlphaSimR]{pullQtlGeno}} as well as
+\code{\link[SIMplyBee]{getQtlHaplo}},
+  \code{\link[AlphaSimR]{pullQtlGeno}}, and
+  \code{\link[SIMplyBee]{getPooledGeno}}, as well as
   \code{vignette(topic = "QuantitativeGenetics", package = "SIMplyBee")}
 }

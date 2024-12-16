@@ -4,21 +4,21 @@
 \alias{getPooledGeno}
 \title{Get a pooled genotype from true genotypes}
 \usage{
-getPooledGeno(x, type = NULL, sex = NULL)
+getPooledGeno(x, type = "mean", sex = NULL)
 }
 \arguments{
 \item{x}{matrix, true genotypes with individuals in rows and sites in columns}
 
-\item{type}{character, "mean" for average genotype or "count" for the counts
-of reference and alternative alleles}
+\item{type}{character, \code{"mean"} for average genotype (default) or
+\code{"count"} for the counts of reference and alternative alleles}
 
 \item{sex}{character, vector of "F" and "M" to denote the sex of individuals
 in \code{x}}
 }
 \value{
 a numeric vector with average allele dosage when \code{type = "mean"}
-  and a two-row matrix with the counts of reference (1st row) and
-  alternative (2nd row) alleles
+  or a two-row matrix with the counts of reference (1st row) and
+  alternative (2nd row) alleles when \code{type = "count"}
 }
 \description{
 Level 0 function that returns a pooled genotype from true
@@ -74,4 +74,9 @@ plot(
 
 # As an exercise you could repeat the above with different numbers of workers!
 
+# How to get pooled genotypes of workers across multiple colonies?
+tmp <- getSegSiteGeno(x = apiary, caste = "workers")
+(tmp2 = lapply(X = tmp, FUN = getPooledGeno)) # as a list of one row matrices
+t(sapply(X = tmp, FUN = getPooledGeno)) # as one matrix - option A
+do.call(what = rbind, args = tmp2) # as one matrix - option B
 }

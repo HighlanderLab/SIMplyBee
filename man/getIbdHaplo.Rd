@@ -165,5 +165,5 @@ getIbdHaplo(apiary, caste = "all")
 getIbdHaplo(apiary, caste = "all", collapse = TRUE)
 }
 \seealso{
-\code{\link[SIMplyBee]{getIbdHaplo}} and \code{\link[AlphaSimR]{pullIbdHaplo}}
+\code{\link[AlphaSimR]{pullIbdHaplo}}
 }

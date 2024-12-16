@@ -32,3 +32,15 @@ Edits the csd locus in an entire population of individuals to
   recalculated to reflect the any changes due to editing, but other slots
   remain the same.
 }
+\examples{
+founderGenomes <- quickHaplo(nInd = 4, nChr = 1, segSites = 10)
+
+SP <- SimParamBee$new(founderGenomes, nCsdAlleles = 2)
+tmp <- createVirginQueens(founderGenomes)
+getCsdAlleles(tmp)
+
+SP <- SimParamBee$new(founderGenomes, nCsdAlleles = 4)
+tmp <- createVirginQueens(founderGenomes)
+getCsdAlleles(tmp)
+
+}

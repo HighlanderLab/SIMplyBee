@@ -4,6 +4,28 @@ editor_options:
     wrap: 72
 ---
 
+# SIMplyBee version 0.4.2
+
+-   20??-??-??
+
+## Major changes
+-   TODO
+
+## New features
+-   TODO
+
+## Bug fixes
+-   editCsdLocus() works now also with just 2 alleles #591
+
+## Backgrond/package/etc. work
+-   calcBeeGRMIbs() can now return centred genotype matrix, allele frequencies,
+and scale factor used to calculate the GRM #594
+-   Improved default for getPooledGeno() (to type="mean"") and added an example
+on how to collect pooled workers' genotype accross colonies (but pooling is
+done within a colony!) #592
+-   We now removed setMisc() and getMisc() because we now use the new AlphaSimR
+structure of the misc slot that is much easier to use. #584
+
 # SIMplyBee version 0.4.1
 
 -   2024-09-19
@@ -26,7 +48,7 @@ which caused an error. We now read in the locations from a csv file.
     now c(0, 0) PR#500
 
 
-## New features ##
+## New features
 -   In setLocation(MultiColony) we can set one location (numeric) or
     multiple (list or data.frame) PR#500
 -   getLocation(MultiColony) got the collapse argument
@@ -56,8 +78,6 @@ which caused an error. We now read in the locations from a csv file.
 
 -   Bug fix - get\*Haplo() functions were returning diploid drones when
     input was a Pop-class
-
--   
 
 # SIMplyBee version 0.3.0
 

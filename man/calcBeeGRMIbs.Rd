@@ -6,7 +6,7 @@
 \title{Calculate Genomic Relatedness Matrix (GRM) for honeybees from
   Identical By State genomic data}
 \usage{
-calcBeeGRMIbs(x, sex, alleleFreq = NULL)
+calcBeeGRMIbs(x, sex, alleleFreq = NULL, returnComponents = FALSE)
 
 calcBeeAlleleFreq(x, sex)
 }
@@ -20,10 +20,18 @@ missing values are allowed (this is not checked - you will get NAs!)}
 \code{x} - \code{"F"} for female and \code{"M"} for male}
 
 \item{alleleFreq}{numeric, vector of allele frequencies for the sites in
-\code{x}; if \code{NULL}, then \code{\link[SIMplyBee]{calcBeeAlleleFreq}} is used}
+\code{x}; if \code{NULL}, then \code{\link[SIMplyBee]{calcBeeAlleleFreq}}
+is used}
+
+\item{returnComponents}{logical, return GRM as well as the components used
+to compute it (useful for GWAS by GBLUP)}
 }
 \value{
-matrix of genomic relatedness coefficients
+if \code{returnComponents = FALSE} (default) return a matrix of
+  genomic relatedness coefficients; if \code{returnComponents = TRUE} return
+  a list with the GRM, centred genotype matrix, allele frequencies, and
+  scaling factor used to scale the crossproduct of centred genotype matrix
+  to get the GRM.
 }
 \description{
 Level 0 function that returns Genomic Relatedness Matrix (GRM)
@@ -56,12 +64,12 @@ sex <- getCasteSex(x = colony, collapse = TRUE)
 GRM <- calcBeeGRMIbs(x = geno, sex = sex)
 # You can visualise this matrix with the function image() from the package 'Matrix'
 
-#Look at the diagonal at the relationship matrix
+# Look at the diagonal at the relationship matrix
 x <- diag(GRM)
 hist(x)
 summary(x)
 
-#Look at the off-diagonal at the relationship matrix
+# Look at the off-diagonal at the relationship matrix
 x <- GRM[lower.tri(x = GRM, diag = FALSE)]
 hist(x)
 summary(x)
@@ -97,6 +105,10 @@ queenGeno <- getQueenSegSiteGeno(colony)
 calcBeeGRMIbs(x = rbind(queenGeno, pooledGenoW), sex = c("F","F"))
 # You can now compare how this compare to relationships between the queen
 # individual workers!
+
+# Return components
+calcBeeGRMIbs(x = rbind(queenGeno, pooledGenoW), sex = c("F","F"),
+              returnComponents = TRUE)
 }
 \references{
 Druet and Legarra (2020) Theoretical and empirical comparisons of

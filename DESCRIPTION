@@ -1,7 +1,7 @@
 Package: SIMplyBee
 Type: Package
 Title: 'AlphaSimR' Extension for Simulating Honeybee Populations and Breeding Programmes
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(
   person("Jana", "Obšteter", email = "obsteter.jana@gmail.com",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1511-3916")),
@@ -27,7 +27,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: methods, R6, stats, utils, extraDistr (>= 1.9.1), RANN, Rcpp (>= 0.12.7)
-Depends: R (>= 3.3.0), AlphaSimR (>= 1.5.3)
+Depends: R (>= 3.3.0), AlphaSimR (>= 1.6.1)
 LinkingTo: Rcpp, RcppArmadillo (>= 0.7.500.0.0), BH
 RoxygenNote: 7.3.2
 Suggests: 

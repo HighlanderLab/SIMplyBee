@@ -1079,11 +1079,7 @@ getQueenAge <- function(x, currentYear, simParamBee = NULL) {
     }
   } else if (isColony(x)) {
     if (isQueenPresent(x, simParamBee = simParamBee)) {
-      if(packageVersion("AlphaSimR") > package_version("1.5.3")){
-        ret <- currentYear - x@queen@misc$yearOfBirth[[1]]
-      }else{
-        ret <- currentYear - x@queen@misc[[1]]$yearOfBirth
-      }
+      ret <- currentYear - x@queen@misc$yearOfBirth[[1]]
     } else {
       ret <- NA
     }
@@ -1279,8 +1275,6 @@ getCasteId <- function(x, caste = "all", collapse = FALSE, simParamBee = NULL) {
 #' @param collapse logical, if \code{TRUE}, the function will return a single
 #'   vector with sex information
 #' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
-#'
-#' @seealso \code{\link[SIMplyBee]{getCaste}}
 #'
 #' @return when \code{x} is \code{\link[AlphaSimR]{Pop-class}} for \code{caste != "all"}
 #'  or list for \code{caste == "all"} with sex nodes named by caste;
@@ -2873,7 +2867,7 @@ nCsdAlleles <- function(x, collapse = FALSE, simParamBee = NULL) {
 #'   with haplotypes of all the individuals
 #' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
 #'
-#' @seealso \code{\link[SIMplyBee]{getIbdHaplo}} and \code{\link[AlphaSimR]{pullIbdHaplo}}
+#' @seealso \code{\link[AlphaSimR]{pullIbdHaplo}}
 #'
 #' @return matrix with haplotypes when \code{x} is \code{\link[SIMplyBee]{Colony-class}}
 #'   and list of matrices with haplotypes when \code{x} is
@@ -3128,7 +3122,7 @@ getDronesIbdHaplo <- function(x, nInd = NULL, chr = NULL, snpChip = NULL,
 #'   with haplotypes of all the individuals
 #' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
 #'
-#' @seealso \code{\link[SIMplyBee]{getQtlHaplo}} and \code{\link[AlphaSimR]{pullQtlHaplo}} as well as
+#' @seealso \code{\link[SIMplyBee]{getQtlGeno}} and \code{\link[AlphaSimR]{pullQtlHaplo}} as well as
 #'   \code{vignette(topic = "QuantitativeGenetics", package = "SIMplyBee")}
 #'
 #' @return matrix with haplotypes when \code{x} is \code{\link[SIMplyBee]{Colony-class}}
@@ -3378,7 +3372,9 @@ getDronesQtlHaplo <- function(x, nInd = NULL,
 #'   with genotypes of all the individuals
 #' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
 #'
-#' @seealso \code{\link[SIMplyBee]{getQtlGeno}} and \code{\link[AlphaSimR]{pullQtlGeno}} as well as
+#' @seealso \code{\link[SIMplyBee]{getQtlHaplo}},
+#'   \code{\link[AlphaSimR]{pullQtlGeno}}, and
+#'   \code{\link[SIMplyBee]{getPooledGeno}}, as well as
 #'   \code{vignette(topic = "QuantitativeGenetics", package = "SIMplyBee")}
 #'
 #' @return matrix with genotypes when \code{x} is \code{\link[SIMplyBee]{Colony-class}} and
@@ -3628,7 +3624,7 @@ getDronesQtlGeno <- function(x, nInd = NULL,
 #'   with haplotypes of all the individuals
 #' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
 #'
-#' @seealso \code{\link[SIMplyBee]{getSegSiteHaplo}} and \code{\link[AlphaSimR]{pullSegSiteHaplo}}
+#' @seealso \code{\link[SIMplyBee]{getSegSiteGeno}} and \code{\link[AlphaSimR]{pullSegSiteHaplo}}
 #'
 #' @return matrix with haplotypes when \code{x} is \code{\link[SIMplyBee]{Colony-class}}
 #'   and list of matrices with haplotypes when \code{x} is
@@ -3870,7 +3866,9 @@ getDronesSegSiteHaplo <- function(x, nInd = NULL,
 #'   with genotypes of all the individuals
 #' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
 #'
-#' @seealso \code{\link[SIMplyBee]{getSegSiteGeno}} and \code{\link[AlphaSimR]{pullSegSiteGeno}}
+#' @seealso \code{\link[SIMplyBee]{getSegSiteHaplo}},
+#'   \code{\link[AlphaSimR]{pullSegSiteGeno}}, and
+#'   \code{\link[SIMplyBee]{getPooledGeno}}
 #'
 #' @return matrix with genotypes when \code{x} is \code{\link[SIMplyBee]{Colony-class}} and
 #'   list of matrices with genotypes when \code{x} is
@@ -4110,7 +4108,7 @@ getDronesSegSiteGeno <- function(x, nInd = NULL,
 #'   with haplotypes of all the individuals
 #' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
 #'
-#' @seealso \code{\link[SIMplyBee]{getSnpHaplo}} and \code{\link[AlphaSimR]{pullSnpHaplo}}
+#' @seealso \code{\link[SIMplyBee]{getSnpGeno}} and \code{\link[AlphaSimR]{pullSnpHaplo}}
 #'
 #' @return matrix with haplotypes when \code{x} is \code{\link[SIMplyBee]{Colony-class}}
 #'   and list of matrices with haplotypes when \code{x} is
@@ -4351,7 +4349,9 @@ getDronesSnpHaplo <- function(x, nInd = NULL,
 #'   with genotypes of all the individuals
 #' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
 #'
-#' @seealso \code{\link[SIMplyBee]{getSnpGeno}} and \code{\link[AlphaSimR]{pullSnpGeno}}
+#' @seealso \code{\link[SIMplyBee]{getSnpHaplo}},
+#'  \code{\link[AlphaSimR]{pullSnpGeno}}, and
+#'  \code{\link[SIMplyBee]{getPooledGeno}}
 #'
 #' @return matrix with genotypes when \code{x} is \code{\link[SIMplyBee]{Colony-class}} and
 #'   list of matrices with genotypes when \code{x} is
@@ -4577,14 +4577,14 @@ getDronesSnpGeno <- function(x, nInd = NULL,
 #'   genotypes to mimic genotyping of a pool of colony members.
 #'
 #' @param x matrix, true genotypes with individuals in rows and sites in columns
-#' @param type character, "mean" for average genotype or "count" for the counts
-#'   of reference and alternative alleles
+#' @param type character, \code{"mean"} for average genotype (default) or
+#'   \code{"count"} for the counts of reference and alternative alleles
 #' @param sex character, vector of "F" and "M" to denote the sex of individuals
 #'   in \code{x}
 #'
 #' @return a numeric vector with average allele dosage when \code{type = "mean"}
-#'   and a two-row matrix with the counts of reference (1st row) and
-#'   alternative (2nd row) alleles
+#'   or a two-row matrix with the counts of reference (1st row) and
+#'   alternative (2nd row) alleles when \code{type = "count"}
 #'
 #' @examples
 #' founderGenomes <- quickHaplo(nInd = 3, nChr = 1, segSites = 50)
@@ -4636,10 +4636,18 @@ getDronesSnpGeno <- function(x, nInd = NULL,
 #'
 #' # As an exercise you could repeat the above with different numbers of workers!
 #'
+#' # How to get pooled genotypes of workers across multiple colonies?
+#' tmp <- getSegSiteGeno(x = apiary, caste = "workers")
+#' (tmp2 = lapply(X = tmp, FUN = getPooledGeno)) # as a list of one row matrices
+#' t(sapply(X = tmp, FUN = getPooledGeno)) # as one matrix - option A
+#' do.call(what = rbind, args = tmp2) # as one matrix - option B
 #' @export
-getPooledGeno <- function(x, type = NULL, sex = NULL) {
+getPooledGeno <- function(x, type = "mean", sex = NULL) {
   if (!is.matrix(x)) {
     stop("Argument x must be a matrix class object!")
+  }
+  if (is.null(type) | !(type %in% c("mean", "count"))) {
+    stop("Argument type must be specified as either mean or count!")
   }
   n <- nrow(x)
   if (is.null(sex)) {
@@ -4658,8 +4666,6 @@ getPooledGeno <- function(x, type = NULL, sex = NULL) {
   } else if (type == "count") {
     ret <- rbind(nPloids - ret, ret)
     rownames(ret) <- c("0", "1")
-  } else {
-    stop("Argument type must be mean or count!")
   }
   return(ret)
 }
@@ -4680,9 +4686,16 @@ getPooledGeno <- function(x, type = NULL, sex = NULL) {
 #' @param sex character vector denoting sex for individuals with genotypes in
 #'   \code{x} - \code{"F"} for female and \code{"M"} for male
 #' @param alleleFreq numeric, vector of allele frequencies for the sites in
-#'   \code{x}; if \code{NULL}, then \code{\link[SIMplyBee]{calcBeeAlleleFreq}} is used
+#'   \code{x}; if \code{NULL}, then \code{\link[SIMplyBee]{calcBeeAlleleFreq}}
+#'   is used
+#' @param returnComponents logical, return GRM as well as the components used
+#'   to compute it (useful for GWAS by GBLUP)
 #'
-#' @return matrix of genomic relatedness coefficients
+#' @return if \code{returnComponents = FALSE} (default) return a matrix of
+#'   genomic relatedness coefficients; if \code{returnComponents = TRUE} return
+#'   a list with the GRM, centred genotype matrix, allele frequencies, and
+#'   scaling factor used to scale the crossproduct of centred genotype matrix
+#'   to get the GRM.
 #'
 #' @references Druet and Legarra (2020) Theoretical and empirical comparisons of
 #'   expected and realized relationships for the X-chromosome. Genetics
@@ -4708,12 +4721,12 @@ getPooledGeno <- function(x, type = NULL, sex = NULL) {
 #' GRM <- calcBeeGRMIbs(x = geno, sex = sex)
 #' # You can visualise this matrix with the function image() from the package 'Matrix'
 #'
-#' #Look at the diagonal at the relationship matrix
+#' # Look at the diagonal at the relationship matrix
 #' x <- diag(GRM)
 #' hist(x)
 #' summary(x)
 #'
-#' #Look at the off-diagonal at the relationship matrix
+#' # Look at the off-diagonal at the relationship matrix
 #' x <- GRM[lower.tri(x = GRM, diag = FALSE)]
 #' hist(x)
 #' summary(x)
@@ -4749,8 +4762,12 @@ getPooledGeno <- function(x, type = NULL, sex = NULL) {
 #' calcBeeGRMIbs(x = rbind(queenGeno, pooledGenoW), sex = c("F","F"))
 #' # You can now compare how this compare to relationships between the queen
 #' # individual workers!
+#'
+#' # Return components
+#' calcBeeGRMIbs(x = rbind(queenGeno, pooledGenoW), sex = c("F","F"),
+#'               returnComponents = TRUE)
 #' @export
-calcBeeGRMIbs <- function(x, sex, alleleFreq = NULL) {
+calcBeeGRMIbs <- function(x, sex, alleleFreq = NULL, returnComponents = FALSE) {
   if (!is.matrix(x)) {
     stop("Argument x must be a matrix class object!")
   }
@@ -4780,8 +4797,13 @@ calcBeeGRMIbs <- function(x, sex, alleleFreq = NULL) {
     #       This would overwrite x only once, at expense of doubling RAM
     x[, site] <- x[, site] - ploidy * alleleFreq[site]
   }
-  G <- tcrossprod(x) / (2 * sum(alleleFreq * (1 - alleleFreq)))
-  return(G)
+  scale <- 2 * sum(alleleFreq * (1 - alleleFreq))
+  G <- tcrossprod(x) / scale
+  if (returnComponents) {
+    return(list(G = G, x = x, alleleFreq = alleleFreq, scale = scale))
+  } else {
+    return(G)
+  }
 }
 
 #' @describeIn calcBeeGRMIbs Calculate allele frequencies from honeybee genotypes
@@ -6326,6 +6348,16 @@ calcColonyAa <- function(x, FUN = mapCasteToColonyAa, simParamBee = NULL, ...) {
 #'   in \code{\link[SIMplyBee]{SimParamBee}}. The two csd alleles must be different to
 #'   ensure heterozygosity at the csd locus.
 #' @param simParamBee global simulation parameters.
+#' @examples
+#' founderGenomes <- quickHaplo(nInd = 4, nChr = 1, segSites = 10)
+#'
+#' SP <- SimParamBee$new(founderGenomes, nCsdAlleles = 2)
+#' tmp <- createVirginQueens(founderGenomes)
+#' getCsdAlleles(tmp)
+#'
+#' SP <- SimParamBee$new(founderGenomes, nCsdAlleles = 4)
+#' tmp <- createVirginQueens(founderGenomes)
+#' getCsdAlleles(tmp)
 #'
 #' @return Returns an object of \code{\link[AlphaSimR]{Pop-class}}
 editCsdLocus <- function(pop, alleles = NULL, simParamBee = NULL) {
@@ -6338,7 +6370,10 @@ editCsdLocus <- function(pop, alleles = NULL, simParamBee = NULL) {
     alleles <- expand.grid(as.data.frame(matrix(rep(0:1, length(csdSites)), nrow = 2, byrow = FALSE)))
     # Sample two different alleles (without replacement) for each individual
     nAlleles <- simParamBee$nCsdAlleles
-    alleles <- sapply(seq_len(pop@nInd), FUN = function(x) list(alleles[sample(nAlleles, size = 2, replace = F), ]))
+    alleles <- sapply(X = seq_len(pop@nInd),
+                      FUN = function(x) {
+                        list(alleles[sample(nAlleles, size = 2, replace = FALSE), , drop = FALSE])
+                      })
   }
 
   if (pop@nInd != length(alleles)) {
@@ -6547,93 +6582,6 @@ createCrossPlan <- function(x,
   names(crossPlan) <- virginId
   return(crossPlan)
 }
-
-# Misc helpers
-# These functions replace the defunct functions of the same name in AlphaSimR
-
-#' @rdname setMisc
-#' @title Set miscellaneous information in a population
-#'
-#' @description Set miscellaneous information in a population
-#'
-#' @param x \code{\link[AlphaSimR]{Pop-class}}
-#' @param node character, name of the node to set within the \code{x@misc} slot
-#' @param value, value to be saved into \code{x@misc[[*]][[node]]}; length of
-#'   \code{value} should be equal to \code{nInd(x)}; if its length is 1, then
-#'   it is repeated using \code{rep} (see examples)
-#'
-#' @details A \code{NULL} in \code{value} is ignored
-#'
-#' @return \code{\link[AlphaSimR]{Pop-class}}
-#'
-#' @export
-setMisc <- function(x, node = NULL, value = NULL) {
-  if (isPop(x)) {
-    if (is.null(node)) {
-      stop("Argument node must be provided!")
-    }
-    if (is.null(value)) {
-      stop("Argument value must be provided!")
-    }
-    n <- nInd(x)
-    if (length(value) == 1 && n > 1) {
-      value <- rep(x = value, times = n)
-    }
-    if (length(value) != n) {
-      stop("Argument value must be of length 1 or nInd(x)!")
-    }
-
-    # Check current AlphaSimR version for new or legacy misc slot
-    if(packageVersion("AlphaSimR") > package_version("1.5.3")){
-      # New misc slot
-      x@misc[[node]] = value
-    }else{
-      # Legacy misc slot
-      names(value) = rep(x = node, times = n)
-      inode = match(names(x@misc[[1]]),node)
-      inode = inode[!is.na(inode)]
-      if(length(inode) == 0){
-        x@misc = sapply(seq_len(n),function(ind){
-          c(x@misc[[ind]],value[ind])
-        },simplify = FALSE)
-      }else{
-        x@misc = sapply(seq_len(n),function(ind){
-          c(x@misc[[ind]],value[ind])[-inode]
-        },simplify = FALSE)
-      }
-    }
-
-  }
-
-  return(x)
-}
-
-#' @rdname getMisc
-#' @title Get miscellaneous information in a population
-#'
-#' @description Get miscellaneous information in a population
-#'
-#' @param x \code{\link[AlphaSimR]{Pop-class}}
-#' @param node character, name of the node to get from the \code{x@misc} slot;
-#'   if \code{NULL} the whole \code{x@misc} slot is returned
-#'
-#' @return The \code{x@misc} slot or its nodes \code{x@misc[[*]][[node]]}
-#'
-#' @export
-getMisc <- function(x, node = NULL) {
-  if (isPop(x)) {
-    if (is.null(node)) {
-      ret <- x@misc
-    } else {
-      # Check current AlphaSimR version for new or legacy misc slot
-      ret = x@misc[[node]]
-    }
-  } else {
-    stop("Argument x must be a Pop class object!")
-  }
-  return(ret)
-}
-
 
 #' @rdname mapLoci
 #' @title Finds loci on a genetic map and return a list of positions

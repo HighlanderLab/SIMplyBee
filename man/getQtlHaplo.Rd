@@ -173,6 +173,6 @@ getQtlHaplo(apiary, caste = "all", collapse = TRUE)
 
 }
 \seealso{
-\code{\link[SIMplyBee]{getQtlHaplo}} and \code{\link[AlphaSimR]{pullQtlHaplo}} as well as
+\code{\link[SIMplyBee]{getQtlGeno}} and \code{\link[AlphaSimR]{pullQtlHaplo}} as well as
   \code{vignette(topic = "QuantitativeGenetics", package = "SIMplyBee")}
 }

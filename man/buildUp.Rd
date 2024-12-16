@@ -118,5 +118,5 @@ nWorkers(apiary)
 nDrones(apiary)
 
 # Queen's counters
-getMisc(getQueen(buildUp(colony)))
+getQueen(buildUp(colony))@misc
 }

@@ -1470,15 +1470,15 @@ cross <- function(x,
         simParamBee$changeCaste(id = virginQueen@id, caste = "queen")
         simParamBee$changeCaste(id = virginQueenDrones@id, caste = "fathers")
 
-        virginQueen <- setMisc(x = virginQueen, node = "nWorkers", value = 0)
-        virginQueen <- setMisc(x = virginQueen, node = "nDrones", value = 0)
-        virginQueen <- setMisc(x = virginQueen, node = "nHomBrood", value = 0)
+        virginQueen@misc$nWorkers <- 0
+        virginQueen@misc$nDrones <- 0
+        virginQueen@misc$nHomBrood <- 0
         if (isCsdActive(simParamBee = simParamBee)) {
           val <- calcQueensPHomBrood(x = virginQueen, simParamBee = simParamBee)
         } else {
           val <- NA
         }
-        virginQueen <- setMisc(x = virginQueen, node = "pHomBrood", value = val)
+        virginQueen@misc$pHomBrood <- val
 
         if (isPop(x)) {
           ret[[virgin]] <- virginQueen
@@ -1580,20 +1580,17 @@ setQueensYearOfBirth <- function(x, year, simParamBee = NULL) {
       stop("Individuals in x must be virgin queens or queens!")
     }
     nInd <- nInd(x)
-    x <- setMisc(x = x, node = "yearOfBirth", value = year)
+    x@misc$yearOfBirth <- year
   } else if (isColony(x)) {
     if (isQueenPresent(x, simParamBee = simParamBee)) {
-      x@queen <- setMisc(x = x@queen, node = "yearOfBirth", value = year)
+      x@queen@misc$yearOfBirth <- year
     } else {
       stop("Missing queen!")
     }
   } else if (isMultiColony(x)) {
     nCol <- nColonies(x)
     for (colony in seq_len(nCol)) {
-      x[[colony]]@queen <- setMisc(
-        x = x[[colony]]@queen, node = "yearOfBirth",
-        value = year
-      )
+      x[[colony]]@queen@misc$yearOfBirth <- year
     }
   } else {
     stop("Argument x must be a Pop, Colony or MultiColony class object!")

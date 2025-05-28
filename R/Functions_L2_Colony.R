@@ -249,7 +249,7 @@ reQueen <- function(x, queen, removeVirginQueens = TRUE, simParamBee = NULL) {
 #' # nVirginQueens/nWorkers/nDrones will vary between function calls when a function is used
 #'
 #' # Queen's counters
-#' getMisc(getQueen(addWorkers(colony)))
+#' getQueen(addWorkers(colony))@misc
 #'
 #' # Add individuals to a MultiColony object
 #' apiary <- addWorkers(apiary)
@@ -472,7 +472,7 @@ addVirginQueens <- function(x, nInd = NULL, new = FALSE,
 #' nDrones(apiary)
 #'
 #' # Queen's counters
-#' getMisc(getQueen(buildUp(colony)))
+#' getQueen(buildUp(colony))@misc
 #' @export
 buildUp <- function(x, nWorkers = NULL, nDrones = NULL,
                     new = TRUE, exact = FALSE, resetEvents = FALSE,

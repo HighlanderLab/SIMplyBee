@@ -1079,11 +1079,7 @@ getQueenAge <- function(x, currentYear, simParamBee = NULL) {
     }
   } else if (isColony(x)) {
     if (isQueenPresent(x, simParamBee = simParamBee)) {
-      if(packageVersion("AlphaSimR") > package_version("1.5.3")){
-        ret <- currentYear - x@queen@misc$yearOfBirth[[1]]
-      }else{
-        ret <- currentYear - x@queen@misc[[1]]$yearOfBirth
-      }
+      ret <- currentYear - x@queen@misc$yearOfBirth[[1]]
     } else {
       ret <- NA
     }
@@ -6547,93 +6543,6 @@ createCrossPlan <- function(x,
   names(crossPlan) <- virginId
   return(crossPlan)
 }
-
-# Misc helpers
-# These functions replace the defunct functions of the same name in AlphaSimR
-
-#' @rdname setMisc
-#' @title Set miscellaneous information in a population
-#'
-#' @description Set miscellaneous information in a population
-#'
-#' @param x \code{\link[AlphaSimR]{Pop-class}}
-#' @param node character, name of the node to set within the \code{x@misc} slot
-#' @param value, value to be saved into \code{x@misc[[*]][[node]]}; length of
-#'   \code{value} should be equal to \code{nInd(x)}; if its length is 1, then
-#'   it is repeated using \code{rep} (see examples)
-#'
-#' @details A \code{NULL} in \code{value} is ignored
-#'
-#' @return \code{\link[AlphaSimR]{Pop-class}}
-#'
-#' @export
-setMisc <- function(x, node = NULL, value = NULL) {
-  if (isPop(x)) {
-    if (is.null(node)) {
-      stop("Argument node must be provided!")
-    }
-    if (is.null(value)) {
-      stop("Argument value must be provided!")
-    }
-    n <- nInd(x)
-    if (length(value) == 1 && n > 1) {
-      value <- rep(x = value, times = n)
-    }
-    if (length(value) != n) {
-      stop("Argument value must be of length 1 or nInd(x)!")
-    }
-
-    # Check current AlphaSimR version for new or legacy misc slot
-    if(packageVersion("AlphaSimR") > package_version("1.5.3")){
-      # New misc slot
-      x@misc[[node]] = value
-    }else{
-      # Legacy misc slot
-      names(value) = rep(x = node, times = n)
-      inode = match(names(x@misc[[1]]),node)
-      inode = inode[!is.na(inode)]
-      if(length(inode) == 0){
-        x@misc = sapply(seq_len(n),function(ind){
-          c(x@misc[[ind]],value[ind])
-        },simplify = FALSE)
-      }else{
-        x@misc = sapply(seq_len(n),function(ind){
-          c(x@misc[[ind]],value[ind])[-inode]
-        },simplify = FALSE)
-      }
-    }
-
-  }
-
-  return(x)
-}
-
-#' @rdname getMisc
-#' @title Get miscellaneous information in a population
-#'
-#' @description Get miscellaneous information in a population
-#'
-#' @param x \code{\link[AlphaSimR]{Pop-class}}
-#' @param node character, name of the node to get from the \code{x@misc} slot;
-#'   if \code{NULL} the whole \code{x@misc} slot is returned
-#'
-#' @return The \code{x@misc} slot or its nodes \code{x@misc[[*]][[node]]}
-#'
-#' @export
-getMisc <- function(x, node = NULL) {
-  if (isPop(x)) {
-    if (is.null(node)) {
-      ret <- x@misc
-    } else {
-      # Check current AlphaSimR version for new or legacy misc slot
-      ret = x@misc[[node]]
-    }
-  } else {
-    stop("Argument x must be a Pop class object!")
-  }
-  return(ret)
-}
-
 
 #' @rdname mapLoci
 #' @title Finds loci on a genetic map and return a list of positions

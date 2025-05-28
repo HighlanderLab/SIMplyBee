@@ -163,5 +163,5 @@ getSegSiteHaplo(apiary, caste = "all")
 getSegSiteHaplo(apiary, caste = "all", collapse = TRUE)
 }
 \seealso{
-\code{\link[SIMplyBee]{getSegSiteHaplo}} and \code{\link[AlphaSimR]{pullSegSiteHaplo}}
+\code{\link[SIMplyBee]{getSegSiteGeno}} and \code{\link[AlphaSimR]{pullSegSiteHaplo}}
 }

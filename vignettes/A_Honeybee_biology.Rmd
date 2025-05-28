@@ -340,10 +340,10 @@ offspring that are expected to be homozygous based on queen's and father's *CSD*
 alleles. You can obtain `pHomBrood` and `nHomBrood` values with the
 corresponding `pHomBrood()` and `nHombrood()` functions that can be applied
 either on the queen (`Pop` class) or colony (`Colony` class) directly. You can
-obtain the entire `misc` slot with the `getMisc()` function.
+obtain the entire `misc` slot using:
 
 ```{r misc}
-getMisc(getQueen(colony))
+getQueen(colony)@misc
 ```
 
 Technically, in SIMplyBee we represent the *CSD* locus as a series of bi-allelic
@@ -412,7 +412,7 @@ population as well as the cumulative number of workers, drones, homozygous
 brood, and the expected proportion of homozygous brood.
 
 ```{r queens counters}
-getMisc(getQueen(inbredColony))
+getQueen(inbredColony)@misc
 ```
 
 # References

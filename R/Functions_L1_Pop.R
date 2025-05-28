@@ -423,10 +423,8 @@ createCastePop <- function(x, caste = NULL, nInd = NULL,
       stop("MapPop-class can only be used to create virgin queens!")
     }
     ret <- newPop(x, simParam = simParamBee)
-    if (!is.null(simParamBee$csdChr)) {
-      if (editCsd) {
-        ret <- editCsdLocus(ret, alleles = csdAlleles, simParamBee = simParamBee)
-      }
+    if (!is.null(simParamBee$csdChr) && editCsd) {
+      ret <- editCsdLocus(pop = ret, alleles = csdAlleles, simParamBee = simParamBee)
     }
     ret@sex[] <- "F"
     simParamBee$changeCaste(id = ret@id, caste = "virginQueens")

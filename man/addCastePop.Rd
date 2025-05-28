@@ -117,7 +117,7 @@ SP$nWorkers <- nWorkersPoisson
 # nVirginQueens/nWorkers/nDrones will vary between function calls when a function is used
 
 # Queen's counters
-getMisc(getQueen(addWorkers(colony)))
+getQueen(addWorkers(colony))@misc
 
 # Add individuals to a MultiColony object
 apiary <- addWorkers(apiary)

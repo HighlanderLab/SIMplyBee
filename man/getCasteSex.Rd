@@ -84,7 +84,5 @@ head(tmp)
 tail(tmp)
 }
 \seealso{
-\code{\link[SIMplyBee]{getCaste}}
-
 \code{\link[SIMplyBee]{getCastePop}} and \code{\link[SIMplyBee]{getCaste}}
 }

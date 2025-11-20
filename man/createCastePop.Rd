@@ -23,7 +23,6 @@ createCastePop(
 createWorkers(
   x,
   nInd = NULL,
-  exact = FALSE,
   simParamBee = NULL,
   returnSP = FALSE,
   ids = NULL,
@@ -91,11 +90,6 @@ for parallel computing)}
 \item{nThreads}{integer, number of cores to use for parallel computing (over colonies)}
 
 \item{...}{additional arguments passed to \code{nInd} when this argument is a function}
-
-\item{exact}{logical, only relevant when creating workers,
-if the csd locus is active and exact is \code{TRUE},
-create the exactly specified number of viable workers (heterozygous on the
-csd locus)}
 }
 \value{
 when \code{x} is \code{\link[AlphaSimR]{MapPop-class}} returns

@@ -55,6 +55,8 @@ Level 2 function that swarms a Colony or MultiColony object -
 \examples{
 founderGenomes <- quickHaplo(nInd = 8, nChr = 1, segSites = 50)
 SP <- SimParamBee$new(founderGenomes)
+SP$setTrackPed(TRUE)
+SP$setTrackRec(TRUE)
 \dontshow{SP$nThreads = 1L}
 basePop <- createVirginQueens(founderGenomes)
 drones <- createDrones(basePop[1], n = 1000)

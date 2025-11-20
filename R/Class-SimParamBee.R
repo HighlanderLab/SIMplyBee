@@ -425,21 +425,80 @@ SimParamBee <- R6Class(
       invisible(self)
     },
 
-    #' @description A function to update the pedigree.
-    #'   For internal use only.
+    #' @description For internal use only.
     #'
-    #' @param pedigree matrix, pedigree matrix to be added
-    updatePedigree = function(pedigree) {
-      private$.pedigree = rbind(private$.pedigree, pedigree)
+    #' @param nNewInd Number of newly created individuals
+    #' @param id the name of each individual
+    #' @param mother vector of mother iids
+    #' @param father vector of father iids
+    #' @param isDH indicator for DH lines
+    addToBeePed = function(nNewInd,id,mother,father,isDH) {
+      stopifnot(nNewInd>0)
+      if(length(isDH)==1) isDH = rep(isDH,nNewInd)
+      mother = as.integer(mother)
+      father = as.integer(father)
+      isDH = as.integer(isDH)
+      stopifnot(length(mother)==nNewInd,
+                length(father)==nNewInd,
+                length(isDH)==nNewInd)
+      tmp = cbind(mother,father,isDH)
+      rownames(tmp) = id
+      private$.pedigree = rbind(private$.pedigree,tmp)
+      private$.lastId = private$.lastId + as.integer(nNewInd)
       invisible(self)
     },
 
-    #' @description A function to update the recHist
-    #'   For internal use only.
+
+    #' @description For internal use only.
     #'
-    #' @param recHist matrix, recHist list to be added
-    updateRecHist = function(recHist) {
-      private$.recHist = c(private$.recHist, recHist)
+    #' @param nNewInd Number of newly created individuals
+    #' @param id the name of each individual
+    #' @param mother vector of mother iids
+    #' @param father vector of father iids
+    #' @param isDH indicator for DH lines
+    #' @param hist new recombination history
+    #' @param ploidy ploidy level
+    addToBeeRec = function(nNewInd,id,mother,father,isDH,
+                           hist,ploidy){
+      stopifnot(nNewInd>0)
+      if(length(isDH)==1) isDH = rep(isDH,nNewInd)
+      mother = as.integer(mother)
+      father = as.integer(father)
+      isDH = as.integer(isDH)
+      stopifnot(length(mother)==nNewInd,
+                length(father)==nNewInd,
+                length(isDH)==nNewInd)
+      tmp = cbind(mother,father,isDH)
+      rownames(tmp) = id
+      if(is.null(hist)){
+        newRecHist = vector("list",nNewInd)
+        tmpLastHaplo = private$.lastHaplo
+        if(all(isDH==1L)){
+          for(i in seq_len(nNewInd)){
+            tmpLastHaplo = tmpLastHaplo + 1L
+            newRecHist[[i]] = rep(tmpLastHaplo, ploidy)
+          }
+        }else{
+          for(i in seq_len(nNewInd)){
+            newRecHist[[i]] = (tmpLastHaplo+1L):(tmpLastHaplo+ploidy)
+            tmpLastHaplo = tmpLastHaplo + ploidy
+          }
+        }
+        private$.hasHap = c(private$.hasHap, rep(FALSE, nNewInd))
+        private$.isFounder = c(private$.isFounder, rep(TRUE, nNewInd))
+        #names(newRecHist) = id
+        private$.recHist = c(private$.recHist, newRecHist)
+        private$.lastHaplo = tmpLastHaplo
+      }else{
+        # Add hist to recombination history
+        private$.hasHap = c(private$.hasHap, rep(FALSE, nNewInd))
+        private$.isFounder = c(private$.isFounder, rep(FALSE, nNewInd))
+        #names(hist) = id
+        private$.recHist = c(private$.recHist, hist)
+      }
+      private$.pedigree = rbind(private$.pedigree, tmp)
+      private$.lastId = private$.lastId + as.integer(nNewInd)
+
       invisible(self)
     },
 
@@ -499,7 +558,7 @@ SimParamBee <- R6Class(
     #'   created
     caste = function(value) {
       if (missing(value)) {
-          x = private$.caste
+        x = private$.caste
       } else {
         stop("`$caste` is read only", call. = FALSE)
       }
@@ -509,7 +568,7 @@ SimParamBee <- R6Class(
     #'   created with \code{\link[SIMplyBee]{createColony}}
     lastColonyId = function(value) {
       if (missing(value)) {
-          private$.lastColonyId
+        private$.lastColonyId
       } else {
         stop("`$lastColonyId` is read only", call. = FALSE)
       }

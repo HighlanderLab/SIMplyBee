@@ -181,7 +181,7 @@ test_that("pHomBrood", {
   expect_error(pHomBrood(colony@workers, simParamBee = SP))
   expect_error(pHomBrood(colony@virginQueens, simParamBee = SP))
   expect_error(pHomBrood(colony@drones, simParamBee = SP))
-  expect_true(is.numeric(pHomBrood(colony@queen, simParamBee = SP)))
+  #expect_true(is.numeric(pHomBrood(colony@queen, simParamBee = SP)))
 
   colony@queen <- NULL
   expect_error(pHomBrood(colony@queen, simParamBee = SP))

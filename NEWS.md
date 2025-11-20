@@ -52,6 +52,20 @@ which caused an error. We now read in the locations from a csv file.
 
 -  Added new C++ function isHeterozygous() to speed up the SIMplyBee function isCsdHeterozygous() 
 
+- parallelised all the major functions (so they run on simParamBee$nThreads cores)
+
+- swarm/split/supersede do no longer store the year of the queen 
+
+- colonies with high inbreeding that do not produce a viable virgin queens in 
+max(10, SP$nVirginQueens) attempts are
+removed in swarm/supersede
+
+- split no longer creates virgin queens in the split colonies but returns colonies with workers 
+and meta data, but no virgin
+queens
+
+- createMultiColony() no longer creates an empty apiary, but it adds empty colonies with IDs
+
 ## Bug fixes
 
 -   Bug fix - get\*Haplo() functions were returning diploid drones when

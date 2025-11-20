@@ -282,7 +282,7 @@ test_that("cross", {
   expect_error(cross(colony2, drones = dronesGroups[7], simParamBee = SP))
 
   # Message if fathers == 0 "Mating failed"
-  expect_error(cross(virginQueen2, drones= selectInd(colony@drones,nInd = 0, use = "rand", simParam = SP), simParamBee = SP))
+  expect_error(cross(virginQueen2, drones= selectInd(colony@drones, nInd = 0, use = "rand", simParam = SP), simParamBee = SP))
   #expect_message(cross(virginQueen2, drones= selectInd(colony@drones,nInd = 0, use = "rand", simParam = SP), checkCross = "warning", simParamBee = SP))
 })
 
@@ -414,3 +414,4 @@ test_that("combineBeeGametesHaploidDiploid", {
   expect_equal(nInd(drones), 5)
   expect_equal(drones@ploidy, 1)
 })
+

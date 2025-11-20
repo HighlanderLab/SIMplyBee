@@ -317,8 +317,8 @@ generate this object}
 \item \href{#method-SimParamBee-new}{\code{SimParamBee$new()}}
 \item \href{#method-SimParamBee-addToCaste}{\code{SimParamBee$addToCaste()}}
 \item \href{#method-SimParamBee-changeCaste}{\code{SimParamBee$changeCaste()}}
-\item \href{#method-SimParamBee-updatePedigree}{\code{SimParamBee$updatePedigree()}}
-\item \href{#method-SimParamBee-updateRecHist}{\code{SimParamBee$updateRecHist()}}
+\item \href{#method-SimParamBee-addToBeePed}{\code{SimParamBee$addToBeePed()}}
+\item \href{#method-SimParamBee-addToBeeRec}{\code{SimParamBee$addToBeeRec()}}
 \item \href{#method-SimParamBee-updateCaste}{\code{SimParamBee$updateCaste()}}
 \item \href{#method-SimParamBee-updateLastBeeId}{\code{SimParamBee$updateLastBeeId()}}
 \item \href{#method-SimParamBee-updateLastColonyId}{\code{SimParamBee$updateLastColonyId()}}
@@ -538,37 +538,55 @@ SP$caste
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SimParamBee-updatePedigree"></a>}}
-\if{latex}{\out{\hypertarget{method-SimParamBee-updatePedigree}{}}}
-\subsection{Method \code{updatePedigree()}}{
-A function to update the pedigree.
-  For internal use only.
+\if{html}{\out{<a id="method-SimParamBee-addToBeePed"></a>}}
+\if{latex}{\out{\hypertarget{method-SimParamBee-addToBeePed}{}}}
+\subsection{Method \code{addToBeePed()}}{
+For internal use only.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimParamBee$updatePedigree(pedigree)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SimParamBee$addToBeePed(nNewInd, id, mother, father, isDH)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{pedigree}}{matrix, pedigree matrix to be added}
+\item{\code{nNewInd}}{Number of newly created individuals}
+
+\item{\code{id}}{the name of each individual}
+
+\item{\code{mother}}{vector of mother iids}
+
+\item{\code{father}}{vector of father iids}
+
+\item{\code{isDH}}{indicator for DH lines}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SimParamBee-updateRecHist"></a>}}
-\if{latex}{\out{\hypertarget{method-SimParamBee-updateRecHist}{}}}
-\subsection{Method \code{updateRecHist()}}{
-A function to update the recHist
-  For internal use only.
+\if{html}{\out{<a id="method-SimParamBee-addToBeeRec"></a>}}
+\if{latex}{\out{\hypertarget{method-SimParamBee-addToBeeRec}{}}}
+\subsection{Method \code{addToBeeRec()}}{
+For internal use only.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimParamBee$updateRecHist(recHist)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SimParamBee$addToBeeRec(nNewInd, id, mother, father, isDH, hist, ploidy)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{recHist}}{matrix, recHist list to be added}
+\item{\code{nNewInd}}{Number of newly created individuals}
+
+\item{\code{id}}{the name of each individual}
+
+\item{\code{mother}}{vector of mother iids}
+
+\item{\code{father}}{vector of father iids}
+
+\item{\code{isDH}}{indicator for DH lines}
+
+\item{\code{hist}}{new recombination history}
+
+\item{\code{ploidy}}{ploidy level}
 }
 \if{html}{\out{</div>}}
 }

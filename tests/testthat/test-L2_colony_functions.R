@@ -109,9 +109,7 @@ test_that("Add functions", {
    expect_equal(nDrones(addDrones(colony, nInd = 5, new = TRUE, simParamBee = SP), simParamBee = SP), 5)
    # If input is an apiary
    # Empty apiary - you can add, but nothing happens - returns an empty apiary
-   expect_s4_class(addVirginQueens(emptyApiary, nInd = 5, simParamBee = SP), "MultiColony")
-   expect_s4_class(addWorkers(emptyApiary, nInd = 5, simParamBee = SP), "MultiColony")
-   expect_s4_class(addDrones(emptyApiary, nInd = 5, simParamBee = SP), "MultiColony")
+   expect_error(addVirginQueens(emptyApiary, nInd = 5, simParamBee = SP))
    # Non-empty apiary
    expect_s4_class(addVirginQueens(apiary, nInd = 5, simParamBee = SP), "MultiColony")
    expect_s4_class(addWorkers(apiary, nInd = 5, simParamBee = SP), "MultiColony")
@@ -154,7 +152,7 @@ test_that("BuildUpDownsize", {
 
    # Build Up an apiary
    # Empty apiary
-   expect_s4_class(buildUp(emptyApiary, simParamBee = SP), "MultiColony")
+   expect_error(buildUp(emptyApiary, simParamBee = SP))
    # Non-empty apiary
    expect_equal(nColonies(buildUp(apiary, simParamBee = SP)), 2)
 
@@ -169,7 +167,7 @@ test_that("BuildUpDownsize", {
    expect_length(intersect(getId(getWorkers(downsize(colony, p = 0.1, new = TRUE, simParamBee = SP), simParamBee = SP)), workersIDs), 0)
 
    # Empty apiary
-   expect_s4_class(downsize(emptyApiary, simParamBee = SP), "MultiColony")
+   expect_error(downsize(emptyApiary, simParamBee = SP))
    # Non-empty apiary
    downsize(apiary, simParamBee = SP)
 })
@@ -201,9 +199,9 @@ test_that("replaceFunctions", {
   expect_error(replaceVirginQueens(emptyColony, p = 0.5, simParamBee = SP))
   expect_error(replaceWorkers(emptyColony, p = 0, simParamBee = SP))
   expect_error(replaceDrones(emptyColony, p = 1, simParamBee = SP))
-  expect_s4_class(replaceVirginQueens(emptyApiary, p = 0.5, simParamBee = SP), "MultiColony")
-  expect_s4_class(replaceWorkers(emptyApiary, p = 0, simParamBee = SP), "MultiColony")
-  expect_s4_class(replaceDrones(emptyApiary, p = 1, simParamBee = SP), "MultiColony")
+  expect_error(replaceVirginQueens(emptyApiary, p = 0.5, simParamBee = SP))
+  expect_error(replaceWorkers(emptyApiary, p = 0, simParamBee = SP))
+  expect_error(replaceDrones(emptyApiary, p = 1, simParamBee = SP))
 
   # Replace individuals in the non-empty colony/apiary
   expect_s4_class(replaceVirginQueens(colony, simParamBee = SP), "Colony")
@@ -211,7 +209,7 @@ test_that("replaceFunctions", {
   expect_s4_class(replaceDrones(colony, simParamBee = SP), "Colony")
   expect_equal(nVirginQueens(replaceVirginQueens(colony, p = 1, simParamBee = SP), simParamBee = SP), nVirginQueens(colony, simParam = SP))
   expect_equal(nWorkers(replaceWorkers(colony, p = 0.5, simParamBee = SP), simParamBee = SP), nWorkers(colony, simParamBee = SP))
-  expect_equal(nDrones(replaceDrones(colony, p = 0, simParamBee = SP), simParamBee = SP), nDrones(colony, simParamBee = SP))
+  expect_warning(nDrones(replaceDrones(colony, p = 0, simParamBee = SP), simParamBee = SP))
   virginQueensIDs <- getId(colony@virginQueens)
   workerIDs <- getId(colony@workers)
   droneIDs <- getId(colony@drones)
@@ -219,14 +217,14 @@ test_that("replaceFunctions", {
                          virginQueensIDs), 0)
   expect_length(intersect(getId(replaceWorkers(colony, p = 0.5, simParamBee = SP)@workers),
                           workerIDs), nWorkers(colony, simParamBee = SP)/2)
-  expect_length(intersect(getId(replaceDrones(colony, p = 0, simParamBee = SP)@drones),
-                          droneIDs), nDrones(colony, simParamBee = SP))
+  expect_warning(intersect(getId(replaceDrones(colony, p = 0, simParamBee = SP)@drones),
+                          droneIDs))
   expect_s4_class(replaceVirginQueens(apiary, simParamBee = SP), "MultiColony")
   expect_s4_class(replaceWorkers(apiary, simParamBee = SP), "MultiColony")
   expect_s4_class(replaceDrones(apiary, simParamBee = SP), "MultiColony")
   expect_equal(nColonies(replaceVirginQueens(apiary, p = 1, simParamBee = SP)), nColonies(apiary))
   expect_equal(nColonies(replaceWorkers(apiary, p = 0.5, simParamBee = SP)), nColonies(apiary))
-  expect_equal(nColonies(replaceDrones(apiary, p = 0, simParamBee = SP)), nColonies(apiary))
+  expect_error(nColonies(replaceDrones(apiary, p = 0, simParamBee = SP)))
 })
 
 # ---- Remove functions  ----
@@ -256,9 +254,9 @@ test_that("removeFunctions", {
   expect_s4_class(removeVirginQueens(emptyColony, p = 0.5, simParamBee = SP), "Colony")
   expect_s4_class(removeWorkers(emptyColony, p = 0, simParamBee = SP), "Colony")
   expect_s4_class(removeDrones(emptyColony, p = 1, simParamBee = SP), "Colony")
-  expect_s4_class(removeVirginQueens(emptyApiary, p = 0.5, simParamBee = SP), "MultiColony")
-  expect_s4_class(removeWorkers(emptyApiary, p = 0, simParamBee = SP), "MultiColony")
-  expect_s4_class(removeDrones(emptyApiary, p = 1, simParamBee = SP), "MultiColony")
+  expect_error(removeVirginQueens(emptyApiary, p = 0.5, simParamBee = SP))
+  expect_error(removeWorkers(emptyApiary, p = 0, simParamBee = SP))
+  expect_error(removeDrones(emptyApiary, p = 1, simParamBee = SP))
 
   # Remove individuals in the non-empty colony/apiary
   expect_s4_class(removeVirginQueens(colony, simParamBee = SP), "Colony")
@@ -308,9 +306,8 @@ test_that("setLocation", {
   emptyApiary <- createMultiColony(n = 3, simParamBee = SP)
   apiary <- createMultiColony(basePop[1:3], simParamBee = SP)
 
-  expect_s4_class(setLocation(emptyApiary, location = c(1,2)), "MultiColony")
+  expect_error(setLocation(emptyApiary, location = c(1,2)))
   expect_error(setLocation(emptyApiary, location = list(1,2))) # Lengths do not match
-  expect_s4_class(setLocation(emptyApiary, location = list(1:2, 3:4, 4:5)), "MultiColony") #Not setting anything, if all are NULL!!!!
   expect_s4_class(setLocation(apiary, location = c(1,2)), "MultiColony")
   expect_s4_class(setLocation(apiary, location = list(1:2, 3:4, 4:5)), "MultiColony")
 })

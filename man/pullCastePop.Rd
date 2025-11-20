@@ -95,12 +95,12 @@ droneGroups <- pullDroneGroupsFromDCA(drones, n = 10, nDrones = nFathersPoisson)
 # Create a Colony and a MultiColony class
 colony <- createColony(x = basePop[2])
 colony <- cross(colony, drones = droneGroups[[1]])
-colony <- buildUp(x = colony, nWorkers = 100, nDrones = 10, exact = TRUE)
+colony <- buildUp(x = colony, nWorkers = 100, nDrones = 10)
 colony <- addVirginQueens(x = colony, nInd = 3)
 
 apiary <- createMultiColony(basePop[3:4], n = 2)
 apiary <- cross(apiary, drones = droneGroups[c(2, 3)])
-apiary <- buildUp(x = apiary, nWorkers = 100, nDrones = 10, exact = TRUE)
+apiary <- buildUp(x = apiary, nWorkers = 100, nDrones = 10)
 apiary <- addVirginQueens(x = apiary, nInd = 3)
 
 # pullCastePop on Colony class

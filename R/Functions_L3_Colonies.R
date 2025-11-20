@@ -13,7 +13,7 @@
 #'   given then \code{\link[SIMplyBee]{MultiColony-class}} is created with \code{n}
 #'   \code{NULL}) individual colony - this is mostly useful for programming)
 #' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
-#' @param nThreads integer, number of cores to use for parallel computing (over colonies)
+#' @param populateColonies boolean, whether to create n empty Colony objects within with assigned ID
 #'
 #' @details When both \code{x} and \code{n} are \code{NULL}, then a
 #'   \code{\link[SIMplyBee]{MultiColony-class}} with 0 colonies is created.
@@ -49,19 +49,26 @@
 #' apiary[[2]]
 #'
 #' @export
-createMultiColony <- function(x = NULL, n = NULL, simParamBee = NULL, nThreads = NULL) {
+createMultiColony <- function(x = NULL, n = NULL, simParamBee = NULL, populateColonies = FALSE) {
   if (is.null(simParamBee)) {
     simParamBee <- get(x = "SP", envir = .GlobalEnv)
   }
-  if (is.null(nThreads)) {
-    nThreads <- simParamBee$nThreads
-  }
-  registerDoParallel(cores = nThreads)
+
+  registerDoParallel(cores = simParamBee$nThreads)
   if (is.null(x)) {
     if (is.null(n)) {
       ret <- new(Class = "MultiColony")
     } else {
       ret <- new(Class = "MultiColony", colonies = vector(mode = "list", length = n))
+      if (populateColonies) {
+        ids <- (simParamBee$lastColonyId+1):(simParamBee$lastColonyId + n)
+        ret@colonies <- foreach(colony = seq_len(n)) %dopar% {
+          createColony(simParamBee = simParamBee, id = ids[colony])
+        }
+        simParamBee$updateLastColonyId(n = n)
+      } else {
+
+      }
     }
   } else {
     if (!isPop(x)) {

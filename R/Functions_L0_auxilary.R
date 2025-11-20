@@ -983,150 +983,6 @@ isNULLColonies <- function(multicolony) {
 
 # get (general) ----
 
-#' @rdname getQueenYearOfBirth
-#' @title Access the queen's year of birth
-#'
-#' @description Level 0 function that returns the queen's year of birth.
-#'
-#' @param x \code{\link[AlphaSimR]{Pop-class}} (one or more than one queen),
-#'   \code{\link[SIMplyBee]{Colony-class}} (one colony), or
-#'   \code{\link[SIMplyBee]{MultiColony-class}} (more colonies)
-#' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
-#'
-#' @return numeric, the year of birth of the queen(s); named when theres is more
-#'   than one queen; \code{NA} if queen not present
-#'
-#' @examples
-#' founderGenomes <- quickHaplo(nInd = 8, nChr = 1, segSites = 100)
-#' SP <- SimParamBee$new(founderGenomes)
-#' \dontshow{SP$nThreads = 1L}
-#' basePop <- createVirginQueens(founderGenomes)
-#'
-#' drones <- createDrones(x = basePop[1], nInd = 1000)
-#' droneGroups <- pullDroneGroupsFromDCA(drones, n = 10, nDrones = nFathersPoisson)
-#'
-#' # Create a Colony and a MultiColony class
-#' colony <- createColony(x = basePop[2])
-#' colony <- cross(colony, drones = droneGroups[[1]])
-#'
-#' apiary <- createMultiColony(basePop[3:4], n = 2)
-#' apiary <- cross(apiary, drones = droneGroups[c(2, 3)])
-#'
-#' queen <- getQueen(colony)
-#' queen <- setQueensYearOfBirth(queen, year = 2022)
-#' getQueenYearOfBirth(queen)
-#'
-#' getQueenYearOfBirth(getQueen(colony))
-#' colony <- setQueensYearOfBirth(colony, year = 2030)
-#' getQueenYearOfBirth(colony)
-#'
-#' apiary <- setQueensYearOfBirth(apiary, year = 2022)
-#' getQueenYearOfBirth(apiary)
-#' @export
-getQueenYearOfBirth <- function(x, simParamBee = NULL) {
-  if (is.null(simParamBee)) {
-    simParamBee <- get(x = "SP", envir = .GlobalEnv)
-  }
-  if (isPop(x)) {
-    if (any(!(isVirginQueen(x, simParamBee = simParamBee) | isQueen(x, simParamBee = simParamBee)))) {
-      stop("Individuals in x must be virgin queens or queens!")
-    }
-    nInd <- nInd(x)
-    ret <- rep(x = NA, times = nInd)
-    for (ind in seq_len(nInd)) {
-      if (!is.null(x@misc$yearOfBirth[[ind]])) {
-        ret[ind] <- x@misc$yearOfBirth[[ind]]
-      }
-    }
-    if (nInd > 1) {
-      names(ret) <- getId(x)
-    }
-  } else if (isColony(x)) {
-    ret <- ifelse(is.null(x@queen@misc$yearOfBirth[[1]]), NA, x@queen@misc$yearOfBirth[[1]])
-  } else if (isMultiColony(x)) {
-    ret <- sapply(X = x@colonies, FUN = getQueenYearOfBirth, simParamBee = simParamBee)
-    names(ret) <- getId(x)
-  } else {
-    stop("Argument x must be a Pop, Colony, or MultiColony class object!")
-  }
-  return(ret)
-}
-
-#' @rdname getQueenAge
-#' @title Get (calculate) the queen's age
-#'
-#' @description Level 0 function that returns the queen's age.
-#'
-#' @param x \code{\link[AlphaSimR]{Pop-class}}, \code{\link[SIMplyBee]{Colony-class}}, or
-#'   \code{\link[SIMplyBee]{MultiColony-class}}
-#' @param currentYear integer, current year
-#' @param simParamBee \code{\link[SIMplyBee]{SimParamBee}}, global simulation parameters
-#'
-#' @return numeric, the age of the queen(s); named when theres is more
-#'   than one queen; \code{NA} if queen not present
-#'
-#' @examples
-#' founderGenomes <- quickHaplo(nInd = 8, nChr = 1, segSites = 100)
-#' SP <- SimParamBee$new(founderGenomes)
-#' \dontshow{SP$nThreads = 1L}
-#' basePop <- createVirginQueens(founderGenomes)
-#'
-#' drones <- createDrones(x = basePop[1], nInd = 1000)
-#' droneGroups <- pullDroneGroupsFromDCA(drones, n = 10, nDrones = nFathersPoisson)
-#'
-#' # Create a Colony and a MultiColony class
-#' colony <- createColony(x = basePop[2])
-#' colony <- cross(colony, drones = droneGroups[[1]])
-#' apiary <- createMultiColony(basePop[3:4], n = 2)
-#' apiary <- cross(apiary, drones = droneGroups[c(2, 3)])
-#'
-#' queen <- getQueen(colony)
-#' queen <- setQueensYearOfBirth(queen, year = 2020)
-#' getQueenAge(queen, currentYear = 2022)
-#'
-#' colony <- setQueensYearOfBirth(colony, year = 2021)
-#' getQueenAge(colony, currentYear = 2022)
-#'
-#' apiary <- setQueensYearOfBirth(apiary, year = 2018)
-#' getQueenAge(apiary, currentYear = 2022)
-#' @export
-getQueenAge <- function(x, currentYear, simParamBee = NULL) {
-  if (is.null(simParamBee)) {
-    simParamBee <- get(x = "SP", envir = .GlobalEnv)
-  }
-  if (isPop(x)) {
-    if (any(!(isVirginQueen(x, simParamBee = simParamBee) | isQueen(x, simParamBee = simParamBee)))) {
-      stop("Individuals in x must be virgin queens or queens!")
-    }
-    nInd <- nInd(x)
-    ret <- rep(x = NA, times = nInd)
-    for (ind in seq_len(nInd)) {
-      if (!is.null(x@misc$yearOfBirth[[ind]])) {
-        ret[ind] <- currentYear - x@misc$yearOfBirth[[ind]]
-      }
-    }
-    if (nInd > 1) {
-      names(ret) <- getId(x)
-    }
-  } else if (isColony(x)) {
-    if (isQueenPresent(x, simParamBee = simParamBee)) {
-      if(packageVersion("AlphaSimR") > package_version("1.5.3")){
-        ret <- currentYear - x@queen@misc$yearOfBirth[[1]]
-      }else{
-        ret <- currentYear - x@queen@misc[[1]]$yearOfBirth
-      }
-    } else {
-      ret <- NA
-    }
-  } else if (isMultiColony(x)) {
-    ret <- sapply(X = x@colonies, FUN = getQueenAge, currentYear = currentYear)
-    names(ret) <- getId(x)
-  } else {
-    stop("Argument x must be a Pop, Colony, or MultiColony class object!")
-  }
-  return(ret)
-}
-
 #' @rdname getId
 #' @title Get the colony ID
 #'
@@ -1800,7 +1656,7 @@ getEvents <- function(x) {
 #' colony <- buildUp(x = colony, nWorkers = 6, nDrones = 3)
 #' colony <- addVirginQueens(colony, nInd = 5)
 #'
-#' apiary <- createMultiColony(basePop[3:4], n = 2)
+#' apiary <- createMultiColony(basePop[3:4])
 #' apiary <- cross(apiary, drones = droneGroups[c(2, 3)])
 #' apiary <- buildUp(x = apiary, nWorkers = 6, nDrones = 3)
 #'
@@ -2912,10 +2768,10 @@ nCsdAlleles <- function(x, collapse = FALSE, simParamBee = NULL) {
 #'   \code{\link[SIMplyBee]{MultiColony-class}}
 #'
 #' @examples
-#' founderGenomes <- quickHaplo(nInd = 4, nChr = 1, segSites = 50)
-#' SP <- SimParamBee$new(founderGenomes)
+#' founderGenomes <- quickHaplo(nInd = 4, nChr = 1, segSites = 5)
+#' SP <- SimParamBee$new(founderGenomes, nCsdAlleles = 4)
 #' \dontshow{SP$nThreads = 1L}
-#' SP$setTrackRec(TRUE)
+#' SP$setTrackRec(isTrackRec = TRUE)
 #' SP$setTrackPed(isTrackPed = TRUE)
 #' basePop <- createVirginQueens(founderGenomes)
 #'
@@ -2925,13 +2781,13 @@ nCsdAlleles <- function(x, collapse = FALSE, simParamBee = NULL) {
 #' # Create a Colony and a MultiColony class
 #' colony <- createColony(x = basePop[2])
 #' colony <- cross(colony, drones = droneGroups[[1]])
-#' colony <- buildUp(x = colony, nWorkers = 6, nDrones = 3)
-#' colony <- addVirginQueens(x = colony, nInd = 5)
+#' colony <- buildUp(x = colony, nWorkers = 3, nDrones = 2)
+#' colony <- addVirginQueens(x = colony, nInd = 2)
 #'
-#' apiary <- createMultiColony(basePop[3:4], n = 2)
+#' apiary <- createMultiColony(basePop[3:4])
 #' apiary <- cross(apiary, drones = droneGroups[c(2, 3)])
-#' apiary <- buildUp(x = apiary, nWorkers = 6, nDrones = 3)
-#' apiary <- addVirginQueens(x = apiary, nInd = 5)
+#' apiary <- buildUp(x = apiary, nWorkers = 3, nDrones = 2)
+#' apiary <- addVirginQueens(x = apiary, nInd = 2)
 #'
 #' # Input is a population
 #' getIbdHaplo(x = getQueen(colony))
@@ -2943,6 +2799,8 @@ nCsdAlleles <- function(x, collapse = FALSE, simParamBee = NULL) {
 #' getQueenIbdHaplo(colony)
 #'
 #' getIbdHaplo(colony, caste = "workers", nInd = 3)
+#' getIbdHaplo(colony, caste = "virginQueens")
+#' getIbdHaplo(colony, caste = "drones")
 #' getWorkersIbdHaplo(colony)
 #' # Same aliases exist for all castes!
 #'
@@ -2957,6 +2815,9 @@ nCsdAlleles <- function(x, collapse = FALSE, simParamBee = NULL) {
 #' # Or collapse all the haplotypes into a single matrix
 #' getQueenIbdHaplo(apiary, collapse = TRUE)
 #'
+#'
+#' getIbdHaplo(x = apiary, caste = "workers")
+#' getIbdHaplo(x = apiary, caste = "drones")
 #' # Get the haplotypes of all individuals either by colony or in a single matrix
 #' getIbdHaplo(apiary, caste = "all")
 #' getIbdHaplo(apiary, caste = "all", collapse = TRUE)
